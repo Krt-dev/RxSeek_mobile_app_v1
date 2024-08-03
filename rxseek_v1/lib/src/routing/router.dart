@@ -57,8 +57,22 @@ class GlobalRouter {
         navigatorKey: _rootNavigatorKey,
         initialLocation: SplashScreen.route,
         // redirect: handleRedirect,
-        refreshListenable: AuthController.I,
+        // refreshListenable: AuthController.I,
         routes: [
+          GoRoute(
+              parentNavigatorKey: _rootNavigatorKey,
+              path: HomeScreen.route,
+              name: HomeScreen.name,
+              builder: (context, _) {
+                return const HomeScreen();
+              }),
+          GoRoute(
+              parentNavigatorKey: _rootNavigatorKey,
+              path: SplashScreen.route,
+              name: SplashScreen.name,
+              builder: (context, _) {
+                return const SplashScreen();
+              }),
           GoRoute(
               parentNavigatorKey: _rootNavigatorKey,
               path: LoginScreen.route,
