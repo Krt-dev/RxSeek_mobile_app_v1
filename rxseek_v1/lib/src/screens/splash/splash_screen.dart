@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:rxseek_v1/src/controllers/auth_controller.dart';
-import 'package:rxseek_v1/src/enum/enum.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
-import 'package:rxseek_v1/src/screens/auth/home/home_screen.dart';
 import 'package:rxseek_v1/src/screens/auth/login.screen.dart';
 
 class SplashScreen extends StatefulWidget {
