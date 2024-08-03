@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:tic_tac_toe/src/controllers/auth_controller.dart';
-import 'package:tic_tac_toe/src/dialogs/waiting_dialog.dart';
-import 'package:tic_tac_toe/src/routing/router.dart';
-
+import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
+import 'package:rxseek_v1/src/routing/router.dart';
 import 'registration.screen.dart';
 
 class LoginScreen extends StatefulWidget {

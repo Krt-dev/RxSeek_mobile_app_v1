@@ -1,4 +1,1 @@
-enum AuthState {
-  authenticated,
-  unauthenticated
-}
+enum AuthState { authenticated, unauthenticated }
