@@ -47,12 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/tictacBG.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
+          ///add decoration hereee
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Form(
             key: formKey,
@@ -65,14 +60,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 80),
-                          child: SizedBox(
-                            width: 500,
-                            height: 80,
-                            child: Image.asset('assets/images/TIC-TAC-TOE.png'),
-                          ),
-                        ),
+                        // Container(
+                        //   padding: const EdgeInsets.symmetric(vertical: 80),
+                        //   child: SizedBox(
+                        //     width: 500,
+                        //     height: 80,
+                        //     child: Image.asset('assets/images/TIC-TAC-TOE.png'),
+                        //   ),
+                        // ),
                         Container(
                           padding: const EdgeInsets.only(top: 60),
                           child: TextFormField(
@@ -175,12 +170,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   onSubmit() {
-    GlobalRouter.I.router.go(HomeScreen.route);
-    // if (formKey.currentState?.validate() ?? false) {
-    //   WaitingDialog.show(context,
-    //       future: AuthController.I
-    //           .login(username.text.trim(), password.text.trim()));
-    // }
+    if (formKey.currentState?.validate() ?? false) {
+      WaitingDialog.show(context,
+          future: AuthController.I
+              .login(username.text.trim(), password.text.trim()));
+    }
   }
 
   final OutlineInputBorder _baseBorder = const OutlineInputBorder(

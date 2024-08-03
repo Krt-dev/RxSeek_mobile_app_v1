@@ -51,12 +51,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/tictacBG.png',
-              fit: BoxFit.cover,
-            ),
-          ),
+          // Positioned.fill(
+          //   child: Image.asset(
+          //     'assets/images/tictacBG.png',
+          //     fit: BoxFit.cover,
+          //   ),
+          // ),
           SafeArea(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
@@ -66,16 +66,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          width: 100,
-                          height: 80,
-                          child: Image.asset('assets/images/Register.png'),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   crossAxisAlignment: CrossAxisAlignment.end,
+                    //   children: [
+                    //     SizedBox(
+                    //       width: 100,
+                    //       height: 80,
+                    //       child: Image.asset('assets/images/Register.png'),
+                    //     ),
+                    //   ],
+                    // ),
                     Flexible(
                       child: TextFormField(
                         decoration: decoration.copyWith(
@@ -238,13 +238,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   onSubmit() {
-    GlobalRouter.I.router.go(HomeScreen.route);
-    // if (formKey.currentState?.validate() ?? false) {
-    //   print("registering");
-    //   WaitingDialog.show(context,
-    //       future: AuthController.I
-    //           .register(username.text.trim(), password.text.trim()));
-    // }
+    if (formKey.currentState?.validate() ?? false) {
+      print("registering");
+      WaitingDialog.show(context,
+          future: AuthController.I
+              .register(username.text.trim(), password.text.trim()));
+    }
   }
 
   final OutlineInputBorder _baseBorder = const OutlineInputBorder(

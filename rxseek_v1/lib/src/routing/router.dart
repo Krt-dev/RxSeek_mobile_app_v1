@@ -25,39 +25,39 @@ class GlobalRouter {
 
   late GoRouter router;
   late GlobalKey<NavigatorState> _rootNavigatorKey;
-  late GlobalKey<NavigatorState> _shellNavigatorKey;
+  // late GlobalKey<NavigatorState> _shellNavigatorKey;
 
-  // FutureOr<String?> handleRedirect(
-  //     BuildContext context, GoRouterState state) async {
-  //   if (AuthController.I.state == AuthState.authenticated) {
-  //     if (state.matchedLocation == LoginScreen.route) {
-  //       return HomeScreen.route;
-  //     }
-  //     if (state.matchedLocation == RegistrationScreen.route) {
-  //       return HomeScreen.route;
-  //     }
-  //     return null;
-  //   }
-  //   if (AuthController.I.state != AuthState.authenticated) {
-  //     if (state.matchedLocation == LoginScreen.route) {
-  //       return null;
-  //     }
-  //     if (state.matchedLocation == RegistrationScreen.route) {
-  //       return null;
-  //     }
-  //     return LoginScreen.route;
-  //   }
-  //   return null;
-  // }
+  FutureOr<String?> handleRedirect(
+      BuildContext context, GoRouterState state) async {
+    if (AuthController.I.state == AuthState.authenticated) {
+      if (state.matchedLocation == LoginScreen.route) {
+        return HomeScreen.route;
+      }
+      if (state.matchedLocation == RegistrationScreen.route) {
+        return HomeScreen.route;
+      }
+      return SplashScreen.route;
+    }
+    if (AuthController.I.state != AuthState.authenticated) {
+      if (state.matchedLocation == LoginScreen.route) {
+        return null;
+      }
+      if (state.matchedLocation == RegistrationScreen.route) {
+        return null;
+      }
+      return SplashScreen.route;
+    }
+    return null;
+  }
 
   GlobalRouter() {
     _rootNavigatorKey = GlobalKey<NavigatorState>();
-    _shellNavigatorKey = GlobalKey<NavigatorState>();
+    // _shellNavigatorKey = GlobalKey<NavigatorState>();
     router = GoRouter(
         navigatorKey: _rootNavigatorKey,
         initialLocation: SplashScreen.route,
-        // redirect: handleRedirect,
-        // refreshListenable: AuthController.I,
+        redirect: handleRedirect,
+        refreshListenable: AuthController.I,
         routes: [
           GoRoute(
               parentNavigatorKey: _rootNavigatorKey,
