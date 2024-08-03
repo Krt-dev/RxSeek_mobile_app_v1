@@ -11,6 +11,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late TextEditingController messageController;
+
+  @override
+  void initState() {
+    super.initState();
+    messageController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    messageController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -33,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
               height: size.height * 0.8,
@@ -40,19 +55,21 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: const BoxDecoration(color: Colors.blue),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  width: size.width * 0.6,
-                  height: size.height * 0.1,
+                  width: size.width * 0.75,
+                  height: size.height * 0.055,
                   decoration: BoxDecoration(
-                      color: Colors.white70,
+                      color: Colors.red,
                       borderRadius: BorderRadius.circular(20)),
-                  child: Row(
-                    children: [
-                      TextField(),
-                      Image.asset("assets/images/send_button.png")
-                    ],
+                  child: TextField(
+                    controller: messageController,
+                    decoration: const InputDecoration(
+                        hintText: "How can I help?",
+                        border: OutlineInputBorder()),
                   ),
+                  // Image.asset("assets/images/send_button.png")
                 ),
                 InkWell(
                     onTap: () {},
