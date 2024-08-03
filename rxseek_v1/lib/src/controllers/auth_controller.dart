@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tic_tac_toe/src/enum/enum.dart';
+import 'package:rxseek_v1/src/enum/enum.dart';
 
 class AuthController with ChangeNotifier {
   //get currentUser => null;

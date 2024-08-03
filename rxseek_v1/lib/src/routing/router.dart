@@ -3,14 +3,6 @@ import "dart:async";
 import "package:flutter/material.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
-import "package:tic_tac_toe/src/enum/enum.dart";
-import "package:tic_tac_toe/src/screens/auth/login.screen.dart";
-import "package:tic_tac_toe/src/screens/auth/registration.screen.dart";
-import "package:tic_tac_toe/src/screens/game/game_screen.dart";
-import "package:tic_tac_toe/src/screens/game/lobby_screen.dart";
-import "package:tic_tac_toe/src/screens/home/home.screen.dart";
-import "package:tic_tac_toe/src/screens/home/wrapper.dart";
-import "../controllers/auth_controller.dart";
 
 /// https://pub.dev/packages/go_router
 
