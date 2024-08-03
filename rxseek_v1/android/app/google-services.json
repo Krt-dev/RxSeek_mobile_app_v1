@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "814418475338",
+    "project_id": "rxseek-b60ba",
+    "storage_bucket": "rxseek-b60ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814418475338:android:a4ee904d8f89c6c87329b3",
+        "android_client_info": {
+          "package_name": "com.example.rxseek_v1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHzXQcmcNqCEyiruNpfVrVh63W0LJP3Ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
