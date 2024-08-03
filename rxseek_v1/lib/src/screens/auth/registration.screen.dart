@@ -4,6 +4,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
+import 'package:rxseek_v1/src/screens/auth/home/home_screen.dart';
 import 'package:rxseek_v1/src/screens/auth/login.screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -237,12 +238,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   onSubmit() {
-    if (formKey.currentState?.validate() ?? false) {
-      print("registering");
-      WaitingDialog.show(context,
-          future: AuthController.I
-              .register(username.text.trim(), password.text.trim()));
-    }
+    GlobalRouter.I.router.go(HomeScreen.route);
+    // if (formKey.currentState?.validate() ?? false) {
+    //   print("registering");
+    //   WaitingDialog.show(context,
+    //       future: AuthController.I
+    //           .register(username.text.trim(), password.text.trim()));
+    // }
   }
 
   final OutlineInputBorder _baseBorder = const OutlineInputBorder(
