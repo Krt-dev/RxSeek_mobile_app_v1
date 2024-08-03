@@ -3,6 +3,12 @@ import "dart:async";
 import "package:flutter/material.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
+import "package:rxseek_v1/src/controllers/auth_controller.dart";
+import "package:rxseek_v1/src/enum/enum.dart";
+import "package:rxseek_v1/src/screens/auth/home/home_screen.dart";
+import "package:rxseek_v1/src/screens/auth/login.screen.dart";
+import "package:rxseek_v1/src/screens/auth/registration.screen.dart";
+import "package:rxseek_v1/src/screens/splash/splash_screen.dart";
 
 /// https://pub.dev/packages/go_router
 
@@ -49,7 +55,7 @@ class GlobalRouter {
     _shellNavigatorKey = GlobalKey<NavigatorState>();
     router = GoRouter(
         navigatorKey: _rootNavigatorKey,
-        initialLocation: HomeScreen.route,
+        initialLocation: SplashScreen.route,
         redirect: handleRedirect,
         refreshListenable: AuthController.I,
         routes: [
@@ -67,43 +73,43 @@ class GlobalRouter {
               builder: (context, _) {
                 return const RegistrationScreen();
               }),
-          ShellRoute(
-              navigatorKey: _shellNavigatorKey,
-              routes: [
-                GoRoute(
-                    parentNavigatorKey: _shellNavigatorKey,
-                    path: HomeScreen.route,
-                    name: HomeScreen.name,
-                    builder: (context, _) {
-                      return const HomeScreen();
-                    }),
-                GoRoute(
-                  parentNavigatorKey: _shellNavigatorKey,
-                  path: "${GameScreen.route}/:gameId/:playerId",
-                  name: GameScreen.name,
-                  builder: (context, state) {
-                    final String gameId = state.pathParameters['gameId'] ?? "";
-                    final String playerId =
-                        state.pathParameters['playerId'] ?? "";
-                    return GameScreen(
-                      gameId: gameId,
-                      playerId: playerId,
-                    );
-                  },
-                ),
-                GoRoute(
-                    parentNavigatorKey: _shellNavigatorKey,
-                    path: LobbyScreen.route,
-                    name: LobbyScreen.name,
-                    builder: (context, _) {
-                      return const LobbyScreen();
-                    }),
-              ],
-              builder: (context, state, child) {
-                return HomeWrapper(
-                  child: child,
-                );
-              }),
+          // ShellRoute(
+          //     navigatorKey: _shellNavigatorKey,
+          //     routes: [
+          //       GoRoute(
+          //           parentNavigatorKey: _shellNavigatorKey,
+          //           path: HomeScreen.route,
+          //           name: HomeScreen.name,
+          //           builder: (context, _) {
+          //             return const HomeScreen();
+          //           }),
+          //       GoRoute(
+          //         parentNavigatorKey: _shellNavigatorKey,
+          //         path: "${GameScreen.route}/:gameId/:playerId",
+          //         name: GameScreen.name,
+          //         builder: (context, state) {
+          //           final String gameId = state.pathParameters['gameId'] ?? "";
+          //           final String playerId =
+          //               state.pathParameters['playerId'] ?? "";
+          //           return GameScreen(
+          //             gameId: gameId,
+          //             playerId: playerId,
+          //           );
+          //         },
+          //       ),
+          //       GoRoute(
+          //           parentNavigatorKey: _shellNavigatorKey,
+          //           path: LobbyScreen.route,
+          //           name: LobbyScreen.name,
+          //           builder: (context, _) {
+          //             return const LobbyScreen();
+          //           }),
+          //     ],
+          //     builder: (context, state, child) {
+          //       return HomeWrapper(
+          //         child: child,
+          //       );
+          //     }),
         ]);
   }
 }
