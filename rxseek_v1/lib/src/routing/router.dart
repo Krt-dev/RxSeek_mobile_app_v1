@@ -36,7 +36,7 @@ class GlobalRouter {
       if (state.matchedLocation == RegistrationScreen.route) {
         return HomeScreen.route;
       }
-      return SplashScreen.route;
+      return null;
     }
     if (AuthController.I.state != AuthState.authenticated) {
       if (state.matchedLocation == LoginScreen.route) {

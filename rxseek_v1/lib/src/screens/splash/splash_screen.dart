@@ -21,11 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      if (AuthController.I.state == AuthState.authenticated) {
-        GlobalRouter.I.router.go(HomeScreen.route);
-      } else {
-        GlobalRouter.I.router.go(LoginScreen.route);
-      }
+      GlobalRouter.I.router.go(LoginScreen.route);
     });
   }
 

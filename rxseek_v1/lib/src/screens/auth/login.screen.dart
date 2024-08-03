@@ -47,8 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          ///add decoration hereee
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/Login_screen.png"),
+                  fit: BoxFit.fill)),
+          padding: const EdgeInsets.only(top: 300, left: 16, right: 16),
           child: Form(
             key: formKey,
             child: Column(
@@ -60,14 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        // Container(
-                        //   padding: const EdgeInsets.symmetric(vertical: 80),
-                        //   child: SizedBox(
-                        //     width: 500,
-                        //     height: 80,
-                        //     child: Image.asset('assets/images/TIC-TAC-TOE.png'),
-                        //   ),
-                        // ),
                         Container(
                           padding: const EdgeInsets.only(top: 60),
                           child: TextFormField(
@@ -98,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 10,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 200),
+                          padding: const EdgeInsets.only(bottom: 40),
                           child: Container(
                             padding: const EdgeInsets.only(top: 10),
                             child: TextFormField(
