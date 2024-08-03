@@ -46,37 +46,56 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Image.asset("assets/images/RxSeek_name.png")),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              height: size.height * 0.8,
-              width: size.width * 0.99,
-              decoration: const BoxDecoration(color: Colors.blue),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: size.width * 0.75,
-                  height: size.height * 0.055,
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: TextField(
-                    controller: messageController,
-                    decoration: const InputDecoration(
-                        hintText: "How can I help?",
-                        border: OutlineInputBorder()),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                height: size.height * 0.8,
+                width: size.width * 0.99,
+                decoration: const BoxDecoration(color: Colors.white),
+                child: const Center(
+                  child: Text(
+                    "Welcome",
+                    style: TextStyle(fontSize: 50),
                   ),
-                  // Image.asset("assets/images/send_button.png")
                 ),
-                InkWell(
-                    onTap: () {},
-                    child: Image.asset("assets/images/camera_button.png"))
-              ],
-            )
-          ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: size.width * 0.8,
+                    height: size.height * 0.06,
+                    decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 221, 218, 218),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(
+                          height: size.height * 0.79,
+                          width: size.width * 0.5,
+                          child: TextField(
+                            controller: messageController,
+                            decoration: const InputDecoration(
+                                hintText: "How can I help?",
+                                border: InputBorder.none),
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {},
+                            child: Image.asset("assets/images/send_button.png"))
+                      ],
+                    ),
+                  ),
+                  InkWell(
+                      onTap: () {},
+                      child: Image.asset("assets/images/camera_button.png"))
+                ],
+              )
+            ],
+          ),
         ),
       ),
     ));
