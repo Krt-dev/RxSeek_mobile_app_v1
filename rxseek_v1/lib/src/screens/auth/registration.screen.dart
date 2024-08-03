@@ -59,23 +59,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           // ),
           SafeArea(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/Login_screen.png"),
+                      fit: BoxFit.cover)),
+              padding: const EdgeInsets.only(top: 220, left: 16, right: 16),
               alignment: Alignment.center,
               child: Form(
                 key: formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Row(
-                    //   crossAxisAlignment: CrossAxisAlignment.end,
-                    //   children: [
-                    //     SizedBox(
-                    //       width: 100,
-                    //       height: 80,
-                    //       child: Image.asset('assets/images/Register.png'),
-                    //     ),
-                    //   ],
-                    // ),
                     Flexible(
                       child: TextFormField(
                         decoration: decoration.copyWith(
