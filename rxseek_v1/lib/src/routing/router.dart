@@ -32,10 +32,10 @@ class GlobalRouter {
       BuildContext context, GoRouterState state) async {
     if (AuthController.I.state == AuthState.authenticated) {
       if (state.matchedLocation == LoginScreen.route) {
-        return HomeScreen.route;
+        return DisclaimerScreen.route;
       }
       if (state.matchedLocation == RegistrationScreen.route) {
-        return HomeScreen.route;
+        return DisclaimerScreen.route;
       }
       return null;
     }
