@@ -27,8 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     formKey = GlobalKey<FormState>();
-    username = TextEditingController();
-    password = TextEditingController();
+    username = TextEditingController(text: "kurvensanchez@gmail.com");
+    password = TextEditingController(text: "#ABCDE123abcde");
     usernameFn = FocusNode();
     passwordFn = FocusNode();
   }
