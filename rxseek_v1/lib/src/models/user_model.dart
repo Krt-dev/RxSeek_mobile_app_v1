@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
-  final String userId;
+  final int userId;
   final String firstName;
   final String lastName;
   final String userName;
