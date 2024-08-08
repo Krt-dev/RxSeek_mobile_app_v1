@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rxseek_v1/src/enum/enum.dart';
 
 class Thread {
   final int threadId;

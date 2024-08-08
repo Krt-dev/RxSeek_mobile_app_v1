@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:rxseek_v1/firebase_options.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 
 void main() async {
@@ -12,6 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AuthController.initialize();
   GlobalRouter.initialize();
+  MessageController.initialize();
   await AuthController.I.loadSession();
   runApp(const MyApp());
 }
