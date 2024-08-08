@@ -4,7 +4,7 @@ import 'package:rxseek_v1/src/enum/enum.dart';
 class Thread {
   final int threadId;
   final String threadName;
-  final Save save;
+  final bool save;
   final int userId;
   final Timestamp timeCreated;
 

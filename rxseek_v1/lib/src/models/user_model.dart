@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxseek_v1/src/enum/enum.dart';
 
 class UserModel {
-  final int userId;
+  final String userId;
   final String firstName;
   final String lastName;
   final String userName;
   final String email;
-  final Status status;
+  final String status;
   final String profileUrl;
   final Timestamp joinedAt;
 

@@ -51,29 +51,37 @@ class AuthController with ChangeNotifier {
     UserCredential? userCredential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
     user = UserModel(
-        userId: userCredential.user?.uid as int,
+        userId: userCredential.user!.uid,
         firstName: "Rhunnan",
         lastName: "Dwight",
         userName: "Rhunnan Dwight",
-        email: "rhunnandwight@gmail.com",
-        status: Status.user,
+        email: userCredential.user!.email.toString(),
+        status: "user",
         profileUrl: "",
         joinedAt: Timestamp.now());
     notifyListeners();
-    await db
-        .collection("Users")
-        .doc(userCredential.user?.uid)
-        .set(user!.toJson());
+    try {
+      await db
+          .collection("Users")
+          .doc(userCredential.user?.uid)
+          .set(user!.toJson());
+    } on FirebaseAuthException catch (e) {
+      print("${e.toString()}");
+    }
   }
 
   login(String userName, String password) async {
     UserCredential userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: userName, password: password);
+    var initialUserDoc =
+        await db.collection("Users").doc(userCredential.user!.uid).get();
+    user = UserModel.fromJson(initialUserDoc.data()!);
     notifyListeners();
   }
 
   ///write code to log out the user and add it to the home page.
   logout() async {
+    user = null;
     notifyListeners();
     return await FirebaseAuth.instance.signOut();
   }
