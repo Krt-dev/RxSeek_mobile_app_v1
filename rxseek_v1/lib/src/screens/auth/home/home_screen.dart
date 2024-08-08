@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String route = "/homeScreen";
@@ -37,7 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: [
             InkWell(
-                onTap: () {},
+                onTap: () {
+                  WaitingDialog.show(context,
+                      future: AuthController.I.logout());
+                },
                 child: const Icon(
                   Icons.more_vert,
                   size: 50,
