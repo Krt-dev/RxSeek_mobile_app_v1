@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:rxseek_v1/src/enum/enum.dart';
+import 'package:rxseek_v1/src/models/user_model.dart';
 
 class AuthController with ChangeNotifier {
   //get currentUser => null;
@@ -18,10 +20,10 @@ class AuthController with ChangeNotifier {
 
   static AuthController get I => GetIt.instance<AuthController>();
 
-  User? user;
-
   AuthState state = AuthState.unauthenticated;
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
+  UserModel? user;
   // SimulatedAPI api = SimulatedAPI();
   late StreamSubscription<User?> currentAuthedUser;
 
@@ -48,20 +50,30 @@ class AuthController with ChangeNotifier {
   register(String email, String password) async {
     UserCredential? userCredential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
-    user = userCredential.user;
+    user = UserModel(
+        userId: userCredential.user?.uid as int,
+        firstName: "Rhunnan",
+        lastName: "Dwight",
+        userName: "Rhunnan Dwight",
+        email: "rhunnandwight@gmail.com",
+        status: Status.user,
+        profileUrl: "",
+        joinedAt: Timestamp.now());
     notifyListeners();
+    await db
+        .collection("Users")
+        .doc(userCredential.user?.uid)
+        .set(user!.toJson());
   }
 
   login(String userName, String password) async {
     UserCredential userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: userName, password: password);
-    user = userCredential.user;
     notifyListeners();
   }
 
   ///write code to log out the user and add it to the home page.
   logout() async {
-    user = null;
     notifyListeners();
     return await FirebaseAuth.instance.signOut();
   }

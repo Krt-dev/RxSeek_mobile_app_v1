@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rxseek_v1/src/enum/enum.dart';
 
-class User {
+class UserModel {
   final int userId;
   final String firstName;
   final String lastName;
   final String userName;
   final String email;
-  final String status;
+  final Status status;
   final String profileUrl;
   final Timestamp joinedAt;
 
-  User(
+  UserModel(
       {required this.userId,
       required this.firstName,
       required this.lastName,
@@ -20,8 +21,8 @@ class User {
       required this.profileUrl,
       required this.joinedAt});
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
         userId: json["userId"],
         firstName: json["firstName"],
         lastName: json["lastName"],

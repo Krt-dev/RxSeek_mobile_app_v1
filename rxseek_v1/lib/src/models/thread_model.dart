@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rxseek_v1/src/enum/enum.dart';
 
 class Thread {
   final int threadId;
   final String threadName;
-  final bool save;
+  final Save save;
   final int userId;
   final Timestamp timeCreated;
 
