@@ -25,93 +25,130 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     messageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return SafeArea(
-        child: Scaffold(
-      appBar: AppBar(
+      child: Scaffold(
+        appBar: AppBar(
           leading: InkWell(
             onTap: () {},
             child: Image.asset("assets/images/burger_button.png"),
           ),
           actions: [
             InkWell(
-                onTap: () {
-                  WaitingDialog.show(context,
-                      future: AuthController.I.logout());
-                },
-                child: const Icon(
-                  Icons.more_vert,
-                  size: 50,
-                ))
+              onTap: () {
+                WaitingDialog.show(context, future: AuthController.I.logout());
+              },
+              child: const Icon(
+                Icons.more_vert,
+                size: 50,
+              ),
+            ),
           ],
-          title: Image.asset("assets/images/RxSeek_name.png")),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                height: size.height * 0.8,
+          title: Image.asset("assets/images/RxSeek_name.png"),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Container(
                 width: size.width * 0.99,
                 decoration: const BoxDecoration(color: Colors.white),
-                child: const Center(
-                  child: Text(
-                    "Welcome",
-                    style: TextStyle(fontSize: 50),
-                  ),
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: MessageController.I.getMessages(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    }
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return Center(child: Text('No messages found'));
+                    }
+                    var messages = snapshot.data!.docs.map((doc) {
+                      return Message.fromJson(
+                          doc.data() as Map<String, dynamic>);
+                    }).toList();
+
+                    return ListView.builder(
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        final message = messages[index];
+                        return ListTile(
+                          title: Text(message.content),
+                          subtitle: Text(message.sender),
+                          trailing: Text(
+                            message.timeCreated.toDate().toString(),
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
                 children: [
-                  Container(
-                    width: size.width * 0.8,
-                    height: size.height * 0.06,
-                    decoration: BoxDecoration(
+                  Expanded(
+                    child: Container(
+                      height: size.height * 0.06,
+                      decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 221, 218, 218),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          height: size.height * 0.79,
-                          width: size.width * 0.5,
-                          child: TextField(
-                            controller: messageController,
-                            decoration: const InputDecoration(
-                                hintText: "How can I help?",
-                                border: InputBorder.none),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: TextField(
+                                controller: messageController,
+                                decoration: const InputDecoration(
+                                  hintText: "How can I help?",
+                                  border: InputBorder.none,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        InkWell(
-                            onTap: () {
+                          IconButton(
+                            icon: Image.asset("assets/images/send_button.png"),
+                            onPressed: () {
                               var message = Message(
-                                  messageId: 1,
-                                  sender: "user",
-                                  content: messageController.text,
-                                  timeCreated: Timestamp.now());
+                                messageId: DateTime.now()
+                                    .millisecondsSinceEpoch, // Auto-generate ID
+                                sender: "user",
+                                content: messageController.text,
+                                timeCreated: Timestamp.now(),
+                              );
                               MessageController.I.sendMessage(message);
+                              messageController.clear();
                             },
-                            child: Image.asset("assets/images/send_button.png"))
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  InkWell(
-                      onTap: () {},
-                      child: Image.asset("assets/images/camera_button.png"))
+                  IconButton(
+                    icon: Image.asset("assets/images/camera_button.png"),
+                    onPressed: () {
+                      // Handle camera button press
+                    },
+                  ),
                 ],
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
-    ));
+    );
   }
 }
