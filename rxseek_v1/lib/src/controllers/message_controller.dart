@@ -22,10 +22,23 @@ class MessageController with ChangeNotifier {
           .collection("Thread")
           .doc("sampleThread")
           .collection("Messages")
-          .doc("sampleMessage")
-          .set(message.toJson());
+          .add(message.toJson());
     } on FirebaseException catch (e) {
       print({e.toString()});
+    }
+  }
+
+  Stream<QuerySnapshot> getMessages() {
+    try {
+      return db
+          .collection("Thread")
+          .doc("sampleThread")
+          .collection("Messages")
+          .orderBy("timeCreated", descending: true)
+          .snapshots();
+    } on FirebaseException catch (e) {
+      print({e.toString()});
+      return const Stream.empty();
     }
   }
 }

@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
+import 'package:rxseek_v1/src/models/message_model.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String route = "/homeScreen";
@@ -88,7 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              var message = Message(
+                                  messageId: 1,
+                                  sender: "user",
+                                  content: messageController.text,
+                                  timeCreated: Timestamp.now());
+                              MessageController.I.sendMessage(message);
+                            },
                             child: Image.asset("assets/images/send_button.png"))
                       ],
                     ),

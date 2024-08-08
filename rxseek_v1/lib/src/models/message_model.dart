@@ -3,20 +3,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Message {
   final int messageId;
   final String content;
-  final int senderId;
+  final String sender;
   final Timestamp timeCreated;
 
   Message(
       {required this.messageId,
       required this.content,
-      required this.senderId,
+      required this.sender,
       required this.timeCreated});
 
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
         messageId: json["messageId"],
         content: json["content"],
-        senderId: json["senderId"],
+        sender: json["senderId"],
         timeCreated: json["timeCreated"]);
   }
 
@@ -24,7 +24,7 @@ class Message {
     return {
       "messageId": messageId,
       "content": content,
-      "senderId": senderId,
+      "senderId": sender,
       "timeCreated": timeCreated
     };
   }

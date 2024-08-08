@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Thread {
-  final int threadId;
+  final String threadId;
   final String threadName;
   final bool save;
-  final int userId;
+  final String userId;
   final Timestamp timeCreated;
 
   Thread(
