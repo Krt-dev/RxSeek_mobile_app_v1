@@ -130,6 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 timeCreated: Timestamp.now(),
                               );
                               MessageController.I.sendMessage(message);
+                              MessageController.I.getMessageReponse(message);
                               messageController.clear();
                             },
                           ),
