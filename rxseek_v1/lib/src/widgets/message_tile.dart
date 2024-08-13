@@ -23,13 +23,13 @@ class MessageWidget extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color:
-              message.sender == "user" ? Colors.blueAccent : Colors.grey[300],
+              message.sender == "user" ? Colors.blueAccent : Color(0xFFE1BD8F),
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Text(
           message.content,
-          style: TextStyle(
-            color: message.sender == "user" ? Colors.white : Colors.black,
+          style: const TextStyle(
+            color: Colors.white,
           ),
         ),
       ),
