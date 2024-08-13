@@ -4,6 +4,7 @@ import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
+import 'package:rxseek_v1/src/widgets/message_tile.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String route = "/homeScreen";
@@ -79,14 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
                         final message = messages[index];
-                        return ListTile(
-                          title: Text(message.content),
-                          subtitle: Text(message.sender),
-                          trailing: Text(
-                            message.timeCreated.toDate().toString(),
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        );
+                        return MessageWidget(message: message);
                       },
                     );
                   },
@@ -123,8 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: Image.asset("assets/images/send_button.png"),
                             onPressed: () {
                               var message = Message(
-                                messageId: DateTime.now()
-                                    .millisecondsSinceEpoch, // Auto-generate ID
+                                messageId:
+                                    DateTime.now().millisecondsSinceEpoch,
                                 sender: "user",
                                 content: messageController.text,
                                 timeCreated: Timestamp.now(),
