@@ -18,8 +18,18 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   late GlobalKey<FormState> formKey;
-  late TextEditingController username, password, password2;
-  late FocusNode usernameFn, passwordFn, password2Fn;
+  late TextEditingController username,
+      password,
+      password2,
+      email,
+      name,
+      lastName;
+  late FocusNode usernameFn,
+      passwordFn,
+      password2Fn,
+      emailfn,
+      nameFn,
+      lastNameFn;
 
   bool obfuscate = true;
 
@@ -33,6 +43,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     passwordFn = FocusNode();
     password2 = TextEditingController();
     password2Fn = FocusNode();
+    email = TextEditingController();
+    emailfn = FocusNode();
+    name = TextEditingController();
+    nameFn = FocusNode();
+    lastName = TextEditingController();
+    lastNameFn = FocusNode();
   }
 
   @override
@@ -44,6 +60,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     passwordFn.dispose();
     password2.dispose();
     password2Fn.dispose();
+    email.dispose();
+    emailfn.dispose();
+    name.dispose();
+    nameFn.dispose();
+    lastName.dispose();
+    lastNameFn.dispose();
   }
 
   @override
@@ -61,7 +83,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             child: Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/Login_screen.png"),
+                      image: AssetImage("assets/images/signup screen.png"),
                       fit: BoxFit.cover)),
               padding: const EdgeInsets.only(top: 220, left: 16, right: 16),
               alignment: Alignment.center,
@@ -73,7 +95,54 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Flexible(
                       child: TextFormField(
                         decoration: decoration.copyWith(
-                            labelText: "Email",
+                            labelText: "Name",
+                            prefixIcon: const Icon(Icons.person)),
+                        focusNode: nameFn,
+                        controller: name,
+                        onEditingComplete: () {
+                          passwordFn.requestFocus();
+                        },
+                        validator: MultiValidator([
+                          RequiredValidator(
+                              errorText: 'Please fill out the Name'),
+                          MaxLengthValidator(32,
+                              errorText: "Name cannot exceed 32 characters"),
+                          EmailValidator(
+                              errorText: "Please select a valid Input"),
+                        ]).call,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Flexible(
+                      child: TextFormField(
+                        decoration: decoration.copyWith(
+                            labelText: "Last Name",
+                            prefixIcon: const Icon(Icons.person)),
+                        focusNode: lastNameFn,
+                        controller: lastName,
+                        onEditingComplete: () {
+                          passwordFn.requestFocus();
+                        },
+                        validator: MultiValidator([
+                          RequiredValidator(
+                              errorText: 'Please fill out the Last name'),
+                          MaxLengthValidator(32,
+                              errorText:
+                                  "Last name cannot exceed 32 characters"),
+                          EmailValidator(
+                              errorText: "Please select a valid input"),
+                        ]).call,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Flexible(
+                      child: TextFormField(
+                        decoration: decoration.copyWith(
+                            labelText: "User name",
                             prefixIcon: const Icon(Icons.person)),
                         focusNode: usernameFn,
                         controller: username,
@@ -86,6 +155,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           MaxLengthValidator(32,
                               errorText:
                                   "Username cannot exceed 32 characters"),
+                          EmailValidator(
+                              errorText: "Please select a valid email"),
+                        ]).call,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Flexible(
+                      child: TextFormField(
+                        decoration: decoration.copyWith(
+                            labelText: "Email",
+                            prefixIcon: const Icon(Icons.person)),
+                        focusNode: emailfn,
+                        controller: email,
+                        onEditingComplete: () {
+                          passwordFn.requestFocus();
+                        },
+                        validator: MultiValidator([
+                          RequiredValidator(
+                              errorText: 'Please fill out the email'),
+                          MaxLengthValidator(32,
+                              errorText: "Email cannot exceed 32 characters"),
                           EmailValidator(
                               errorText: "Please select a valid email"),
                         ]).call,
