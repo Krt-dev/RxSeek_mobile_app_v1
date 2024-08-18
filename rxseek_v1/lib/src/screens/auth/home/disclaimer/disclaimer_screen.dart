@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/auth/home/home_screen.dart';
@@ -18,27 +21,70 @@ class DisclaimerScreen extends StatelessWidget {
               width: 600, // Add width and height constraints
               height: 600,
               decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                   image: DecorationImage(
-                image: AssetImage("assets/images/Disclaimer picture.png"),
-                fit: BoxFit.cover, // Ensure the image covers the container
-              )),
+                    image: AssetImage("assets/images/Disclaimer picture.png"),
+                    fit: BoxFit.cover, // Ensure the image covers the container
+                  )),
             ),
           ),
-          Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
-            child: ElevatedButton(
-                onPressed: () {
-                  GlobalRouter.I.router.go(HomeScreen.route);
-                },
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.blue),
-                ),
-                child: const Text(
-                  "Get Started",
-                  style: TextStyle(color: Colors.white),
-                )),
+          SizedBox(
+            height: 150,
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/rxseek_logo_name.png")),
+              ),
+            ),
           ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+              onPressed: () {
+                showModalBottomSheet<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return SizedBox(
+                      height: 600,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Text(
+                                "Disclaimer",
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Text(
+                                "The information provided by this Language Model (LLM) is for educational and informational purposes only and is not intended as a substitute for diagnosis, or treatment. By using this LLM, you acknowledge that you understand these limitations and agree to consult a qualified healthcare professional for all medical and health-related inquiries. The creators and providers of this LLM are not responsible for any consequences arising from the use or misuse of the information provided. For any questions or concerns about the information provided by this LLM, please contact a licensed healthcare provider.",
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  GlobalRouter.I.router.go(HomeScreen.route);
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      WidgetStateProperty.all(Colors.blue),
+                                ),
+                                child: const Text(
+                                  "Understood",
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+              child: const Text("Get Started")),
         ],
       ),
     );
