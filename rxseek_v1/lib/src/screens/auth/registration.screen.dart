@@ -95,7 +95,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Flexible(
                       child: TextFormField(
                         decoration: decoration.copyWith(
-                            labelText: "Name",
+                            labelText: "First Name",
                             prefixIcon: const Icon(Icons.person)),
                         focusNode: nameFn,
                         controller: name,
@@ -327,8 +327,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     if (formKey.currentState?.validate() ?? false) {
       print("registering");
       WaitingDialog.show(context,
-          future: AuthController.I
-              .register(username.text.trim(), password.text.trim()));
+          future: AuthController.I.register(
+              username.text.trim(),
+              password.text.trim(),
+              name.text.trim(),
+              lastName.text.trim(),
+              username.text.trim()));
     }
   }
 
