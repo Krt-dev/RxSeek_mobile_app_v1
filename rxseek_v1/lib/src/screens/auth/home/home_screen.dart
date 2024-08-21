@@ -17,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController messageController;
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -78,8 +79,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     return ListView.builder(
                       itemCount: messages.length,
+                      controller: scrollController,
                       itemBuilder: (context, index) {
                         final message = messages[index];
+                        Future.delayed(const Duration(seconds: 2), () {
+                          scrollController.animateTo(
+                              scrollController.position.maxScrollExtent,
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.easeOut);
+                        });
                         return MessageWidget(message: message);
                       },
                     );
@@ -124,7 +132,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 timeCreated: Timestamp.now(),
                               );
                               MessageController.I.sendMessage(message);
+                              scrollController.animateTo(
+                                  scrollController.position.maxScrollExtent,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeOut);
                               MessageController.I.getMessageReponse(message);
+                              Future.delayed(const Duration(seconds: 8), () {
+                                scrollController.animateTo(
+                                    scrollController.position.maxScrollExtent,
+                                    duration: const Duration(seconds: 3),
+                                    curve: Curves.easeOut);
+                              });
                               messageController.clear();
                             },
                           ),
