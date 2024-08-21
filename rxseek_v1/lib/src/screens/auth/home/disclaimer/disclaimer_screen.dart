@@ -29,7 +29,7 @@ class DisclaimerScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 150,
+            height: 134,
             child: Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(

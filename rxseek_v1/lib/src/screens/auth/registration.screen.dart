@@ -107,8 +107,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               errorText: 'Please fill out the Name'),
                           MaxLengthValidator(32,
                               errorText: "Name cannot exceed 32 characters"),
-                          EmailValidator(
-                              errorText: "Please select a valid Input"),
                         ]).call,
                       ),
                     ),
@@ -131,8 +129,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           MaxLengthValidator(32,
                               errorText:
                                   "Last name cannot exceed 32 characters"),
-                          EmailValidator(
-                              errorText: "Please select a valid input"),
                         ]).call,
                       ),
                     ),
@@ -155,8 +151,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           MaxLengthValidator(32,
                               errorText:
                                   "Username cannot exceed 32 characters"),
-                          EmailValidator(
-                              errorText: "Please select a valid email"),
                         ]).call,
                       ),
                     ),
@@ -328,7 +322,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       print("registering");
       WaitingDialog.show(context,
           future: AuthController.I.register(
-              username.text.trim(),
+              email.text.trim(),
               password.text.trim(),
               name.text.trim(),
               lastName.text.trim(),
