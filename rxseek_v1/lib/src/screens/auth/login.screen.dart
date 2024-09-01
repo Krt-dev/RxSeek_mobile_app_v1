@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
@@ -73,10 +74,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   prefixIcon: const Icon(Icons.person),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(
-                                        40.0), // Adds rounded corners
-                                    borderSide: const BorderSide(
-                                      width: 15.0, // Sets border width
-                                    ),
+                                        30.0), // Adds rounded corners
+                                    // borderSide: const BorderSide(
+                                    //   width: 1.0, // Sets border width
+                                    // ),
                                   )),
                               focusNode: usernameFn,
                               controller: username,
@@ -136,7 +137,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               GlobalRouter.I.router
                                   .go(RegistrationScreen.route);
                             },
-                            child: const Text("No account? Register"),
+                            child: Text("No account? Register",
+                                style: GoogleFonts.quicksand(
+                                    fontWeight: FontWeight.bold)),
                           ),
                         ),
                         Container(
@@ -150,9 +153,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 backgroundColor:
                                     WidgetStateProperty.all(Colors.blue),
                               ),
-                              child: const Text(
+                              child: Text(
                                 "Login",
-                                style: TextStyle(color: Colors.white),
+                                style: GoogleFonts.quicksand(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               )),
                         ),
                       ],
@@ -177,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final OutlineInputBorder _baseBorder = const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.grey),
-    borderRadius: BorderRadius.all(Radius.circular(4)),
+    borderRadius: BorderRadius.all(Radius.circular(30)),
   );
 
   InputDecoration get decoration => InputDecoration(

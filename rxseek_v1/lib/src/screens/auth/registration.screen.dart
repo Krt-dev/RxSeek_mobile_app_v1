@@ -333,7 +333,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   final OutlineInputBorder _baseBorder = const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.grey),
-    borderRadius: BorderRadius.all(Radius.circular(4)),
+    borderRadius: BorderRadius.all(Radius.circular(30)),
   );
 
   InputDecoration get decoration => InputDecoration(
