@@ -71,6 +71,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           // Positioned.fill(
@@ -288,7 +289,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 45),
+                      margin: const EdgeInsets.only(bottom: 190),
                       height: 62,
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
@@ -297,7 +298,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         },
                         style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all(
-                              Color.fromARGB(255, 231, 238, 239)),
+                              const Color.fromARGB(255, 231, 238, 239)),
                         ),
                         child: const Text(
                           "Back To Login Page",

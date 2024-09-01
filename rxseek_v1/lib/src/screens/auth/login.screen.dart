@@ -45,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
@@ -63,37 +64,39 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.only(top: 60),
-                          child: TextFormField(
-                            decoration: decoration.copyWith(
-                                labelText: "Username",
-                                prefixIcon: const Icon(Icons.person),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      40.0), // Adds rounded corners
-                                  borderSide: const BorderSide(
-                                    width: 15.0, // Sets border width
-                                  ),
-                                )),
-                            focusNode: usernameFn,
-                            controller: username,
-                            onEditingComplete: () {
-                              passwordFn.requestFocus();
-                            },
-                            validator: MultiValidator([
-                              RequiredValidator(
-                                  errorText: 'Please fill out the username'),
-                              EmailValidator(
-                                  errorText: "Please select a valid email"),
-                            ]).call,
+                        SafeArea(
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 190),
+                            child: TextFormField(
+                              decoration: decoration.copyWith(
+                                  labelText: "Username",
+                                  prefixIcon: const Icon(Icons.person),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        40.0), // Adds rounded corners
+                                    borderSide: const BorderSide(
+                                      width: 15.0, // Sets border width
+                                    ),
+                                  )),
+                              focusNode: usernameFn,
+                              controller: username,
+                              onEditingComplete: () {
+                                passwordFn.requestFocus();
+                              },
+                              validator: MultiValidator([
+                                RequiredValidator(
+                                    errorText: 'Please fill out the username'),
+                                EmailValidator(
+                                    errorText: "Please select a valid email"),
+                              ]).call,
+                            ),
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 40),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: Container(
                             padding: const EdgeInsets.only(top: 10),
                             child: TextFormField(
@@ -127,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 3.0),
+                              horizontal: 10.0, vertical: 10.0),
                           child: ElevatedButton(
                             onPressed: () {
                               GlobalRouter.I.router
@@ -138,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 3.0),
+                              horizontal: 10.0, vertical: 10.0),
                           child: ElevatedButton(
                               onPressed: () {
                                 onSubmit();
