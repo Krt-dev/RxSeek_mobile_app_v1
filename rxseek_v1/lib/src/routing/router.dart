@@ -9,6 +9,7 @@ import "package:rxseek_v1/src/screens/disclaimer/disclaimer_screen.dart";
 import "package:rxseek_v1/src/screens/home/home_screen.dart";
 import "package:rxseek_v1/src/screens/auth/login.screen.dart";
 import "package:rxseek_v1/src/screens/auth/registration.screen.dart";
+import "package:rxseek_v1/src/screens/profile/profile_screen.dart";
 import "package:rxseek_v1/src/screens/splash/splash_screen.dart";
 
 /// https://pub.dev/packages/go_router
@@ -94,6 +95,14 @@ class GlobalRouter {
               name: DisclaimerScreen.name,
               builder: (context, _) {
                 return const DisclaimerScreen();
+              }),
+          //for testing rani sa profile need pani i balhin sa hellroute kay dapat naa ni nav bar
+          GoRoute(
+              parentNavigatorKey: _rootNavigatorKey,
+              path: ProfileScreen.route,
+              name: ProfileScreen.name,
+              builder: (context, _) {
+                return const ProfileScreen();
               }),
           // ShellRoute(
           //     navigatorKey: _shellNavigatorKey,

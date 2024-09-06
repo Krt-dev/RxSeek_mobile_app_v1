@@ -4,6 +4,8 @@ import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
+import 'package:rxseek_v1/src/routing/router.dart';
+import 'package:rxseek_v1/src/screens/profile/profile_screen.dart';
 import 'package:rxseek_v1/src/widgets/message_tile.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,7 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: InkWell(
-            onTap: () {},
+            onTap: () {
+              //for testing rani para maka route padung profile page
+              GlobalRouter.I.router.go(ProfileScreen.route);
+            },
             child: Image.asset("assets/images/burger_button.png"),
           ),
           actions: [
@@ -56,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: Column(
           children: [
+            //this part is sa messages
             Expanded(
               child: Container(
                 width: size.width * 0.99,
@@ -95,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            //this part is sa textfield
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(

@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
-import 'package:rxseek_v1/src/screens/home/home_screen.dart';
 import 'registration.screen.dart';
 
 class LoginScreen extends StatefulWidget {
