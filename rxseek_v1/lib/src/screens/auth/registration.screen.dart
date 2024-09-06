@@ -4,7 +4,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
-import 'package:rxseek_v1/src/screens/auth/home/home_screen.dart';
+import 'package:rxseek_v1/src/screens/home/home_screen.dart';
 import 'package:rxseek_v1/src/screens/auth/login.screen.dart';
 
 class RegistrationScreen extends StatefulWidget {

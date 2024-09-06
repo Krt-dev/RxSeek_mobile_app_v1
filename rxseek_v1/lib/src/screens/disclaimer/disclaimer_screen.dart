@@ -4,7 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
-import 'package:rxseek_v1/src/screens/auth/home/home_screen.dart';
+import 'package:rxseek_v1/src/screens/home/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DisclaimerScreen extends StatelessWidget {
