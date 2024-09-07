@@ -1,30 +1,63 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   static const String route = "/profile";
   static const String name = "Profile Screen";
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  ScrollController scrollController = ScrollController();
+  PanelController panelController = PanelController();
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
         child: SlidingUpPanel(
-      minHeight: 345,
+      controller: panelController,
+      minHeight: 360,
+      maxHeight: 360,
       borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(35), topRight: Radius.circular(35)),
       body: const Scaffold(
-          backgroundColor: Color.fromARGB(255, 197, 139, 118),
+          backgroundColor: Color(0xffd8b689),
+
+          //kaning body mao ni ang backgroiund sa panel
           body: Column(
             children: [
               Center(
                   child: Column(
-                children: [Icon(Icons.image), Text("Sample Name")],
+                children: [
+                  Text(
+                    "Profile",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  Icon(Icons.image),
+                  Text("Sample Name",
+                      style: TextStyle(color: Colors.white, fontSize: 36)),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text("UserSampleName",
+                      style: TextStyle(color: Colors.white, fontSize: 12)),
+                ],
               ))
             ],
           )),
+      //mao ni ang panel para marking or dmalibog
       panelBuilder: () {
-        return Column(
+        return ListView(
+          controller: scrollController,
           children: [
             ExpansionTile(
               leading: const Icon(
@@ -49,7 +82,10 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
             ExpansionTile(
-              leading: const Icon(Icons.settings),
+              leading: const Icon(
+                Icons.settings,
+                color: Colors.blue,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
                 side: const BorderSide(width: 0, color: Colors.transparent),
