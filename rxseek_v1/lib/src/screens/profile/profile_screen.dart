@@ -10,6 +10,9 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
         child: SlidingUpPanel(
+      minHeight: 345,
+      borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(35), topRight: Radius.circular(35)),
       body: const Scaffold(
           backgroundColor: Color.fromARGB(255, 197, 139, 118),
           body: Column(
@@ -21,11 +24,71 @@ class ProfileScreen extends StatelessWidget {
             ],
           )),
       panelBuilder: () {
-        return const Column(
+        return Column(
           children: [
-            ExpansionPanelList(
-                //reminder, tun i ni nga widget para sa mga menus
+            ExpansionTile(
+              leading: const Icon(
+                Icons.bookmark_outline,
+                color: Colors.blue,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: const BorderSide(width: 0, color: Colors.transparent),
+              ),
+              title: const Text("Saved Chats"),
+              children: const [
+                ListTile(
+                  title: Text("Samples rani"),
+                ),
+                ListTile(
+                  title: Text("Samples rani"),
+                ),
+                ListTile(
+                  title: Text("Samples rani"),
                 )
+              ],
+            ),
+            ExpansionTile(
+              leading: const Icon(Icons.settings),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: const BorderSide(width: 0, color: Colors.transparent),
+              ),
+              title: const Text("Settings"),
+              children: const [
+                ListTile(
+                  title: Text("Samples rani"),
+                ),
+                ListTile(
+                  title: Text("Samples rani"),
+                ),
+                ListTile(
+                  title: Text("Samples rani"),
+                )
+              ],
+            ),
+            ExpansionTile(
+              leading: const Icon(
+                Icons.info_outline,
+                color: Colors.blue,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: const BorderSide(width: 0, color: Colors.transparent),
+              ),
+              title: const Text("FAQs"),
+              children: const [
+                ListTile(
+                  title: Text("Samples rani"),
+                ),
+                ListTile(
+                  title: Text("Samples rani"),
+                ),
+                ListTile(
+                  title: Text("Samples rani"),
+                )
+              ],
+            )
           ],
         );
       },
