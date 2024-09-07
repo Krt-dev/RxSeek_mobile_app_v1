@@ -11,6 +11,7 @@ import "package:rxseek_v1/src/screens/auth/login.screen.dart";
 import "package:rxseek_v1/src/screens/auth/registration.screen.dart";
 import "package:rxseek_v1/src/screens/profile/profile_screen.dart";
 import "package:rxseek_v1/src/screens/splash/splash_screen.dart";
+import "package:rxseek_v1/src/screens/wrapper/wrapperScreen.dart";
 
 /// https://pub.dev/packages/go_router
 
@@ -27,7 +28,7 @@ class GlobalRouter {
 
   late GoRouter router;
   late GlobalKey<NavigatorState> _rootNavigatorKey;
-  // late GlobalKey<NavigatorState> _shellNavigatorKey;
+  late GlobalKey<NavigatorState> _shellNavigatorKey;
 
   FutureOr<String?> handleRedirect(
       BuildContext context, GoRouterState state) async {
@@ -54,20 +55,13 @@ class GlobalRouter {
 
   GlobalRouter() {
     _rootNavigatorKey = GlobalKey<NavigatorState>();
-    // _shellNavigatorKey = GlobalKey<NavigatorState>();
+    _shellNavigatorKey = GlobalKey<NavigatorState>();
     router = GoRouter(
         navigatorKey: _rootNavigatorKey,
         initialLocation: SplashScreen.route,
         redirect: handleRedirect,
         refreshListenable: AuthController.I,
         routes: [
-          GoRoute(
-              parentNavigatorKey: _rootNavigatorKey,
-              path: HomeScreen.route,
-              name: HomeScreen.name,
-              builder: (context, _) {
-                return const HomeScreen();
-              }),
           GoRoute(
               parentNavigatorKey: _rootNavigatorKey,
               path: SplashScreen.route,
@@ -96,51 +90,44 @@ class GlobalRouter {
               builder: (context, _) {
                 return const DisclaimerScreen();
               }),
+
           //for testing rani sa profile need pani i balhin sa hellroute kay dapat naa ni nav bar
-          GoRoute(
-              parentNavigatorKey: _rootNavigatorKey,
-              path: ProfileScreen.route,
-              name: ProfileScreen.name,
-              builder: (context, _) {
-                return const ProfileScreen();
+
+          ShellRoute(
+              navigatorKey: _shellNavigatorKey,
+              routes: [
+                GoRoute(
+                    parentNavigatorKey: _shellNavigatorKey,
+                    path: ProfileScreen.route,
+                    name: ProfileScreen.name,
+                    builder: (context, _) {
+                      return const ProfileScreen();
+                    }),
+                GoRoute(
+                    parentNavigatorKey: _shellNavigatorKey,
+                    path: HomeScreen.route,
+                    name: HomeScreen.name,
+                    builder: (context, _) {
+                      return const HomeScreen();
+                    }),
+                // GoRoute(
+                //   parentNavigatorKey: _shellNavigatorKey,
+                //   path: "${GameScreen.route}/:gameId/:playerId",
+                //   name: GameScreen.name,
+                //   builder: (context, state) {
+                //     final String gameId = state.pathParameters['gameId'] ?? "";
+                //     final String playerId =
+                //         state.pathParameters['playerId'] ?? "";
+                //     return GameScreen(
+                //       gameId: gameId,
+                //       playerId: playerId,
+                //     );
+                //   },
+                // ),
+              ],
+              builder: (context, state, child) {
+                return HomeWrapper(child: child);
               }),
-          // ShellRoute(
-          //     navigatorKey: _shellNavigatorKey,
-          //     routes: [
-          //       GoRoute(
-          //           parentNavigatorKey: _shellNavigatorKey,
-          //           path: HomeScreen.route,
-          //           name: HomeScreen.name,
-          //           builder: (context, _) {
-          //             return const HomeScreen();
-          //           }),
-          //       GoRoute(
-          //         parentNavigatorKey: _shellNavigatorKey,
-          //         path: "${GameScreen.route}/:gameId/:playerId",
-          //         name: GameScreen.name,
-          //         builder: (context, state) {
-          //           final String gameId = state.pathParameters['gameId'] ?? "";
-          //           final String playerId =
-          //               state.pathParameters['playerId'] ?? "";
-          //           return GameScreen(
-          //             gameId: gameId,
-          //             playerId: playerId,
-          //           );
-          //         },
-          //       ),
-          //       GoRoute(
-          //           parentNavigatorKey: _shellNavigatorKey,
-          //           path: LobbyScreen.route,
-          //           name: LobbyScreen.name,
-          //           builder: (context, _) {
-          //             return const LobbyScreen();
-          //           }),
-          //     ],
-          //     builder: (context, state, child) {
-          //       return HomeWrapper(
-          //         child: child,
-          //       );
-          //     }),
         ]);
   }
 }
