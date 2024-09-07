@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -29,8 +30,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       maxHeight: 360,
       borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(35), topRight: Radius.circular(35)),
-      body: const Scaffold(
-          backgroundColor: Color(0xffd8b689),
+      body: Scaffold(
+          backgroundColor: const Color(0xffd8b689),
 
           //kaning body mao ni ang backgroiund sa panel
           body: Column(
@@ -38,17 +39,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Center(
                   child: Column(
                 children: [
-                  Text(
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
                     "Profile",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
-                  Icon(Icons.image),
-                  Text("Sample Name",
-                      style: TextStyle(color: Colors.white, fontSize: 36)),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text("UserSampleName",
+                  Container(
+                    height: 107,
+                    width: 101,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                AssetImage("assets/images/sampleProfile.png"),
+                            fit: BoxFit.contain)),
+                  ),
+                  const Text("Yamete Kudasai",
+                      style: TextStyle(color: Colors.white, fontSize: 36)),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text("UserSampleName",
                       style: TextStyle(color: Colors.white, fontSize: 12)),
                 ],
               ))
@@ -124,6 +139,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   title: Text("Samples rani"),
                 )
               ],
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text(
+                "Log Out",
+              ),
+              textColor: Colors.red,
+              onTap: () {
+                AuthController.I.logout();
+              },
             )
           ],
         );
