@@ -9,6 +9,7 @@ import "package:rxseek_v1/src/screens/disclaimer/disclaimer_screen.dart";
 import "package:rxseek_v1/src/screens/home/home_screen.dart";
 import "package:rxseek_v1/src/screens/auth/login.screen.dart";
 import "package:rxseek_v1/src/screens/auth/registration.screen.dart";
+import "package:rxseek_v1/src/screens/home/home_screen_final.dart";
 import "package:rxseek_v1/src/screens/profile/profile_screen.dart";
 import "package:rxseek_v1/src/screens/splash/splash_screen.dart";
 import "package:rxseek_v1/src/screens/wrapper/wrapperScreen.dart";
@@ -110,6 +111,15 @@ class GlobalRouter {
                     builder: (context, _) {
                       return const HomeScreen();
                     }),
+                GoRoute(
+                    parentNavigatorKey: _shellNavigatorKey,
+                    path: HomeScreenFinal.route,
+                    name: HomeScreenFinal.name,
+                    builder: (context, _) {
+                      return const HomeScreenFinal();
+                    }),
+
+                //sample sa pag pass parameters using routers, sauna ni namo na code
                 // GoRoute(
                 //   parentNavigatorKey: _shellNavigatorKey,
                 //   path: "${GameScreen.route}/:gameId/:playerId",

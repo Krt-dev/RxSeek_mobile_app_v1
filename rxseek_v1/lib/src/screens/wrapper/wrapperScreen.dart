@@ -3,6 +3,7 @@ import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/home/home_screen.dart';
+import 'package:rxseek_v1/src/screens/home/home_screen_final.dart';
 import 'package:rxseek_v1/src/screens/profile/profile_screen.dart';
 
 class HomeWrapper extends StatefulWidget {
@@ -16,7 +17,7 @@ class HomeWrapper extends StatefulWidget {
 class _HomeWrapperState extends State<HomeWrapper> {
   int index = 0;
 
-  List<String> routes = [HomeScreen.route, ProfileScreen.route];
+  List<String> routes = [HomeScreenFinal.route, ProfileScreen.route];
 
   @override
   Widget build(BuildContext context) {
