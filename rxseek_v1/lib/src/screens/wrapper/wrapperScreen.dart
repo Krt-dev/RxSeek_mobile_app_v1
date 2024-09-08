@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/home/home_screen.dart';
 import 'package:rxseek_v1/src/screens/profile/profile_screen.dart';
@@ -19,6 +21,27 @@ class _HomeWrapperState extends State<HomeWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            //for testing rani para maka route padung profile page
+            GlobalRouter.I.router.go(ProfileScreen.route);
+          },
+          child: Image.asset("assets/images/burger_button.png"),
+        ),
+        actions: [
+          InkWell(
+            onTap: () {
+              WaitingDialog.show(context, future: AuthController.I.logout());
+            },
+            child: const Icon(
+              Icons.more_vert,
+              size: 50,
+            ),
+          ),
+        ],
+        title: Image.asset("assets/images/RxSeek_name.png"),
+      ),
       body: widget.child ?? const Placeholder(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
@@ -30,9 +53,9 @@ class _HomeWrapperState extends State<HomeWrapper> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.beach_access), label: "Lobby"),
+              icon: Icon(Icons.message_outlined), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ""),
         ],
       ),
     );
