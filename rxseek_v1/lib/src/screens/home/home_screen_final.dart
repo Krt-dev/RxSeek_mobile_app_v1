@@ -147,34 +147,84 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
           //History or recents chats patrt from here to down!!!!!!!
           //!!!!!!!!!!!!!!!!!
           //Marker ni or ilhanan !!!!!!!!!!!!!!!
-          const Text(
-            "Chats",
-            style: TextStyle(fontSize: 20),
+
+          Center(
+            child: Container(
+              padding: const EdgeInsets.only(top: 15),
+              width: 340,
+              height: 670,
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(right: 285),
+                    child: Text(
+                      "Chats",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 70, bottom: 15),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 65,
+                            height: 30,
+                            decoration: const BoxDecoration(
+                                border: Border.symmetric(
+                                    vertical: BorderSide(
+                                        style: BorderStyle.solid, width: 1),
+                                    horizontal: BorderSide(
+                                        style: BorderStyle.solid, width: 1)),
+                                color: Colors.white),
+                            child: const Center(child: Text("All")),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 50, right: 50.0),
+                            child: Container(
+                              width: 65,
+                              height: 30,
+                              decoration:
+                                  const BoxDecoration(color: Colors.blue),
+                              child: const Center(
+                                  child: Text(
+                                "Recent",
+                                style: TextStyle(color: Colors.white),
+                              )),
+                            ),
+                          ),
+                          Image.asset("assets/images/search_icon.png")
+                        ]),
+                  ),
+                  SizedBox(
+                      height: 580,
+                      child: ListView.builder(
+                        itemCount: 20,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Container(
+                              height: 91,
+                              width: 340,
+                              decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 1, 65, 117),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: const Center(
+                                child: Text(
+                                  "What is Ibuprofen?",
+                                  style: TextStyle(
+                                      fontSize: 24, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ))
+                ],
+              ),
+            ),
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            Container(
-              width: 75,
-              height: 35,
-              decoration: const BoxDecoration(
-                  border: Border.symmetric(
-                      vertical: BorderSide(style: BorderStyle.solid, width: 1),
-                      horizontal:
-                          BorderSide(style: BorderStyle.solid, width: 1)),
-                  color: Colors.white),
-              child: const Center(child: Text("All")),
-            ),
-            Container(
-              width: 75,
-              height: 35,
-              decoration: const BoxDecoration(color: Colors.blue),
-              child: const Center(
-                  child: Text(
-                "Recent",
-                style: TextStyle(color: Colors.white),
-              )),
-            ),
-            Image.asset("assets/images/search_icon.png")
-          ]),
         ],
       ),
     );
