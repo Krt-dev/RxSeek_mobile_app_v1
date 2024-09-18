@@ -58,13 +58,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 AssetImage("assets/images/sampleProfile.png"),
                             fit: BoxFit.contain)),
                   ),
-                  const Text("Yamete Kudasai",
-                      style: TextStyle(color: Colors.white, fontSize: 36)),
+                  SizedBox(
+                    width: 172,
+                    child: Text("${AuthController.I.currentUser?.email}",
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 36)),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text("UserSampleName",
-                      style: TextStyle(color: Colors.white, fontSize: 12)),
+                  Text("${AuthController.I.currentUser?.email}",
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 12)),
                 ],
               ))
             ],

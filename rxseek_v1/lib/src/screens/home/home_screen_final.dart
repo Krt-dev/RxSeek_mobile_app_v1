@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/enum/enum.dart';
 
 class HomeScreenFinal extends StatefulWidget {
   static const String route = "/homeScreenFinal";
@@ -21,7 +23,8 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Hi, Yamete"),
+                //need pa mag make og function na mo get sa document aning user nga naa aning Unique Id ron ma access mga info sa user
+                Text("Hi, ${AuthController.I.currentUser?.email}"),
 
                 const SizedBox(
                   width: 260,
@@ -65,7 +68,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 32,
-                                      fontWeight: FontWeight.w200),
+                                      fontWeight: FontWeight.w300),
                                 ),
                               ),
                             ],
@@ -140,7 +143,38 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                 )
               ],
             ),
-          )
+          ),
+          //History or recents chats patrt from here to down!!!!!!!
+          //!!!!!!!!!!!!!!!!!
+          //Marker ni or ilhanan !!!!!!!!!!!!!!!
+          const Text(
+            "Chats",
+            style: TextStyle(fontSize: 20),
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Container(
+              width: 75,
+              height: 35,
+              decoration: const BoxDecoration(
+                  border: Border.symmetric(
+                      vertical: BorderSide(style: BorderStyle.solid, width: 1),
+                      horizontal:
+                          BorderSide(style: BorderStyle.solid, width: 1)),
+                  color: Colors.white),
+              child: const Center(child: Text("All")),
+            ),
+            Container(
+              width: 75,
+              height: 35,
+              decoration: const BoxDecoration(color: Colors.blue),
+              child: const Center(
+                  child: Text(
+                "Recent",
+                style: TextStyle(color: Colors.white),
+              )),
+            ),
+            Image.asset("assets/images/search_icon.png")
+          ]),
         ],
       ),
     );

@@ -53,10 +53,13 @@ class _HomeWrapperState extends State<HomeWrapper> {
             GlobalRouter.I.router.go(routes[i]);
           });
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.message_outlined), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ""),
+              icon: Image.asset("assets/images/messave_nav_icon.png"),
+              label: ""),
+          BottomNavigationBarItem(
+              icon: Image.asset("assets/images/profile_nav_icon.png"),
+              label: ""),
         ],
       ),
     );
