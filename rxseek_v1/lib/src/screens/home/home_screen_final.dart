@@ -49,11 +49,25 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                           decoration: BoxDecoration(
                               color: const Color(0xffd8b689),
                               borderRadius: BorderRadius.circular(20)),
-                          child: const Column(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Icon(Icons.message_outlined),
-                              Text("Chat with RxSeek"),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 70, left: 90),
+                                child: Image.asset(
+                                    "assets/images/chat_with_rxseek_button.png"),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 10),
+                                child: Text(
+                                  "Chat with\n RxSeek",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w200),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -62,32 +76,59 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 15),
                               decoration: BoxDecoration(
                                   color: const Color(0xff6796B7),
                                   borderRadius: BorderRadius.circular(20)),
                               height: 120,
                               width: 115,
-                              child: const Column(
+                              child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.bookmark_outlined),
-                                  Text("Saved Chats")
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 60),
+                                    child: Container(
+                                      height: 34,
+                                      width: 34,
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/images/save_chats_button_icon.png"),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Saved\n Chats",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 13),
+                                  )
                                 ],
                               ),
                             ),
                             Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 15),
                               decoration: BoxDecoration(
                                   color: const Color(0xff37B1B8),
                                   borderRadius: BorderRadius.circular(20)),
                               height: 120,
                               width: 115,
-                              child: const Column(
+                              child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.image),
-                                  Text("Query With Image")
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 60),
+                                    child: Image.asset(
+                                        "assets/images/chat_with_image_icon.png"),
+                                  ),
+                                  const Text("Query With\n Image",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 13))
                                 ],
                               ),
                             ),
