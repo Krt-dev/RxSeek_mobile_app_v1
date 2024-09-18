@@ -23,6 +23,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 50,
         leading: InkWell(
           onTap: () {
             //for testing rani para maka route padung profile page
@@ -44,23 +45,42 @@ class _HomeWrapperState extends State<HomeWrapper> {
         title: Image.asset("assets/images/RxSeek_name.png"),
       ),
       body: widget.child ?? const Placeholder(),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index,
-        onTap: (i) {
-          setState(() {
-            index = i;
+      bottomNavigationBar: SizedBox(
+        height: 61,
+        child: BottomNavigationBar(
+          currentIndex: index,
+          onTap: (i) {
+            setState(() {
+              index = i;
 
-            GlobalRouter.I.router.go(routes[i]);
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Image.asset("assets/images/messave_nav_icon.png"),
-              label: ""),
-          BottomNavigationBarItem(
-              icon: Image.asset("assets/images/profile_nav_icon.png"),
-              label: ""),
-        ],
+              GlobalRouter.I.router.go(routes[i]);
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+                icon: Container(
+                  height: 26,
+                  width: 26,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image:
+                              AssetImage("assets/images/messave_nav_icon.png"),
+                          fit: BoxFit.cover)),
+                ),
+                label: ""),
+            BottomNavigationBarItem(
+                icon: Container(
+                  height: 26,
+                  width: 26,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image:
+                              AssetImage("assets/images/profile_nav_icon.png"),
+                          fit: BoxFit.cover)),
+                ),
+                label: ""),
+          ],
+        ),
       ),
     );
   }
