@@ -4,8 +4,9 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
-import 'package:rxseek_v1/src/screens/home/home_screen.dart';
+import 'package:rxseek_v1/src/screens/home/chat_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rxseek_v1/src/screens/home/home_screen_final.dart';
 
 class DisclaimerScreen extends StatelessWidget {
   const DisclaimerScreen({super.key});
@@ -80,7 +81,8 @@ class DisclaimerScreen extends StatelessWidget {
                               ),
                               ElevatedButton(
                                   onPressed: () {
-                                    GlobalRouter.I.router.go(HomeScreen.route);
+                                    GlobalRouter.I.router
+                                        .go(HomeScreenFinal.route);
                                   },
                                   style: ButtonStyle(
                                     backgroundColor:

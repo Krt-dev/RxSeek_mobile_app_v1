@@ -6,7 +6,7 @@ import "package:go_router/go_router.dart";
 import "package:rxseek_v1/src/controllers/auth_controller.dart";
 import "package:rxseek_v1/src/enum/enum.dart";
 import "package:rxseek_v1/src/screens/disclaimer/disclaimer_screen.dart";
-import "package:rxseek_v1/src/screens/home/home_screen.dart";
+import "package:rxseek_v1/src/screens/home/chat_screen.dart";
 import "package:rxseek_v1/src/screens/auth/login.screen.dart";
 import "package:rxseek_v1/src/screens/auth/registration.screen.dart";
 import "package:rxseek_v1/src/screens/home/home_screen_final.dart";
@@ -106,10 +106,10 @@ class GlobalRouter {
                     }),
                 GoRoute(
                     parentNavigatorKey: _shellNavigatorKey,
-                    path: HomeScreen.route,
-                    name: HomeScreen.name,
+                    path: ChatScreen.route,
+                    name: ChatScreen.name,
                     builder: (context, _) {
-                      return const HomeScreen();
+                      return const ChatScreen();
                     }),
                 GoRoute(
                     parentNavigatorKey: _shellNavigatorKey,

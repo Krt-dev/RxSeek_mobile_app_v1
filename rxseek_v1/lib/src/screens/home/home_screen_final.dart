@@ -3,6 +3,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/enum/enum.dart';
+import 'package:rxseek_v1/src/routing/router.dart';
+import 'package:rxseek_v1/src/screens/home/chat_screen.dart';
 
 class HomeScreenFinal extends StatefulWidget {
   static const String route = "/homeScreenFinal";
@@ -47,32 +49,38 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          height: 254,
-                          width: 190,
-                          decoration: BoxDecoration(
-                              color: const Color(0xffd8b689),
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(bottom: 70, left: 90),
-                                child: Image.asset(
-                                    "assets/images/chat_with_rxseek_button.png"),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 10),
-                                child: Text(
-                                  "Chat with\n RxSeek",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.w300),
+                        //chat with rxseek button
+                        InkWell(
+                          onTap: () {
+                            GlobalRouter.I.router.go(ChatScreen.route);
+                          },
+                          child: Container(
+                            height: 254,
+                            width: 190,
+                            decoration: BoxDecoration(
+                                color: const Color(0xffd8b689),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 70, left: 90),
+                                  child: Image.asset(
+                                      "assets/images/chat_with_rxseek_button.png"),
                                 ),
-                              ),
-                            ],
+                                const Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Text(
+                                    "Chat with\n RxSeek",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         //saved and query image button

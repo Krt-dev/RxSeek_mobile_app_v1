@@ -8,16 +8,16 @@ import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/profile/profile_screen.dart';
 import 'package:rxseek_v1/src/widgets/message_tile.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String route = "/homeScreen";
-  static const String name = "Home Screen";
-  const HomeScreen({super.key});
+class ChatScreen extends StatefulWidget {
+  static const String route = "/ChatScreen";
+  static const String name = "Chat Screen";
+  const ChatScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ChatScreenState extends State<ChatScreen> {
   late TextEditingController messageController;
   final ScrollController scrollController = ScrollController();
 
