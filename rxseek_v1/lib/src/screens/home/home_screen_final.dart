@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/enum/enum.dart';
@@ -202,23 +203,61 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                       child: ListView.builder(
                         itemCount: 20,
                         itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Container(
-                              height: 91,
-                              width: 340,
-                              decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 1, 65, 117),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: const Center(
-                                child: Text(
-                                  "What is Ibuprofen?",
-                                  style: TextStyle(
-                                      fontSize: 24, color: Colors.white),
+                          return Slidable(
+                            startActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: save,
+                                    icon: Icons.bookmark,
+                                    backgroundColor: const Color(0xFF6796B7),
+                                  ),
+                                ]),
+                            endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: delete,
+                                    backgroundColor: Colors.red,
+                                    icon: Icons.delete,
+                                  )
+                                ]),
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: Container(
+                                height: 91,
+                                width: 340,
+                                decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromARGB(255, 1, 65, 117),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: const Center(
+                                  child: Text(
+                                    "What is Ibuprofen?",
+                                    style: TextStyle(
+                                        fontSize: 24, color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ),
                           );
+                          // return Padding(
+                          //   padding: const EdgeInsets.only(bottom: 10),
+                          //   child: Container(
+                          //     height: 91,
+                          //     width: 340,
+                          //     decoration: BoxDecoration(
+                          //         color: const Color.fromARGB(255, 1, 65, 117),
+                          //         borderRadius: BorderRadius.circular(15)),
+                          //     child: const Center(
+                          //       child: Text(
+                          //         "What is Ibuprofen?",
+                          //         style: TextStyle(
+                          //             fontSize: 24, color: Colors.white),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // );
                         },
                       ))
                 ],
@@ -228,5 +267,13 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
         ],
       ),
     );
+  }
+
+  void delete(BuildContext context) {
+    print("deleted");
+  }
+
+  void save(BuildContext context) {
+    print("saved");
   }
 }
