@@ -23,8 +23,7 @@ class AuthController with ChangeNotifier {
   AuthState state = AuthState.unauthenticated;
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  UserModel? user;
-  // SimulatedAPI api = SimulatedAPI();
+  UserModel? user; // SimulatedAPI api = SimulatedAPI();
   late StreamSubscription<User?> currentAuthedUser;
 
   User? get currentUser => FirebaseAuth.instance.currentUser;
@@ -92,5 +91,19 @@ class AuthController with ChangeNotifier {
     listen();
     User? user = FirebaseAuth.instance.currentUser;
     handleUserChanges(user);
+  }
+
+  Future<DocumentSnapshot> getUser(String uid) async {
+    try {
+      final docSnap = await db.collection("Users").doc(uid).get();
+      if (docSnap.exists) {
+        return docSnap;
+      } else {
+        throw Exception("Document Does not Exist");
+      }
+    } catch (e) {
+      print(e.toString());
+      rethrow;
+    }
   }
 }

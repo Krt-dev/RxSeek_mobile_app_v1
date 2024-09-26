@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/enum/enum.dart';
+import 'package:rxseek_v1/src/models/user_model.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/home/chat_screen.dart';
 
@@ -27,7 +29,22 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //need pa mag make og function na mo get sa document aning user nga naa aning Unique Id ron ma access mga info sa user
-                Text("Hi, ${AuthController.I.currentUser?.email}"),
+                FutureBuilder(
+                    future: AuthController.I
+                        .getUser(AuthController.I.currentUser!.uid),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (snapshot.hasData && snapshot.data != null) {
+                        return Text(
+                            "Hi, ${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}");
+                      } else {
+                        return const Center(
+                            child: Text('No such document found'));
+                      }
+                    }),
 
                 const SizedBox(
                   width: 260,
