@@ -200,30 +200,35 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                   ),
                   SizedBox(
                       height: 580,
-                      child: ListView.builder(
+                      child: ListView.separated(
                         itemCount: 20,
+                        separatorBuilder: (context, index) => const Divider(),
                         itemBuilder: (context, index) {
                           return Slidable(
                             startActionPane: ActionPane(
+                                extentRatio: 0.3,
                                 motion: const ScrollMotion(),
                                 children: [
-                                  SlidableAction(
-                                    onPressed: save,
-                                    icon: Icons.bookmark,
-                                    backgroundColor: const Color(0xFF6796B7),
-                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        save(context);
+                                      },
+                                      child: Image.asset(
+                                          "assets/images/save_button.png")),
                                 ]),
                             endActionPane: ActionPane(
+                                extentRatio: 0.3,
                                 motion: const ScrollMotion(),
                                 children: [
-                                  SlidableAction(
-                                    onPressed: delete,
-                                    backgroundColor: Colors.red,
-                                    icon: Icons.delete,
-                                  )
+                                  InkWell(
+                                    onTap: () => delete(context),
+                                    child: Image.asset(
+                                        "assets/images/delete_button.png"),
+                                  ),
                                 ]),
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: Container(
                                 height: 91,
                                 width: 340,
