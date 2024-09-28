@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/enum/enum.dart';
+import 'package:rxseek_v1/src/models/message_model.dart';
+import 'package:rxseek_v1/src/models/thread_model.dart';
 import 'package:rxseek_v1/src/models/user_model.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/home/chat_screen.dart';
@@ -34,7 +37,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                         .getUser(AuthController.I.currentUser!.uid),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (snapshot.hasData && snapshot.data != null) {
@@ -225,71 +228,100 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                   ),
                   SizedBox(
                       height: 580,
-                      child: ListView.separated(
-                        itemCount: 20,
-                        separatorBuilder: (context, index) => const Divider(),
-                        itemBuilder: (context, index) {
-                          return Slidable(
-                            startActionPane: ActionPane(
-                                extentRatio: 0.3,
-                                motion: const ScrollMotion(),
-                                children: [
-                                  InkWell(
-                                      onTap: () {
-                                        save(context);
-                                      },
-                                      child: Image.asset(
-                                          "assets/images/save_button.png")),
-                                ]),
-                            endActionPane: ActionPane(
-                                extentRatio: 0.3,
-                                motion: const ScrollMotion(),
-                                children: [
-                                  InkWell(
-                                    onTap: () => delete(context),
-                                    child: Image.asset(
-                                        "assets/images/delete_button.png"),
+                      child: StreamBuilder(
+                          stream: MessageController.I
+                              .getUserThreads("Xy2JpEy0YFTHLj5vhL9NkKUAcr02"),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: const CircularProgressIndicator());
+                            }
+                            if (snapshot.hasError) {
+                              return Center(
+                                  child: Text('Error: ${snapshot.error}'));
+                            }
+                            if (!snapshot.hasData ||
+                                snapshot.data!.docs.isEmpty) {
+                              return const Center(
+                                  child: Text('No messages found'));
+                            }
+
+                            List<Thread>? threads =
+                                snapshot.data!.docs.map((doc) {
+                              return Thread.fromJson(
+                                  doc.data() as Map<String, dynamic>);
+                            }).toList();
+
+                            return ListView.separated(
+                              itemCount: threads.length,
+                              separatorBuilder: (context, index) =>
+                                  const Divider(),
+                              itemBuilder: (context, index) {
+                                return Slidable(
+                                  startActionPane: ActionPane(
+                                      extentRatio: 0.3,
+                                      motion: const ScrollMotion(),
+                                      children: [
+                                        InkWell(
+                                            onTap: () {
+                                              save(context);
+                                            },
+                                            child: Image.asset(
+                                                "assets/images/save_button.png")),
+                                      ]),
+                                  endActionPane: ActionPane(
+                                      extentRatio: 0.3,
+                                      motion: const ScrollMotion(),
+                                      children: [
+                                        InkWell(
+                                          onTap: () => delete(context),
+                                          child: Image.asset(
+                                              "assets/images/delete_button.png"),
+                                        ),
+                                      ]),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: Container(
+                                      height: 91,
+                                      width: 340,
+                                      decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              255, 1, 65, 117),
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      child: Center(
+                                        child: Text(
+                                          threads![index].threadName,
+                                          style: const TextStyle(
+                                              fontSize: 24,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ]),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Container(
-                                height: 91,
-                                width: 340,
-                                decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 1, 65, 117),
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: const Center(
-                                  child: Text(
-                                    "What is Ibuprofen?",
-                                    style: TextStyle(
-                                        fontSize: 24, color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                          // return Padding(
-                          //   padding: const EdgeInsets.only(bottom: 10),
-                          //   child: Container(
-                          //     height: 91,
-                          //     width: 340,
-                          //     decoration: BoxDecoration(
-                          //         color: const Color.fromARGB(255, 1, 65, 117),
-                          //         borderRadius: BorderRadius.circular(15)),
-                          //     child: const Center(
-                          //       child: Text(
-                          //         "What is Ibuprofen?",
-                          //         style: TextStyle(
-                          //             fontSize: 24, color: Colors.white),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // );
-                        },
-                      ))
+                                );
+                                // return Padding(
+                                //   padding: const EdgeInsets.only(bottom: 10),
+                                //   child: Container(
+                                //     height: 91,
+                                //     width: 340,
+                                //     decoration: BoxDecoration(
+                                //         color: const Color.fromARGB(255, 1, 65, 117),
+                                //         borderRadius: BorderRadius.circular(15)),
+                                //     child: const Center(
+                                //       child: Text(
+                                //         "What is Ibuprofen?",
+                                //         style: TextStyle(
+                                //             fontSize: 24, color: Colors.white),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // );
+                              },
+                            );
+                          }))
                 ],
               ),
             ),

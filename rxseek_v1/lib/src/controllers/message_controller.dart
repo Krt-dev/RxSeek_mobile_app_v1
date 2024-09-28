@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:rxseek_v1/src/models/thread_model.dart';
 
 class MessageController with ChangeNotifier {
   // Static method to initialize the singleton in GetIt
@@ -85,6 +87,34 @@ class MessageController with ChangeNotifier {
     } on FirebaseException catch (e) {
       print({e.toString()});
       return const Stream.empty();
+    }
+  }
+
+////////threadssssssssssssss
+//initial
+
+//buhatanan og index sa firebase pangitae paagi mabuhatan index kay composite ang query or nag use og
+//duha ka clause which is nad orederbyog and where so needog index para madungan nig gamit ang duha
+  Stream<QuerySnapshot> getUserThreads(String userId) {
+    try {
+      return db
+          .collection("Thread")
+          .where("userId", isEqualTo: userId)
+          // .orderBy("timeCreated", descending: false)
+          .snapshots();
+    } on FirebaseException catch (e) {
+      print({e.toString()});
+      rethrow;
+    }
+  }
+
+  //para create new thread
+  //initial
+  Future<void> createNewThread(Thread newThread) async {
+    try {
+      db.collection("Thread").add(newThread.toJson());
+    } on FirebaseException catch (e) {
+      print({e.toString()});
     }
   }
 }
