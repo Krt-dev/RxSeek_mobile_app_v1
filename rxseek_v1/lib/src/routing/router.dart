@@ -108,8 +108,12 @@ class GlobalRouter {
                     parentNavigatorKey: _shellNavigatorKey,
                     path: ChatScreen.route,
                     name: ChatScreen.name,
-                    builder: (context, _) {
-                      return const ChatScreen();
+                    builder: (context, state) {
+                      final String threadIdParam =
+                          state.pathParameters["threadId"] ?? "";
+                      return ChatScreen(
+                        threadId: threadIdParam,
+                      );
                     }),
                 GoRoute(
                     parentNavigatorKey: _shellNavigatorKey,
