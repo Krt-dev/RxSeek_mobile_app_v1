@@ -100,7 +100,7 @@ class MessageController with ChangeNotifier {
       return db
           .collection("Thread")
           .where("userId", isEqualTo: userId)
-          // .orderBy("timeCreated", descending: false)
+          .orderBy("timeCreated", descending: false)
           .snapshots();
     } on FirebaseException catch (e) {
       print({e.toString()});

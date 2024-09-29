@@ -71,7 +71,18 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                       children: [
                         //chat with rxseek button
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
+                            Thread newThread = Thread(
+                                threadId: DateTime.now()
+                                    .millisecondsSinceEpoch
+                                    .toString(),
+                                threadName: "",
+                                save: false,
+                                userId: AuthController.I.currentUser!.uid,
+                                timeCreated: Timestamp.now());
+
+                            await MessageController.I
+                                .createNewThread(newThread);
                             GlobalRouter.I.router.go(ChatScreen.route);
                           },
                           child: Container(
