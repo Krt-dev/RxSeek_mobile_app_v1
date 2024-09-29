@@ -117,4 +117,16 @@ class MessageController with ChangeNotifier {
       print({e.toString()});
     }
   }
+
+  Future<void> updateThreadName(String threadId, List<Message> messages) async {
+    try {
+      MessageController.I.db
+          .collection("Thread")
+          .doc(threadId)
+          .update({"threadName": messages[0].content});
+    } on FirebaseException catch (e) {
+      print(e.toString());
+      rethrow;
+    }
+  }
 }

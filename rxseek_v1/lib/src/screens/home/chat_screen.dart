@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
-import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
-import 'package:rxseek_v1/src/routing/router.dart';
-import 'package:rxseek_v1/src/screens/profile/profile_screen.dart';
 import 'package:rxseek_v1/src/widgets/message_tile.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -83,6 +79,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   var messages = snapshot.data!.docs.map((doc) {
                     return Message.fromJson(doc.data() as Map<String, dynamic>);
                   }).toList();
+
+                  if (messages.isNotEmpty) {
+                    MessageController.I
+                        .updateThreadName(widget.threadId, messages);
+                  }
 
                   return ListView.builder(
                     itemCount: messages.length,
