@@ -147,14 +147,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                 curve: Curves.easeOut);
                             messageController.clear();
 
-                            MessageController.I
-                                .getMessageReponse(message, widget.threadId);
-                            Future.delayed(const Duration(seconds: 8), () {
-                              scrollController.animateTo(
-                                  scrollController.position.maxScrollExtent,
-                                  duration: const Duration(seconds: 3),
-                                  curve: Curves.easeOut);
-                            });
+                            // MessageController.I
+                            //     .getMessageReponse(message, widget.threadId);
+                            // Future.delayed(const Duration(seconds: 8), () {
+                            //   scrollController.animateTo(
+                            //       scrollController.position.maxScrollExtent,
+                            //       duration: const Duration(seconds: 3),
+                            //       curve: Curves.easeOut);
+                            // });
                           },
                         ),
                       ],
