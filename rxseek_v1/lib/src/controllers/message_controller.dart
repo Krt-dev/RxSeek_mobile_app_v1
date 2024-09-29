@@ -21,11 +21,11 @@ class MessageController with ChangeNotifier {
 
   FirebaseFirestore db = FirebaseFirestore.instance;
 //send messsage nya butang sa db then butang sa ui
-  Future<void> sendMessage(Message message) async {
+  Future<void> sendMessage(Message message, String threadId) async {
     try {
       db
           .collection("Thread")
-          .doc("sampleThread")
+          .doc(threadId)
           .collection("Messages")
           .add(message.toJson());
     } on FirebaseException catch (e) {
@@ -34,7 +34,7 @@ class MessageController with ChangeNotifier {
   }
 
   //gekan sa ge send na message agto backend generate response nya i get response nya save sa db nya butang sa ui
-  Future<void> getMessageReponse(Message message) async {
+  Future<void> getMessageReponse(Message message, String threadId) async {
     //mao ni atong post request to process the query sa backend then get the response sa LLM gekan sa backend from the query
     final response = await http.post(
       Uri.parse("http://10.0.2.2:8000/process_query/"),
@@ -60,7 +60,7 @@ class MessageController with ChangeNotifier {
         try {
           db
               .collection("Thread")
-              .doc("sampleThread")
+              .doc(threadId)
               .collection("Messages")
               .add(messageResponse.toJson());
         } on FirebaseException catch (e) {
@@ -112,7 +112,9 @@ class MessageController with ChangeNotifier {
   //initial
   Future<void> createNewThread(Thread newThread) async {
     try {
-      db.collection("Thread").add(newThread.toJson());
+      var docRef = db.collection("Thread").doc(newThread.threadId);
+
+      await docRef.set(newThread.toJson());
     } on FirebaseException catch (e) {
       print({e.toString()});
     }

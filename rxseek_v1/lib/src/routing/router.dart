@@ -106,7 +106,7 @@ class GlobalRouter {
                     }),
                 GoRoute(
                     parentNavigatorKey: _shellNavigatorKey,
-                    path: ChatScreen.route,
+                    path: "${ChatScreen.route}/:threadId",
                     name: ChatScreen.name,
                     builder: (context, state) {
                       final String threadIdParam =

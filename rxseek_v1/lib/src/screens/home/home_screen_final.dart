@@ -83,7 +83,9 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
 
                             await MessageController.I
                                 .createNewThread(newThread);
-                            GlobalRouter.I.router.go(ChatScreen.route);
+
+                            GlobalRouter.I.router.go(
+                                "${ChatScreen.route}/${newThread.threadId}");
                           },
                           child: Container(
                             height: 254,
@@ -240,8 +242,8 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                   SizedBox(
                       height: 580,
                       child: StreamBuilder(
-                          stream: MessageController.I
-                              .getUserThreads("Xy2JpEy0YFTHLj5vhL9NkKUAcr02"),
+                          stream: MessageController.I.getUserThreads(
+                              AuthController.I.currentUser!.uid),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -294,20 +296,26 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         left: 10, right: 10),
-                                    child: Container(
-                                      height: 91,
-                                      width: 340,
-                                      decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                              255, 1, 65, 117),
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      child: Center(
-                                        child: Text(
-                                          threads![index].threadName,
-                                          style: const TextStyle(
-                                              fontSize: 24,
-                                              color: Colors.white),
+                                    child: InkWell(
+                                      onTap: () {
+                                        GlobalRouter.I.router.go(
+                                            "${ChatScreen.route}/${threads[index].threadId}");
+                                      },
+                                      child: Container(
+                                        height: 91,
+                                        width: 340,
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 1, 65, 117),
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: Center(
+                                          child: Text(
+                                            threads[index].threadName,
+                                            style: const TextStyle(
+                                                fontSize: 24,
+                                                color: Colors.white),
+                                          ),
                                         ),
                                       ),
                                     ),
