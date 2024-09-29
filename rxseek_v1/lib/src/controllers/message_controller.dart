@@ -76,11 +76,11 @@ class MessageController with ChangeNotifier {
     }
   }
 
-  Stream<QuerySnapshot> getMessages() {
+  Stream<QuerySnapshot> getMessagesInThread(String threadId) {
     try {
       return db
           .collection("Thread")
-          .doc("sampleThread")
+          .doc(threadId)
           .collection("Messages")
           .orderBy("timeCreated", descending: false)
           .snapshots();

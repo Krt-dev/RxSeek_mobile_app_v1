@@ -11,7 +11,8 @@ import 'package:rxseek_v1/src/widgets/message_tile.dart';
 class ChatScreen extends StatefulWidget {
   static const String route = "/ChatScreen";
   static const String name = "Chat Screen";
-  const ChatScreen({super.key});
+  final String threadId;
+  const ChatScreen({required this.threadId, super.key});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -67,7 +68,8 @@ class _ChatScreenState extends State<ChatScreen> {
               width: size.width * 0.99,
               decoration: const BoxDecoration(color: Colors.white),
               child: StreamBuilder<QuerySnapshot>(
-                stream: MessageController.I.getMessages(),
+                stream:
+                    MessageController.I.getMessagesInThread(widget.threadId),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
