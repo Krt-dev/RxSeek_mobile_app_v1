@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
@@ -18,7 +19,6 @@ class HomeScreenFinal extends StatefulWidget {
 }
 
 class _HomeScreenFinalState extends State<HomeScreenFinal> {
-  bool recent = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -202,58 +202,25 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 70, bottom: 15),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                recent = false;
-                              });
-                              print("tapped All");
-                              print(UserInterfaceController.I.recent);
-                            },
-                            child: Container(
-                              width: 65,
-                              height: 30,
-                              decoration: recent
-                                  ? const BoxDecoration(
-                                      border: Border.symmetric(
-                                          vertical: BorderSide(
-                                              style: BorderStyle.solid,
-                                              width: 1),
-                                          horizontal: BorderSide(
-                                              style: BorderStyle.solid,
-                                              width: 1)),
-                                      color: Colors.white)
-                                  : const BoxDecoration(color: Colors.blue),
-                              child: Center(
-                                  child: Text("All",
-                                      style: UserInterfaceController.I.recent
-                                          ? const TextStyle(color: Colors.black)
-                                          : const TextStyle(
-                                              color: Colors.white))),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 50, right: 50.0),
-                            child: InkWell(
+                  Consumer<UserInterfaceController>(
+                      builder: (context, button, child) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 70, bottom: 15),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
                               onTap: () {
-                                setState(() {
-                                  recent = true;
-                                });
-                                print("tapped Recent");
-                                print(UserInterfaceController.I.recent);
+                                Provider.of<UserInterfaceController>(context,
+                                        listen: false)
+                                    .handleTapAlllButton();
+                                print("tapped All");
                               },
                               child: Container(
                                 width: 65,
                                 height: 30,
-                                decoration: recent
-                                    ? const BoxDecoration(color: Colors.blue)
-                                    : const BoxDecoration(
+                                decoration: button.recent
+                                    ? const BoxDecoration(
                                         border: Border.symmetric(
                                             vertical: BorderSide(
                                                 style: BorderStyle.solid,
@@ -261,20 +228,56 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                             horizontal: BorderSide(
                                                 style: BorderStyle.solid,
                                                 width: 1)),
-                                        color: Colors.white),
+                                        color: Colors.white)
+                                    : const BoxDecoration(color: Colors.blue),
                                 child: Center(
-                                    child: Text(
-                                  "Recent",
-                                  style: recent
-                                      ? const TextStyle(color: Colors.white)
-                                      : const TextStyle(color: Colors.black),
-                                )),
+                                    child: Text("All",
+                                        style: button.recent
+                                            ? const TextStyle(
+                                                color: Colors.black)
+                                            : const TextStyle(
+                                                color: Colors.white))),
                               ),
                             ),
-                          ),
-                          Image.asset("assets/images/search_icon.png")
-                        ]),
-                  ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 50, right: 50.0),
+                              child: InkWell(
+                                onTap: () {
+                                  Provider.of<UserInterfaceController>(context,
+                                          listen: false)
+                                      .handleTapRecentButton();
+
+                                  print("tapped Recent");
+                                },
+                                child: Container(
+                                  width: 65,
+                                  height: 30,
+                                  decoration: button.recent
+                                      ? const BoxDecoration(color: Colors.blue)
+                                      : const BoxDecoration(
+                                          border: Border.symmetric(
+                                              vertical: BorderSide(
+                                                  style: BorderStyle.solid,
+                                                  width: 1),
+                                              horizontal: BorderSide(
+                                                  style: BorderStyle.solid,
+                                                  width: 1)),
+                                          color: Colors.white),
+                                  child: Center(
+                                      child: Text(
+                                    "Recent",
+                                    style: button.recent
+                                        ? const TextStyle(color: Colors.white)
+                                        : const TextStyle(color: Colors.black),
+                                  )),
+                                ),
+                              ),
+                            ),
+                            Image.asset("assets/images/search_icon.png")
+                          ]),
+                    );
+                  }),
                   SizedBox(
                       height: 580,
                       child: StreamBuilder(
@@ -302,9 +305,13 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                   doc.data() as Map<String, dynamic>);
                             }).toList();
 
-                            return ThreadTile(
-                              threads: threads,
-                              recent: recent,
+                            return Consumer<UserInterfaceController>(
+                              builder: (context, button, child) {
+                                return ThreadTile(
+                                  threads: threads,
+                                  recent: button.recent,
+                                );
+                              },
                             );
                           }))
                 ],
