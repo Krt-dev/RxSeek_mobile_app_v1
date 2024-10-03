@@ -1,15 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
-import 'package:rxseek_v1/src/enum/enum.dart';
-import 'package:rxseek_v1/src/models/message_model.dart';
 import 'package:rxseek_v1/src/models/thread_model.dart';
-import 'package:rxseek_v1/src/models/user_model.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/home/chat_screen.dart';
+import 'package:rxseek_v1/src/widgets/thread_tile.dart';
 
 class HomeScreenFinal extends StatefulWidget {
   static const String route = "/homeScreenFinal";
@@ -266,80 +262,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                   doc.data() as Map<String, dynamic>);
                             }).toList();
 
-                            return ListView.separated(
-                              itemCount: threads.length,
-                              separatorBuilder: (context, index) =>
-                                  const Divider(),
-                              itemBuilder: (context, index) {
-                                return Slidable(
-                                  startActionPane: ActionPane(
-                                      extentRatio: 0.3,
-                                      motion: const ScrollMotion(),
-                                      children: [
-                                        InkWell(
-                                            onTap: () {
-                                              save(context);
-                                            },
-                                            child: Image.asset(
-                                                "assets/images/save_button.png")),
-                                      ]),
-                                  endActionPane: ActionPane(
-                                      extentRatio: 0.3,
-                                      motion: const ScrollMotion(),
-                                      children: [
-                                        InkWell(
-                                          onTap: () => delete(context),
-                                          child: Image.asset(
-                                              "assets/images/delete_button.png"),
-                                        ),
-                                      ]),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: InkWell(
-                                      onTap: () {
-                                        GlobalRouter.I.router.go(
-                                            "${ChatScreen.route}/${threads[index].threadId}");
-                                      },
-                                      child: Container(
-                                        height: 91,
-                                        width: 340,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 1, 65, 117),
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                        child: Center(
-                                          child: Text(
-                                            threads[index].threadName,
-                                            style: const TextStyle(
-                                                fontSize: 24,
-                                                color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                                // return Padding(
-                                //   padding: const EdgeInsets.only(bottom: 10),
-                                //   child: Container(
-                                //     height: 91,
-                                //     width: 340,
-                                //     decoration: BoxDecoration(
-                                //         color: const Color.fromARGB(255, 1, 65, 117),
-                                //         borderRadius: BorderRadius.circular(15)),
-                                //     child: const Center(
-                                //       child: Text(
-                                //         "What is Ibuprofen?",
-                                //         style: TextStyle(
-                                //             fontSize: 24, color: Colors.white),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // );
-                              },
-                            );
+                            return ThreadTile(threads: threads);
                           }))
                 ],
               ),
@@ -348,13 +271,5 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
         ],
       ),
     );
-  }
-
-  void delete(BuildContext context) {
-    print("deleted");
-  }
-
-  void save(BuildContext context) {
-    print("saved");
   }
 }

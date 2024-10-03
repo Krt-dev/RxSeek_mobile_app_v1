@@ -68,26 +68,26 @@ class _ChatScreenState extends State<ChatScreen> {
                     MessageController.I.getMessagesInThread(widget.threadId),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   }
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return Center(child: Text('No messages found'));
+                    return const Center(child: Text('No messages found'));
                   }
                   var messages = snapshot.data!.docs.map((doc) {
                     return Message.fromJson(doc.data() as Map<String, dynamic>);
                   }).toList();
 
-                  if (messages.isNotEmpty) {
+                  if (messages.isNotEmpty && messages.length == 1) {
                     MessageController.I
                         .updateThreadName(widget.threadId, messages);
                   }
 
                   return ListView.builder(
                     itemCount: messages.length,
-                    controller: scrollController,
+                    // controller: scrollController,
                     itemBuilder: (context, index) {
                       final message = messages[index];
                       // Future.delayed(const Duration(seconds: 2), () {
@@ -141,10 +141,10 @@ class _ChatScreenState extends State<ChatScreen> {
                             );
                             MessageController.I
                                 .sendMessage(message, widget.threadId);
-                            scrollController.animateTo(
-                                scrollController.position.maxScrollExtent,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeOut);
+                            // scrollController.animateTo(
+                            //     scrollController.position.maxScrollExtent,
+                            //     duration: const Duration(milliseconds: 300),
+                            //     curve: Curves.easeOut);
                             messageController.clear();
 
                             // MessageController.I

@@ -131,4 +131,37 @@ class MessageController with ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<void> deleteThread(String threadId) async {
+    try {
+      CollectionReference messageCollection =
+          db.collection("Thread").doc(threadId).collection("Messages");
+      QuerySnapshot snapshot = await messageCollection.get();
+      for (var document in snapshot.docs) {
+        document.reference.delete();
+      }
+
+      db.collection("Thread").doc(threadId).delete().then(
+          // ignore: avoid_print
+          (doc) => print("Thread successfuly deleted"),
+          // ignore: avoid_print
+          onError: (e) => print(e.toString()));
+    } on FirebaseException catch (e) {
+      // ignore: avoid_print
+      print(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> saveThread(String threadId) async {
+    try {
+      MessageController.I.db
+          .collection("Thread")
+          .doc(threadId)
+          .update({"save": true});
+    } on FirebaseException catch (e) {
+      print(e.toString());
+      rethrow;
+    }
+  }
 }
