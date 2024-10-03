@@ -1,9 +1,10 @@
+// ignore_for_file: avoid_print, duplicate_ignore
+
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxseek_v1/src/models/thread_model.dart';
@@ -95,7 +96,7 @@ class MessageController with ChangeNotifier {
 
 //buhatanan og index sa firebase pangitae paagi mabuhatan index kay composite ang query or nag use og
 //duha ka clause which is nad orederbyog and where so needog index para madungan nig gamit ang duha
-  Stream<QuerySnapshot> getUserThreads(String userId) {
+  Stream<QuerySnapshot> getRecentUserThreads(String userId) {
     try {
       return db
           .collection("Thread")
@@ -136,8 +137,11 @@ class MessageController with ChangeNotifier {
     try {
       CollectionReference messageCollection =
           db.collection("Thread").doc(threadId).collection("Messages");
+
+      // WriteBatch batch = messageCollection.firestore.batch();
       QuerySnapshot snapshot = await messageCollection.get();
       for (var document in snapshot.docs) {
+        // batch.delete(document.reference);
         document.reference.delete();
       }
 

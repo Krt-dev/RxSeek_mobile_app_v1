@@ -238,7 +238,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                   SizedBox(
                       height: 580,
                       child: StreamBuilder(
-                          stream: MessageController.I.getUserThreads(
+                          stream: MessageController.I.getRecentUserThreads(
                               AuthController.I.currentUser!.uid),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
@@ -262,7 +262,10 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                   doc.data() as Map<String, dynamic>);
                             }).toList();
 
-                            return ThreadTile(threads: threads);
+                            return ThreadTile(
+                              threads: threads,
+                              recent: false,
+                            );
                           }))
                 ],
               ),

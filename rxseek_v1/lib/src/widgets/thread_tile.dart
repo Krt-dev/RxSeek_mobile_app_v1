@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/models/thread_model.dart';
@@ -10,14 +9,22 @@ class ThreadTile extends StatelessWidget {
   const ThreadTile({
     super.key,
     required this.threads,
+    required this.recent,
   });
 
   final List<Thread>? threads;
+  final bool recent;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: threads!.length,
+      itemCount: recent
+          ? threads!.length > 10
+              ? 10
+              : threads!.length
+          : threads!.length,
+      // itemCount: threads!.length > 10 ? 10 : threads!.length,
+
       separatorBuilder: (context, index) => const Divider(),
       itemBuilder: (context, index) {
         return Slidable(
