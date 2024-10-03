@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
+import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
 import 'package:rxseek_v1/src/models/thread_model.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/home/chat_screen.dart';
@@ -17,6 +18,7 @@ class HomeScreenFinal extends StatefulWidget {
 }
 
 class _HomeScreenFinalState extends State<HomeScreenFinal> {
+  bool recent = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -205,31 +207,69 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            width: 65,
-                            height: 30,
-                            decoration: const BoxDecoration(
-                                border: Border.symmetric(
-                                    vertical: BorderSide(
-                                        style: BorderStyle.solid, width: 1),
-                                    horizontal: BorderSide(
-                                        style: BorderStyle.solid, width: 1)),
-                                color: Colors.white),
-                            child: const Center(child: Text("All")),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                recent = false;
+                              });
+                              print("tapped All");
+                              print(UserInterfaceController.I.recent);
+                            },
+                            child: Container(
+                              width: 65,
+                              height: 30,
+                              decoration: recent
+                                  ? const BoxDecoration(
+                                      border: Border.symmetric(
+                                          vertical: BorderSide(
+                                              style: BorderStyle.solid,
+                                              width: 1),
+                                          horizontal: BorderSide(
+                                              style: BorderStyle.solid,
+                                              width: 1)),
+                                      color: Colors.white)
+                                  : const BoxDecoration(color: Colors.blue),
+                              child: Center(
+                                  child: Text("All",
+                                      style: UserInterfaceController.I.recent
+                                          ? const TextStyle(color: Colors.black)
+                                          : const TextStyle(
+                                              color: Colors.white))),
+                            ),
                           ),
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: 50, right: 50.0),
-                            child: Container(
-                              width: 65,
-                              height: 30,
-                              decoration:
-                                  const BoxDecoration(color: Colors.blue),
-                              child: const Center(
-                                  child: Text(
-                                "Recent",
-                                style: TextStyle(color: Colors.white),
-                              )),
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  recent = true;
+                                });
+                                print("tapped Recent");
+                                print(UserInterfaceController.I.recent);
+                              },
+                              child: Container(
+                                width: 65,
+                                height: 30,
+                                decoration: recent
+                                    ? const BoxDecoration(color: Colors.blue)
+                                    : const BoxDecoration(
+                                        border: Border.symmetric(
+                                            vertical: BorderSide(
+                                                style: BorderStyle.solid,
+                                                width: 1),
+                                            horizontal: BorderSide(
+                                                style: BorderStyle.solid,
+                                                width: 1)),
+                                        color: Colors.white),
+                                child: Center(
+                                    child: Text(
+                                  "Recent",
+                                  style: recent
+                                      ? const TextStyle(color: Colors.white)
+                                      : const TextStyle(color: Colors.black),
+                                )),
+                              ),
                             ),
                           ),
                           Image.asset("assets/images/search_icon.png")
@@ -264,7 +304,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
 
                             return ThreadTile(
                               threads: threads,
-                              recent: false,
+                              recent: recent,
                             );
                           }))
                 ],
