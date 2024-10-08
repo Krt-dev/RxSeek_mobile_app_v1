@@ -66,17 +66,31 @@ class ThreadTile extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 1, 65, 117),
                     borderRadius: BorderRadius.circular(15)),
-                child: Center(
-                  child: Text(
+                child: Column(children: [
+                  Text(
+                    "${convertToNotMilitaryTime(threads![index].timeCreated.toDate().hour, threads![index].timeCreated.toDate().minute)}",
+                    style: const TextStyle(fontSize: 13, color: Colors.white),
+                  ),
+                  Text(
                     threads![index].threadName,
                     style: const TextStyle(fontSize: 24, color: Colors.white),
                   ),
-                ),
+                ]),
               ),
             ),
           ),
         );
       },
     );
+  }
+
+  String convertToNotMilitaryTime(int hour, int minute) {
+    int finalHour = 0;
+    if (hour > 12) {
+      finalHour = hour - 12;
+      return "$finalHour:${minute} PM";
+    } else {
+      return "$hour:${minute} AM";
+    }
   }
 }
