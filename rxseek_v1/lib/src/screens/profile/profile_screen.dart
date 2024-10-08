@@ -12,8 +12,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  ScrollController scrollController = ScrollController();
-  PanelController panelController = PanelController();
+  late ScrollController scrollController;
+  late PanelController panelController;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = ScrollController();
+    panelController = PanelController();
+  }
+
   @override
   void dispose() {
     scrollController.dispose();
@@ -57,18 +65,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 AssetImage("assets/images/sampleProfile.png"),
                             fit: BoxFit.contain)),
                   ),
+                  FutureBuilder(
+                      future: AuthController.I
+                          .getUser(AuthController.I.currentUser!.uid),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (snapshot.hasData && snapshot.data != null) {
+                          return Text(
+                              "${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}",
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 25));
+                        } else {
+                          return const Center(child: Text('No User is found'));
+                        }
+                      }),
                   SizedBox(
                     width: 172,
-                    child: Text("${AuthController.I.currentUser?.email}",
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 36)),
+                    child: Text(
+                      "${AuthController.I.currentUser!.email}",
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Text("${AuthController.I.currentUser?.email}",
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 12)),
                 ],
               ))
             ],
