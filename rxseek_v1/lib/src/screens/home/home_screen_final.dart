@@ -121,12 +121,8 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SaveThreadScreen()),
-                                );
+                                GlobalRouter.I.router
+                                    .go(SaveThreadScreen.route);
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(

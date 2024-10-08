@@ -11,6 +11,7 @@ import "package:rxseek_v1/src/screens/auth/login.screen.dart";
 import "package:rxseek_v1/src/screens/auth/registration.screen.dart";
 import "package:rxseek_v1/src/screens/home/home_screen_final.dart";
 import "package:rxseek_v1/src/screens/profile/profile_screen.dart";
+import "package:rxseek_v1/src/screens/save_threads/save_thread.dart";
 import "package:rxseek_v1/src/screens/splash/splash_screen.dart";
 import "package:rxseek_v1/src/screens/wrapper/wrapperScreen.dart";
 
@@ -91,12 +92,16 @@ class GlobalRouter {
               builder: (context, _) {
                 return const DisclaimerScreen();
               }),
-
-          //for testing rani sa profile need pani i balhin sa hellroute kay dapat naa ni nav bar
-
           ShellRoute(
               navigatorKey: _shellNavigatorKey,
               routes: [
+                GoRoute(
+                    parentNavigatorKey: _shellNavigatorKey,
+                    path: SaveThreadScreen.route,
+                    name: SaveThreadScreen.name,
+                    builder: (context, _) {
+                      return const SaveThreadScreen();
+                    }),
                 GoRoute(
                     parentNavigatorKey: _shellNavigatorKey,
                     path: ProfileScreen.route,
