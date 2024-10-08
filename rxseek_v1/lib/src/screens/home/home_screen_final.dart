@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +9,7 @@ import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
 import 'package:rxseek_v1/src/models/thread_model.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/home/chat_screen.dart';
+import 'package:rxseek_v1/src/screens/save_threads/save_thread.dart';
 import 'package:rxseek_v1/src/widgets/thread_tile.dart';
 
 class HomeScreenFinal extends StatefulWidget {
@@ -29,7 +32,6 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //need pa mag make og function na mo get sa document aning user nga naa aning Unique Id ron ma access mga info sa user
                 FutureBuilder(
                     future: AuthController.I
                         .getUser(AuthController.I.currentUser!.uid),
@@ -42,8 +44,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                         return Text(
                             "Hi, ${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}");
                       } else {
-                        return const Center(
-                            child: Text('No such document found'));
+                        return const Center(child: Text('No User is found'));
                       }
                     }),
 
@@ -52,7 +53,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                   child: Text(
                     "How may I help you today?",
                     style: TextStyle(
-                      color: const Color(0xff37B1B8),
+                      color: Color(0xff37B1B8),
                       fontSize: 24,
                     ),
                   ),
@@ -118,37 +119,47 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 15),
-                              decoration: BoxDecoration(
-                                  color: const Color(0xff6796B7),
-                                  borderRadius: BorderRadius.circular(20)),
-                              height: 120,
-                              width: 115,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 60),
-                                    child: Container(
-                                      height: 34,
-                                      width: 34,
-                                      decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  "assets/images/save_chats_button_icon.png"),
-                                              fit: BoxFit.cover)),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SaveThreadScreen()),
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff6796B7),
+                                    borderRadius: BorderRadius.circular(20)),
+                                height: 120,
+                                width: 115,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 60),
+                                      child: Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/save_chats_button_icon.png"),
+                                                fit: BoxFit.cover)),
+                                      ),
                                     ),
-                                  ),
-                                  const Text(
-                                    "Saved\n Chats",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 13),
-                                  )
-                                ],
+                                    const Text(
+                                      "Saved\n Chats",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 13),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             Container(
@@ -281,13 +292,13 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                   SizedBox(
                       height: 580,
                       child: StreamBuilder(
-                          stream: MessageController.I.getRecentUserThreads(
+                          stream: MessageController.I.getUserThreads(
                               AuthController.I.currentUser!.uid),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return const Center(
-                                  child: const CircularProgressIndicator());
+                                  child: CircularProgressIndicator());
                             }
                             if (snapshot.hasError) {
                               return Center(

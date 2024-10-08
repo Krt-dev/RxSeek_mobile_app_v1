@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
