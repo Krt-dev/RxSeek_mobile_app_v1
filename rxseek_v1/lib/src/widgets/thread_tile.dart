@@ -67,12 +67,19 @@ class ThreadTile extends StatelessWidget {
                     color: const Color.fromARGB(255, 1, 65, 117),
                     borderRadius: BorderRadius.circular(15)),
                 child: Column(children: [
-                  Text(
-                    "${convertToNotMilitaryTime(threads![index].timeCreated.toDate().hour, threads![index].timeCreated.toDate().minute)}",
-                    style: const TextStyle(fontSize: 13, color: Colors.white),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 200),
+                    child: Text(
+                      convertToNotMilitaryTime(
+                          threads![index].timeCreated.toDate().hour,
+                          threads![index].timeCreated.toDate().minute),
+                      style: const TextStyle(fontSize: 13, color: Colors.white),
+                    ),
                   ),
                   Text(
-                    threads![index].threadName,
+                    threads![index].threadName.length > 20
+                        ? "${threads![index].threadName.substring(0, 20)}...?"
+                        : threads![index].threadName,
                     style: const TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 ]),
