@@ -72,19 +72,41 @@ class GlobalRouter {
                 return const SplashScreen();
               }),
           GoRoute(
-              parentNavigatorKey: _rootNavigatorKey,
-              path: LoginScreen.route,
-              name: LoginScreen.name,
-              builder: (context, _) {
-                return const LoginScreen();
-              }),
+            parentNavigatorKey: _rootNavigatorKey,
+            path: LoginScreen.route,
+            name: LoginScreen.name,
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                key: state.pageKey,
+                child: const LoginScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+              );
+            },
+          ),
           GoRoute(
-              parentNavigatorKey: _rootNavigatorKey,
-              path: RegistrationScreen.route,
-              name: RegistrationScreen.name,
-              builder: (context, _) {
-                return const RegistrationScreen();
-              }),
+            parentNavigatorKey: _rootNavigatorKey,
+            path: RegistrationScreen.route,
+            name: RegistrationScreen.name,
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                key: state.pageKey,
+                child: const RegistrationScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+              );
+            },
+          ),
           GoRoute(
               parentNavigatorKey: _rootNavigatorKey,
               path: DisclaimerScreen.route,
@@ -103,30 +125,81 @@ class GlobalRouter {
                       return const SaveThreadScreen();
                     }),
                 GoRoute(
-                    parentNavigatorKey: _shellNavigatorKey,
-                    path: ProfileScreen.route,
-                    name: ProfileScreen.name,
-                    builder: (context, _) {
-                      return const ProfileScreen();
-                    }),
+                  parentNavigatorKey: _shellNavigatorKey,
+                  path: ProfileScreen.route,
+                  name: ProfileScreen.name,
+                  pageBuilder: (context, state) {
+                    return CustomTransitionPage(
+                      key: state.pageKey,
+                      child: const ProfileScreen(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        // Define the start and end points for the slide transition
+                        const begin =
+                            Offset(1.0, 0.0); // Slide in from the right
+                        const end = Offset.zero;
+                        const curve = Curves.easeInOut;
+
+                        // Create a tween for the animation
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+                        var offsetAnimation = animation.drive(tween);
+
+                        // Return the SlideTransition widget
+                        return SlideTransition(
+                          position: offsetAnimation,
+                          child: child,
+                        );
+                      },
+                    );
+                  },
+                ),
                 GoRoute(
-                    parentNavigatorKey: _shellNavigatorKey,
-                    path: "${ChatScreen.route}/:threadId",
-                    name: ChatScreen.name,
-                    builder: (context, state) {
-                      final String threadIdParam =
-                          state.pathParameters["threadId"] ?? "";
-                      return ChatScreen(
-                        threadId: threadIdParam,
-                      );
-                    }),
+                  parentNavigatorKey: _shellNavigatorKey,
+                  path: "${ChatScreen.route}/:threadId",
+                  name: ChatScreen.name,
+                  pageBuilder: (context, state) {
+                    final String threadIdParam =
+                        state.pathParameters["threadId"] ?? "";
+                    return CustomTransitionPage(
+                      key: state.pageKey,
+                      child: ChatScreen(threadId: threadIdParam),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        );
+                      },
+                    );
+                  },
+                ),
                 GoRoute(
-                    parentNavigatorKey: _shellNavigatorKey,
-                    path: HomeScreenFinal.route,
-                    name: HomeScreenFinal.name,
-                    builder: (context, _) {
-                      return const HomeScreenFinal();
-                    }),
+                  parentNavigatorKey: _shellNavigatorKey,
+                  path: HomeScreenFinal.route,
+                  name: HomeScreenFinal.name,
+                  pageBuilder: (context, state) {
+                    return CustomTransitionPage(
+                      key: state.pageKey,
+                      child: const HomeScreenFinal(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin =
+                            Offset(-1.0, 0.0); // Slide in from the left
+                        const end = Offset.zero;
+                        const curve = Curves.easeInOut;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    );
+                  },
+                ),
 
                 //sample sa pag pass parameters using routers, sauna ni namo na code
                 // GoRoute(
