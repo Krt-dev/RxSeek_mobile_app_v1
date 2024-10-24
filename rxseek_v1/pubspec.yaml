@@ -46,6 +46,7 @@ dependencies:
   sliding_up_panel2: ^3.2.0+2
   flutter_slidable: ^3.1.1
   provider: ^6.1.2
+  firebase_storage: ^12.3.4
   image_picker: ^1.1.2
 
 dev_dependencies:

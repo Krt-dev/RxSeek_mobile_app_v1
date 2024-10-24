@@ -17,7 +17,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late ScrollController scrollController;
   late PanelController panelController;
-  Uint8List? _image;
 
   @override
   void initState() {
@@ -32,11 +31,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.dispose();
   }
 
-  selectImage() async {
+  ChangeProfile() async {
     Uint8List img = await ImageController.I.captureImage();
-    setState(() {
-      _image = img;
-    });
+    String userId = AuthController.I.currentUser!.uid;
+    String imageNetworkUrl = await ImageController.I
+        .uploadImageProfileToDb(img, "profileImage/ + ${userId}");
+
+    ImageController.I.updateUserProfileUrl(imageNetworkUrl, userId);
   }
 
   @override
@@ -67,23 +68,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  InkWell(
-                    onTap: () => selectImage(),
-                    child: _image != null
-                        ? CircleAvatar(
-                            radius: 64,
-                            backgroundImage: MemoryImage(_image!),
-                          )
-                        : Container(
-                            height: 107,
-                            width: 101,
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/images/sampleProfile.png"),
-                                    fit: BoxFit.contain)),
-                          ),
-                  ),
                   FutureBuilder(
                       future: AuthController.I
                           .getUser(AuthController.I.currentUser!.uid),
@@ -96,10 +80,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           return Center(
                               child: Text('Error: ${snapshot.error}'));
                         } else if (snapshot.hasData && snapshot.data != null) {
-                          return Text(
-                              "${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}",
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 25));
+                          return Column(
+                            children: [
+                              InkWell(
+                                onTap: () => ChangeProfile(),
+                                child: snapshot.data!["profileUrl"] != ""
+                                    ? CircleAvatar(
+                                        radius: 64,
+                                        backgroundImage: NetworkImage(
+                                            "${snapshot.data!["profileUrl"]}}"),
+                                      )
+                                    : Container(
+                                        height: 107,
+                                        width: 101,
+                                        decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/sampleProfile.png"),
+                                                fit: BoxFit.contain)),
+                                      ),
+                              ),
+                              Text(
+                                  "${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}",
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 25)),
+                            ],
+                          );
                         } else {
                           return const Center(child: Text('No User is found'));
                         }

@@ -1,7 +1,10 @@
-import 'dart:ffi';
+import 'dart:typed_data';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 
 class ImageController {
   static void initialize() {
@@ -12,6 +15,8 @@ class ImageController {
   static ImageController get instance => GetIt.instance<ImageController>();
 
   static ImageController get I => GetIt.instance<ImageController>();
+
+  final FirebaseStorage dbStorage = FirebaseStorage.instance;
 
   final ImagePicker imagePicker = ImagePicker();
 
@@ -31,5 +36,26 @@ class ImageController {
       return await image.readAsBytes();
     }
     print("No image is selected");
+  }
+
+  uploadImageProfileToDb(Uint8List imageFile, String childName) async {
+    Reference _ref = dbStorage.ref().child(childName);
+    UploadTask uploadTask = _ref.putData(imageFile);
+    TaskSnapshot snapshot = await uploadTask;
+    String imageDownloadUrl = await snapshot.ref.getDownloadURL();
+
+    return imageDownloadUrl;
+  }
+
+  Future<void> updateUserProfileUrl(String downloadedUrl, String userId) async {
+    try {
+      AuthController.I.db
+          .collection("Users")
+          .doc(userId)
+          .update({"profileUrl": downloadedUrl});
+    } on FirebaseException catch (e) {
+      print(e.toString());
+      rethrow;
+    }
   }
 }
