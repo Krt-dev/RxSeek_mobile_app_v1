@@ -17,6 +17,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late ScrollController scrollController;
   late PanelController panelController;
+  Uint8List? _image;
 
   @override
   void initState() {
@@ -36,6 +37,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     String userId = AuthController.I.currentUser!.uid;
     String imageNetworkUrl = await ImageController.I
         .uploadImageProfileToDb(img, "profileImage/ + ${userId}");
+    setState(() {
+      _image = img;
+    });
 
     ImageController.I.updateUserProfileUrl(imageNetworkUrl, userId);
   }
@@ -88,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ? CircleAvatar(
                                         radius: 64,
                                         backgroundImage: NetworkImage(
-                                            "${snapshot.data!["profileUrl"]}}"),
+                                            "${snapshot.data!["profileUrl"]}"),
                                       )
                                     : Container(
                                         height: 107,
