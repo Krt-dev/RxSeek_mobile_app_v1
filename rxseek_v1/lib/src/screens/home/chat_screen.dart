@@ -146,9 +146,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             //     duration: const Duration(milliseconds: 300),
                             //     curve: Curves.easeOut);
                             messageController.clear();
-
-                            // MessageController.I
-                            //     .getMessageReponse(message, widget.threadId);
+                            MessageController.I
+                                .getMessageReponse(message, widget.threadId);
                             // Future.delayed(const Duration(seconds: 8), () {
                             //   scrollController.animateTo(
                             //       scrollController.position.maxScrollExtent,
