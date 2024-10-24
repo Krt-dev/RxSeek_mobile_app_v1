@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxseek_v1/firebase_options.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/controllers/image_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
@@ -17,6 +18,7 @@ void main() async {
   GlobalRouter.initialize();
   MessageController.initialize();
   UserInterfaceController.initialize();
+  ImageController.initialize();
   await AuthController.I.loadSession();
   runApp(ChangeNotifierProvider(
       create: (context) => UserInterfaceController(), child: const MyApp()));

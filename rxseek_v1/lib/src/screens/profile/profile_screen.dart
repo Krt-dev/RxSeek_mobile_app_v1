@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/controllers/image_controller.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -14,6 +17,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late ScrollController scrollController;
   late PanelController panelController;
+  Uint8List? _image;
 
   @override
   void initState() {
@@ -26,6 +30,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void dispose() {
     scrollController.dispose();
     super.dispose();
+  }
+
+  selectImage() async {
+    Uint8List img = await ImageController.I.captureImage();
+    setState(() {
+      _image = img;
+    });
   }
 
   @override
@@ -56,14 +67,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: 107,
-                    width: 101,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage("assets/images/sampleProfile.png"),
-                            fit: BoxFit.contain)),
+                  InkWell(
+                    onTap: () => selectImage(),
+                    child: _image != null
+                        ? CircleAvatar(
+                            radius: 64,
+                            backgroundImage: MemoryImage(_image!),
+                          )
+                        : Container(
+                            height: 107,
+                            width: 101,
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/sampleProfile.png"),
+                                    fit: BoxFit.contain)),
+                          ),
                   ),
                   FutureBuilder(
                       future: AuthController.I
