@@ -137,6 +137,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               messageId: DateTime.now().millisecondsSinceEpoch,
                               sender: "user",
                               content: messageController.text,
+                              imageUrl: "",
                               timeCreated: Timestamp.now(),
                             );
                             MessageController.I

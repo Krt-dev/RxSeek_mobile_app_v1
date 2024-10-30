@@ -57,6 +57,7 @@ class MessageController with ChangeNotifier {
             messageId: DateTime.now().millisecondsSinceEpoch,
             content: jsonResponse["response"],
             sender: "system",
+            imageUrl: "",
             timeCreated: Timestamp.now());
         try {
           db
