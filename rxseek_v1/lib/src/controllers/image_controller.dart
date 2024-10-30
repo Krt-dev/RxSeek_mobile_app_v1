@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,10 +19,11 @@ class ImageController {
   static ImageController get I => GetIt.instance<ImageController>();
 
   final FirebaseStorage dbStorage = FirebaseStorage.instance;
-
+  final FirebaseFirestore db = FirebaseFirestore.instance;
   final ImagePicker imagePicker = ImagePicker();
 
   // para mo get og imgae using camera
+
   captureImage() async {
     XFile? image = await imagePicker.pickImage(source: ImageSource.camera);
     if (image != null) {
@@ -56,6 +59,15 @@ class ImageController {
     } on FirebaseException catch (e) {
       print(e.toString());
       rethrow;
+    }
+  }
+
+  streamProfileChange(String userId) async {
+    try {
+      return db.collection("Users").doc(userId).snapshots();
+    } on FirebaseException catch (e) {
+      print({e.toString()});
+      return const Stream.empty();
     }
   }
 }

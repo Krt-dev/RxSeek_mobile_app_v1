@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/image_controller.dart';
+import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -86,24 +88,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         } else if (snapshot.hasData && snapshot.data != null) {
                           return Column(
                             children: [
-                              InkWell(
-                                onTap: () => ChangeProfile(),
-                                child: snapshot.data!["profileUrl"] != ""
-                                    ? CircleAvatar(
-                                        radius: 64,
-                                        backgroundImage: NetworkImage(
-                                            "${snapshot.data!["profileUrl"]}"),
-                                      )
-                                    : Container(
-                                        height: 107,
-                                        width: 101,
-                                        decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/sampleProfile.png"),
-                                                fit: BoxFit.contain)),
-                                      ),
-                              ),
+                              Consumer<UserInterfaceController>(
+                                  builder: (context, button, child) {
+                                return InkWell(
+                                  onTap: () async {
+                                    await ChangeProfile();
+                                    UserInterfaceController.I.forceBuilder;
+                                  },
+                                  child: snapshot.data!["profileUrl"] != ""
+                                      ? CircleAvatar(
+                                          radius: 64,
+                                          backgroundImage: NetworkImage(
+                                              "${snapshot.data!["profileUrl"]}"),
+                                        )
+                                      : Container(
+                                          height: 107,
+                                          width: 101,
+                                          decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      "assets/images/sampleProfile.png"),
+                                                  fit: BoxFit.contain)),
+                                        ),
+                                );
+                              }),
                               Text(
                                   "${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}",
                                   style: const TextStyle(
