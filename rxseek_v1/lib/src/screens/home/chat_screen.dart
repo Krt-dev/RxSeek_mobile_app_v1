@@ -191,10 +191,10 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<String> sendImage() async {
-    Uint8List img = await ImageController.I.captureImage();
+    Uint8List img = await ImageController.I.selectImage();
     String userId = AuthController.I.currentUser!.uid;
-    String imageNetworkUrl = await ImageController.I
-        .uploadImageToDb(img, "${userId}/${Timestamp.now()}");
+    String imageNetworkUrl = await ImageController.I.uploadImageToDb(
+        img, "${userId}/${Timestamp.now().millisecondsSinceEpoch}");
     return imageNetworkUrl;
   }
 }
