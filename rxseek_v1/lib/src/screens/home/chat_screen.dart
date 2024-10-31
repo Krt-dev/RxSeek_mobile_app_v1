@@ -1,5 +1,10 @@
+import 'dart:ffi';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/controllers/image_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
 import 'package:rxseek_v1/src/widgets/message_tile.dart';
@@ -163,7 +168,17 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 IconButton(
                   icon: Image.asset("assets/images/camera_button.png"),
-                  onPressed: () {
+                  onPressed: () async {
+                    String uploadedImageUrl = await sendImage();
+                    var message = Message(
+                      messageId: DateTime.now().millisecondsSinceEpoch,
+                      sender: "user",
+                      content: messageController.text,
+                      imageUrl: uploadedImageUrl,
+                      timeCreated: Timestamp.now(),
+                    );
+                    MessageController.I.sendMessage(message, widget.threadId);
+
                     // Handle camera button press
                   },
                 ),
@@ -173,5 +188,13 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
     );
+  }
+
+  Future<String> sendImage() async {
+    Uint8List img = await ImageController.I.captureImage();
+    String userId = AuthController.I.currentUser!.uid;
+    String imageNetworkUrl = await ImageController.I
+        .uploadImageToDb(img, "${userId}/${Timestamp.now()}");
+    return imageNetworkUrl;
   }
 }

@@ -15,12 +15,6 @@ class UserInterfaceController extends ChangeNotifier {
       GetIt.instance<UserInterfaceController>();
 
   bool recent = true;
-  int forceBuilder = 0;
-
-  void forceRebuild() {
-    forceBuilder += 1;
-    notifyListeners();
-  }
 
   void handleTapRecentButton() {
     recent = true;

@@ -19,7 +19,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late ScrollController scrollController;
   late PanelController panelController;
-  Uint8List? _image;
 
   @override
   void initState() {
@@ -35,14 +34,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   ChangeProfile() async {
+    //pag capture saimage put into an U8intlist type na variable
     Uint8List img = await ImageController.I.captureImage();
     String userId = AuthController.I.currentUser!.uid;
+    //getting image URL paghuman upload gamit ani na function na ato gebuhat
     String imageNetworkUrl = await ImageController.I
-        .uploadImageProfileToDb(img, "profileImage/ + ${userId}");
-    setState(() {
-      _image = img;
-    });
-
+        .uploadImageToDb(img, "profileImage/ + ${userId}");
+    //para rebuild sa UI sa consumer widget part
+    setState(() {});
+    //para update sa profile url na link sa user digtos firebase
     ImageController.I.updateUserProfileUrl(imageNetworkUrl, userId);
   }
 
@@ -93,23 +93,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 return InkWell(
                                   onTap: () async {
                                     await ChangeProfile();
-                                    UserInterfaceController.I.forceBuilder;
                                   },
-                                  child: snapshot.data!["profileUrl"] != ""
-                                      ? CircleAvatar(
-                                          radius: 64,
-                                          backgroundImage: NetworkImage(
-                                              "${snapshot.data!["profileUrl"]}"),
-                                        )
-                                      : Container(
-                                          height: 107,
-                                          width: 101,
-                                          decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      "assets/images/sampleProfile.png"),
-                                                  fit: BoxFit.contain)),
-                                        ),
+                                  child: Column(
+                                    children: [
+                                      snapshot.data!["profileUrl"] != ""
+                                          ? CircleAvatar(
+                                              radius: 64,
+                                              backgroundImage: NetworkImage(
+                                                  "${snapshot.data!["profileUrl"]}"),
+                                            )
+                                          : Container(
+                                              height: 107,
+                                              width: 101,
+                                              decoration: const BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          "assets/images/sampleProfile.png"),
+                                                      fit: BoxFit.contain)),
+                                            ),
+                                    ],
+                                  ),
                                 );
                               }),
                               Text(

@@ -41,7 +41,7 @@ class ImageController {
     print("No image is selected");
   }
 
-  uploadImageProfileToDb(Uint8List imageFile, String childName) async {
+  uploadImageToDb(Uint8List imageFile, String childName) async {
     Reference _ref = dbStorage.ref().child(childName);
     UploadTask uploadTask = _ref.putData(imageFile);
     TaskSnapshot snapshot = await uploadTask;
