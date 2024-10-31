@@ -93,11 +93,12 @@ class AuthController with ChangeNotifier {
     handleUserChanges(user);
   }
 
-  Future<DocumentSnapshot> getUser(String uid) async {
+  Future<UserModel> getUser(String uid) async {
     try {
       final docSnap = await db.collection("Users").doc(uid).get();
       if (docSnap.exists) {
-        return docSnap;
+        UserModel userInfo = UserModel.fromJson(docSnap.data()!);
+        return userInfo;
       } else {
         throw Exception("Document Does not Exist");
       }

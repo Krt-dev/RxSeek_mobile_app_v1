@@ -96,11 +96,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                   child: Column(
                                     children: [
-                                      snapshot.data!["profileUrl"] != ""
+                                      snapshot.data!.profileUrl != ""
                                           ? CircleAvatar(
                                               radius: 64,
                                               backgroundImage: NetworkImage(
-                                                  "${snapshot.data!["profileUrl"]}"),
+                                                  "${snapshot.data!.profileUrl}"),
                                             )
                                           : Container(
                                               height: 107,
@@ -116,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 );
                               }),
                               Text(
-                                  "${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}",
+                                  "${snapshot.data!.firstName} ${snapshot.data!.lastName}",
                                   style: const TextStyle(
                                       color: Colors.white, fontSize: 25)),
                             ],

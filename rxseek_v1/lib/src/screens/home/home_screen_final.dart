@@ -7,6 +7,7 @@ import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
 import 'package:rxseek_v1/src/models/thread_model.dart';
+import 'package:rxseek_v1/src/models/user_model.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/home/chat_screen.dart';
 import 'package:rxseek_v1/src/screens/save_threads/save_thread.dart';
@@ -42,7 +43,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (snapshot.hasData && snapshot.data != null) {
                         return Text(
-                            "Hi, ${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}");
+                            "Hi, ${snapshot.data!.firstName} ${snapshot.data!.lastName}");
                       } else {
                         return const Center(child: Text('No User is found'));
                       }
