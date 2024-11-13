@@ -1,8 +1,10 @@
 import 'dart:ffi';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/image_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
@@ -167,9 +169,25 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 IconButton(
-                  icon: Image.asset("assets/images/camera_button.png"),
+                  icon: Image.asset("assets/images/upload_image_button.png"),
                   onPressed: () async {
                     String uploadedImageUrl = await sendImage();
+                    var message = Message(
+                      messageId: DateTime.now().millisecondsSinceEpoch,
+                      sender: "user",
+                      content: messageController.text,
+                      imageUrl: uploadedImageUrl,
+                      timeCreated: Timestamp.now(),
+                    );
+                    MessageController.I.sendMessage(message, widget.threadId);
+
+                    // Handle camera button press
+                  },
+                ),
+                IconButton(
+                  icon: Image.asset("assets/images/camera_button.png"),
+                  onPressed: () async {
+                    String uploadedImageUrl = await openCameraAndUploadImage();
                     var message = Message(
                       messageId: DateTime.now().millisecondsSinceEpoch,
                       sender: "user",
@@ -192,6 +210,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<String> sendImage() async {
     Uint8List img = await ImageController.I.selectImage();
+    String userId = AuthController.I.currentUser!.uid;
+    String imageNetworkUrl = await ImageController.I.uploadImageToDb(
+        img, "${userId}/${Timestamp.now().millisecondsSinceEpoch}");
+    return imageNetworkUrl;
+  }
+
+  Future<String> openCameraAndUploadImage() async {
+    Uint8List img = await ImageController.I.captureImage();
     String userId = AuthController.I.currentUser!.uid;
     String imageNetworkUrl = await ImageController.I.uploadImageToDb(
         img, "${userId}/${Timestamp.now().millisecondsSinceEpoch}");
