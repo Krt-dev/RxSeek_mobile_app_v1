@@ -68,7 +68,8 @@ class DisclaimerScreen extends StatelessWidget {
                                   child: Text(
                                     "Disclaimer",
                                     style: TextStyle(
-                                        fontSize: 24,
+                                        fontFamily: 'Quicksand',
+                                        fontSize: 31,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -77,21 +78,30 @@ class DisclaimerScreen extends StatelessWidget {
                                   child: Text(
                                     "The information provided by this Language Model (LLM) is for educational and informational purposes only and is not intended as a substitute for diagnosis, or treatment. By using this LLM, you acknowledge that you understand these limitations and agree to consult a qualified healthcare professional for all medical and health-related inquiries. The creators and providers of this LLM are not responsible for any consequences arising from the use or misuse of the information provided. For any questions or concerns about the information provided by this LLM, please contact a licensed healthcare provider.",
                                     textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontFamily: 'SourceSans3',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal),
                                   ),
                                 ),
                                 ElevatedButton(
-                                    onPressed: () {
-                                      GlobalRouter.I.router
-                                          .go(HomeScreenFinal.route);
-                                    },
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          WidgetStateProperty.all(Colors.blue),
-                                    ),
-                                    child: const Text(
-                                      "Understood",
-                                      style: TextStyle(color: Colors.white),
-                                    )),
+                                  onPressed: () {
+                                    GlobalRouter.I.router
+                                        .go(HomeScreenFinal.route);
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        WidgetStateProperty.all(Colors.blue),
+                                  ),
+                                  child: const Text(
+                                    "Understood",
+                                    style: TextStyle(
+                                        fontFamily: 'Quicksand',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

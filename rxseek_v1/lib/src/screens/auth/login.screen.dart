@@ -70,6 +70,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: TextFormField(
                               decoration: decoration.copyWith(
                                   labelText: "Username",
+                                  labelStyle: const TextStyle(
+                                    fontFamily:
+                                        'Quicksand', // Apply Quicksand font to the label
+                                    fontSize: 20, // Adjust font size if needed
+                                    fontWeight:
+                                        FontWeight.bold, // Use regular weight
+                                  ),
                                   prefixIcon: const Icon(Icons.person),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(
@@ -80,6 +87,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   )),
                               focusNode: usernameFn,
                               controller: username,
+                              style: const TextStyle(
+                                fontFamily:
+                                    'Quicksand', // Set custom font family
+                                fontSize: 19, // Adjust font size as desired
+                                fontWeight:
+                                    FontWeight.normal, // Use regular weight
+                              ),
                               onEditingComplete: () {
                                 passwordFn.requestFocus();
                               },
@@ -104,6 +118,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               obscureText: obfuscate,
                               decoration: decoration.copyWith(
                                   labelText: "Password",
+                                  labelStyle: const TextStyle(
+                                    fontFamily:
+                                        'Quicksand', // Apply Quicksand font to the label
+                                    fontSize: 20, // Adjust font size if needed
+                                    fontWeight:
+                                        FontWeight.bold, // Use regular weight
+                                  ),
                                   prefixIcon: const Icon(Icons.password),
                                   suffixIcon: IconButton(
                                       onPressed: () {
@@ -116,6 +137,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                           : CupertinoIcons.eye_slash))),
                               focusNode: passwordFn,
                               controller: password,
+                              style: const TextStyle(
+                                fontFamily:
+                                    'Quicksand', // Set custom font family
+                                fontSize: 19, // Adjust font size as desired
+                                fontWeight:
+                                    FontWeight.normal, // Use regular weight
+                              ),
                               onEditingComplete: () {
                                 passwordFn.unfocus();
 
