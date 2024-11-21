@@ -23,23 +23,53 @@ class ImageController {
   final ImagePicker imagePicker = ImagePicker();
 
   // para mo get og imgae using camera
-
-  captureImage() async {
+//returns the path of the networkAddress of iamge and Imagepath to send in the backend
+  openCameraAndUploadImage() async {
     XFile? image = await imagePicker.pickImage(source: ImageSource.camera);
     if (image != null) {
-      return await image.readAsBytes();
+      //image path is use for sending the image to the backend
+      String imagePath = image.path;
+      Uint8List img = await image.readAsBytes();
+      String userId = AuthController.I.currentUser!.uid;
+      String imageNetworkUrl = await ImageController.I.uploadImageToDb(
+          img, "${userId}/${Timestamp.now().millisecondsSinceEpoch}");
+      return [imageNetworkUrl, imagePath, await image.readAsBytes()];
+    } else {
+      print("No image is selected");
     }
-    print("No image is captured");
   }
 
   // pra mo select images sa gallery
-  selectImage() async {
+  selectandSendImage() async {
     XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      return await image.readAsBytes();
+      //image path is use for sending the image to the backend
+      String imagePath = image.path;
+      Uint8List img = await image.readAsBytes();
+      String userId = AuthController.I.currentUser!.uid;
+      String imageNetworkUrl = await ImageController.I.uploadImageToDb(
+          img, "${userId}/${Timestamp.now().millisecondsSinceEpoch}");
+      return [imageNetworkUrl, imagePath, await image.readAsBytes()];
+    } else {
+      print("No image is selected");
     }
-    print("No image is selected");
   }
+
+  // Future<String> openCameraAndUploadImage() async {
+  //   Uint8List img = await ImageController.I.captureImage();
+  //   String userId = AuthController.I.currentUser!.uid;
+  //   String imageNetworkUrl = await ImageController.I.uploadImageToDb(
+  //       img, "${userId}/${Timestamp.now().millisecondsSinceEpoch}");
+  //   return imageNetworkUrl;
+  // }
+
+  //  Future<String> sendImage() async {
+  //   Uint8List img = await ImageController.I.selectImage();
+  //   String userId = AuthController.I.currentUser!.uid;
+  //   String imageNetworkUrl = await ImageController.I.uploadImageToDb(
+  //       img, "${userId}/${Timestamp.now().millisecondsSinceEpoch}");
+  //   return imageNetworkUrl;
+  // }
 
   uploadImageToDb(Uint8List imageFile, String childName) async {
     Reference _ref = dbStorage.ref().child(childName);

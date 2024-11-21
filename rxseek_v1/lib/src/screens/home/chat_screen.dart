@@ -171,7 +171,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 IconButton(
                   icon: Image.asset("assets/images/upload_image_button.png"),
                   onPressed: () async {
-                    String uploadedImageUrl = await sendImage();
+                    var listOfImageResults =
+                        await ImageController.I.selectandSendImage();
+                    String uploadedImageUrl = listOfImageResults[0];
+
                     var message = Message(
                       messageId: DateTime.now().millisecondsSinceEpoch,
                       sender: "user",
@@ -187,7 +190,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 IconButton(
                   icon: Image.asset("assets/images/camera_button.png"),
                   onPressed: () async {
-                    String uploadedImageUrl = await openCameraAndUploadImage();
+                    var listOfImageResults =
+                        await ImageController.I.openCameraAndUploadImage();
+                    String uploadedImageUrl = listOfImageResults[0];
+
                     var message = Message(
                       messageId: DateTime.now().millisecondsSinceEpoch,
                       sender: "user",
@@ -208,19 +214,5 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Future<String> sendImage() async {
-    Uint8List img = await ImageController.I.selectImage();
-    String userId = AuthController.I.currentUser!.uid;
-    String imageNetworkUrl = await ImageController.I.uploadImageToDb(
-        img, "${userId}/${Timestamp.now().millisecondsSinceEpoch}");
-    return imageNetworkUrl;
-  }
-
-  Future<String> openCameraAndUploadImage() async {
-    Uint8List img = await ImageController.I.captureImage();
-    String userId = AuthController.I.currentUser!.uid;
-    String imageNetworkUrl = await ImageController.I.uploadImageToDb(
-        img, "${userId}/${Timestamp.now().millisecondsSinceEpoch}");
-    return imageNetworkUrl;
-  }
+  final ImagePicker imagePicker = ImagePicker();
 }

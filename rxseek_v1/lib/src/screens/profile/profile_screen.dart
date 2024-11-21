@@ -35,7 +35,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   ChangeProfile() async {
     //pag capture saimage put into an U8intlist type na variable
-    Uint8List img = await ImageController.I.captureImage();
+    var listOfImageResult = await ImageController.I.openCameraAndUploadImage();
+    Uint8List img = listOfImageResult[2];
     String userId = AuthController.I.currentUser!.uid;
     //getting image URL paghuman upload gamit ani na function na ato gebuhat
     String imageNetworkUrl = await ImageController.I
