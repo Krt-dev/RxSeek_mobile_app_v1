@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
+import 'package:http_parser/http_parser.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -7,6 +11,8 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/controllers/message_controller.dart';
+import 'package:rxseek_v1/src/models/message_model.dart';
 
 class ImageController {
   static void initialize() {
@@ -52,6 +58,55 @@ class ImageController {
       return [imageNetworkUrl, imagePath, await image.readAsBytes()];
     } else {
       print("No image is selected");
+    }
+  }
+
+//para get sa message response sa ocr or image then i add lahus sa db ron mabutang sa UI
+  getOcrResponse(String imagePath, String threadId) async {
+    try {
+      File file = File(imagePath);
+
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse("http://10.0.2.2:8000/process_query/"),
+      );
+
+      request.files.add(http.MultipartFile.fromBytes(
+          'file', file.readAsBytesSync(),
+          filename: file.path.split('/').last,
+          contentType: MediaType('image', file.path.split('.').last)));
+
+      //send ang request sa babaw mao ni ang pag make nako sa request diri ang pag send na
+      try {
+        var response = await request.send();
+
+        if (response.statusCode == 200) {
+          var httpResponse = await http.Response.fromStream(response);
+
+          var jsonResponse = jsonDecode(httpResponse.body);
+          Message messageOcrResponse = Message(
+              messageId: DateTime.now().millisecondsSinceEpoch,
+              content: jsonResponse["response"],
+              sender: "system",
+              imageUrl: "",
+              timeCreated: Timestamp.now());
+          //diri pag make para ma add ang response digtos db
+
+          try {
+            MessageController.I.db
+                .collection("Thread")
+                .doc(threadId)
+                .collection("Messages")
+                .add(messageOcrResponse.toJson());
+          } on FirebaseException catch (e) {
+            print({e.toString()});
+          }
+        }
+      } catch (e) {
+        print(e.toString());
+      }
+    } catch (e) {
+      print("failed to generate response:" + e.toString());
     }
   }
 

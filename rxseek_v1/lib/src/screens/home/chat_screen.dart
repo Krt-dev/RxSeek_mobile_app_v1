@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:http_parser/http_parser.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import 'package:rxseek_v1/src/controllers/image_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
 import 'package:rxseek_v1/src/widgets/message_tile.dart';
+import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
   static const String route = "/ChatScreen";
@@ -183,8 +186,11 @@ class _ChatScreenState extends State<ChatScreen> {
                       timeCreated: Timestamp.now(),
                     );
                     MessageController.I.sendMessage(message, widget.threadId);
-
-                    // Handle camera button press
+                    //diri kay function to send the image to the backend then get and response nya i send sa db then butang sa frontend
+                    if (listOfImageResults[1] != null) {
+                      ImageController.I.getOcrResponse(
+                          listOfImageResults[1], widget.threadId);
+                    }
                   },
                 ),
                 IconButton(
@@ -201,9 +207,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       imageUrl: uploadedImageUrl,
                       timeCreated: Timestamp.now(),
                     );
+                    //sent the image to the db to put in Frontend
                     MessageController.I.sendMessage(message, widget.threadId);
-
-                    // Handle camera button press
+                    //diri kay function to send the image to the backend then get and response nya i send sa db then butang sa frontend
+                    if (listOfImageResults[1] != null) {
+                      ImageController.I.getOcrResponse(
+                          listOfImageResults[1], widget.threadId);
+                    }
                   },
                 ),
               ],
