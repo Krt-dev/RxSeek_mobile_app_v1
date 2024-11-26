@@ -43,7 +43,11 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (snapshot.hasData && snapshot.data != null) {
                         return Text(
-                            "Hi, ${snapshot.data!.firstName} ${snapshot.data!.lastName}");
+                          "Hi, ${snapshot.data!.firstName} ${snapshot.data!.lastName}",
+                          style: const TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.w500),
+                        );
                       } else {
                         return const Center(child: Text('No User is found'));
                       }
@@ -54,9 +58,10 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                   child: Text(
                     "How may I help you today?",
                     style: TextStyle(
-                      color: Color(0xff37B1B8),
-                      fontSize: 24,
-                    ),
+                        color: Color(0xff37B1B8),
+                        fontSize: 24,
+                        fontFamily: 'Quicksand',
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
                 //buttons
@@ -108,7 +113,8 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 32,
-                                        fontWeight: FontWeight.w300),
+                                        fontFamily: 'Quicksand',
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ),
                               ],
@@ -152,7 +158,10 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                     const Text(
                                       "Saved\n Chats",
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 13),
+                                          color: Colors.white,
+                                          fontSize: 13,
+                                          fontFamily: 'Quicksand',
+                                          fontWeight: FontWeight.w600),
                                     )
                                   ],
                                 ),
@@ -178,7 +187,10 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                   ),
                                   const Text("Query With\n Image",
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 13))
+                                          color: Colors.white,
+                                          fontSize: 13,
+                                          fontFamily: 'Quicksand',
+                                          fontWeight: FontWeight.w600))
                                 ],
                               ),
                             ),
@@ -200,14 +212,17 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
               color: Colors.white,
               padding: const EdgeInsets.only(top: 15),
               width: 340,
-              height: 670,
+              height: 720,
               child: Column(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(right: 285),
+                    padding: EdgeInsets.only(right: 255, bottom: 20),
                     child: Text(
                       "Chats",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'Quicksand',
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
                   Consumer<UserInterfaceController>(
@@ -247,9 +262,13 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                     child: Text("All",
                                         style: button.recent
                                             ? const TextStyle(
-                                                color: Colors.black)
+                                                color: Colors.black,
+                                                fontFamily: 'Quicksand',
+                                                fontWeight: FontWeight.w600)
                                             : const TextStyle(
-                                                color: Colors.white))),
+                                                color: Colors.white,
+                                                fontFamily: 'Quicksand',
+                                                fontWeight: FontWeight.w600))),
                               ),
                             ),
                             Padding(
@@ -288,8 +307,14 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                       child: Text(
                                     "Recent",
                                     style: button.recent
-                                        ? const TextStyle(color: Colors.white)
-                                        : const TextStyle(color: Colors.black),
+                                        ? const TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Quicksand',
+                                            fontWeight: FontWeight.w600)
+                                        : const TextStyle(
+                                            color: Colors.black,
+                                            fontFamily: 'Quicksand',
+                                            fontWeight: FontWeight.w600),
                                   )),
                                 ),
                               ),
@@ -317,7 +342,12 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                             if (!snapshot.hasData ||
                                 snapshot.data!.docs.isEmpty) {
                               return const Center(
-                                  child: Text('No messages found'));
+                                  child: Text(
+                                'No messages yet',
+                                style: TextStyle(
+                                    fontFamily: 'Quicksand',
+                                    fontWeight: FontWeight.w600),
+                              ));
                             }
 
                             List<Thread>? threads =
