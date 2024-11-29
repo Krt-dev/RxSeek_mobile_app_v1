@@ -28,6 +28,7 @@ class ThreadTile extends StatelessWidget {
       separatorBuilder: (context, index) => const Divider(),
       itemBuilder: (context, index) {
         return Slidable(
+          key: ValueKey(threads![index].threadId),
           startActionPane: ActionPane(
               extentRatio: 0.3,
               motion: const ScrollMotion(),

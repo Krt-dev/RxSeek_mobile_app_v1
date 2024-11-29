@@ -90,7 +90,7 @@ class ImageController {
               sender: "system",
               imageUrl: "",
               timeCreated: Timestamp.now());
-          //diri pag make para ma add ang response digtos db
+          //diri pag make message object with contents sa response para ma add ang response digtos db
 
           try {
             MessageController.I.db

@@ -84,7 +84,7 @@ class MessageController with ChangeNotifier {
           .collection("Thread")
           .doc(threadId)
           .collection("Messages")
-          .orderBy("timeCreated", descending: false)
+          .orderBy("timeCreated")
           .snapshots();
     } on FirebaseException catch (e) {
       print({e.toString()});

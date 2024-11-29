@@ -113,11 +113,13 @@ class _SaveThreadScreenState extends State<SaveThreadScreen> {
                       return Thread.fromJson(
                           doc.data() as Map<String, dynamic>);
                     }).toList();
+                    //reversing the list
+                    List<Thread>? reversedThreads = threads.reversed.toList();
 
                     return Consumer<UserInterfaceController>(
                       builder: (context, button, child) {
                         return ThreadTile(
-                          threads: threads,
+                          threads: reversedThreads,
                           recent: button.recent,
                         );
                       },
