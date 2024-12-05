@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
+import 'package:rxseek_v1/src/controllers/image_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
+import 'package:rxseek_v1/src/models/message_model.dart';
 import 'package:rxseek_v1/src/models/thread_model.dart';
 import 'package:rxseek_v1/src/models/user_model.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
@@ -175,31 +177,69 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                 ),
                               ),
                             ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 15),
-                              decoration: BoxDecoration(
-                                  color: const Color(0xff37B1B8),
-                                  borderRadius: BorderRadius.circular(20)),
-                              height: 120,
-                              width: 115,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 60),
-                                    child: Image.asset(
-                                        "assets/images/chat_with_image_icon.png"),
-                                  ),
-                                  const Text("Query With\n Image",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13,
-                                          fontFamily: 'Quicksand',
-                                          fontWeight: FontWeight.w600))
-                                ],
+                            InkWell(
+                              onTap: () async {
+                                Thread newThread = Thread(
+                                    threadId: DateTime.now()
+                                        .millisecondsSinceEpoch
+                                        .toString(),
+                                    threadName: "",
+                                    save: false,
+                                    userId: AuthController.I.currentUser!.uid,
+                                    timeCreated: Timestamp.now());
+
+                                await MessageController.I
+                                    .createNewThread(newThread);
+                                GlobalRouter.I.router.go(
+                                    "${ChatScreen.route}/${newThread.threadId}");
+
+                                var listOfImageResults = await ImageController.I
+                                    .selectandSendImage();
+                                String uploadedImageUrl = listOfImageResults[0];
+
+                                var message = Message(
+                                  messageId:
+                                      DateTime.now().millisecondsSinceEpoch,
+                                  sender: "user",
+                                  content: "",
+                                  imageUrl: uploadedImageUrl,
+                                  timeCreated: Timestamp.now(),
+                                );
+                                MessageController.I
+                                    .sendMessage(message, newThread.threadId);
+                                //diri kay function to send the image to the backend then get and response nya i send sa db then butang sa frontend
+                                if (listOfImageResults[1] != null) {
+                                  ImageController.I.getOcrResponse(
+                                      listOfImageResults[1],
+                                      newThread.threadId);
+                                }
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff37B1B8),
+                                    borderRadius: BorderRadius.circular(20)),
+                                height: 120,
+                                width: 115,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 60),
+                                      child: Image.asset(
+                                          "assets/images/chat_with_image_icon.png"),
+                                    ),
+                                    const Text("Query With\n Image",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontFamily: 'Quicksand',
+                                            fontWeight: FontWeight.w600))
+                                  ],
+                                ),
                               ),
                             ),
                           ],
