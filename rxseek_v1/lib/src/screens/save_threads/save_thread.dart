@@ -4,6 +4,7 @@ import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
 import 'package:rxseek_v1/src/models/thread_model.dart';
+import 'package:rxseek_v1/src/widgets/chat_button_history.dart';
 import 'package:rxseek_v1/src/widgets/thread_tile.dart';
 
 class SaveThreadScreen extends StatefulWidget {
@@ -25,74 +26,7 @@ class _SaveThreadScreenState extends State<SaveThreadScreen> {
             "Saved Chats\n",
             style: TextStyle(color: Colors.black, fontSize: 20),
           ),
-          Consumer<UserInterfaceController>(builder: (context, button, child) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 70, bottom: 15),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Provider.of<UserInterfaceController>(context,
-                                listen: false)
-                            .handleTapAlllButton();
-                        print("tapped All");
-                      },
-                      child: Container(
-                        width: 65,
-                        height: 30,
-                        decoration: button.recent
-                            ? const BoxDecoration(
-                                border: Border.symmetric(
-                                    vertical: BorderSide(
-                                        style: BorderStyle.solid, width: 1),
-                                    horizontal: BorderSide(
-                                        style: BorderStyle.solid, width: 1)),
-                                color: Colors.white)
-                            : const BoxDecoration(color: Colors.blue),
-                        child: Center(
-                            child: Text("All",
-                                style: button.recent
-                                    ? const TextStyle(color: Colors.black)
-                                    : const TextStyle(color: Colors.white))),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 50, right: 50.0),
-                      child: InkWell(
-                        onTap: () {
-                          Provider.of<UserInterfaceController>(context,
-                                  listen: false)
-                              .handleTapRecentButton();
-
-                          print("tapped Recent");
-                        },
-                        child: Container(
-                          width: 65,
-                          height: 30,
-                          decoration: button.recent
-                              ? const BoxDecoration(color: Colors.blue)
-                              : const BoxDecoration(
-                                  border: Border.symmetric(
-                                      vertical: BorderSide(
-                                          style: BorderStyle.solid, width: 1),
-                                      horizontal: BorderSide(
-                                          style: BorderStyle.solid, width: 1)),
-                                  color: Colors.white),
-                          child: Center(
-                              child: Text(
-                            "Recent",
-                            style: button.recent
-                                ? const TextStyle(color: Colors.white)
-                                : const TextStyle(color: Colors.black),
-                          )),
-                        ),
-                      ),
-                    ),
-                    Image.asset("assets/images/search_icon.png")
-                  ]),
-            );
-          }),
+          const ChatButtonHistory(),
           Center(
             child: SizedBox(
                 height: 500,

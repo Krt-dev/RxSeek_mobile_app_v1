@@ -22,16 +22,16 @@ class ThreadTile extends StatelessWidget {
 
       return ListView.separated(
         itemCount: recent
-            ? finalThreads!.length > 10
+            ? finalThreads.length > 10
                 ? 10
-                : finalThreads!.length
-            : finalThreads!.length,
+                : finalThreads.length
+            : finalThreads.length,
         // itemCount: threads!.length > 10 ? 10 : threads!.length,
 
         separatorBuilder: (context, index) => const Divider(),
         itemBuilder: (context, index) {
           return Slidable(
-            key: ValueKey(finalThreads![index].threadId),
+            key: ValueKey(finalThreads[index].threadId),
             startActionPane: ActionPane(
                 extentRatio: 0.3,
                 motion: const ScrollMotion(),
@@ -52,7 +52,7 @@ class ThreadTile extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       MessageController.I
-                          .deleteThread(finalThreads![index].threadId);
+                          .deleteThread(finalThreads[index].threadId);
                       // ignore: avoid_print
                       print("deleted Thread");
                     },
@@ -64,7 +64,7 @@ class ThreadTile extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   GlobalRouter.I.router.go(
-                      "${ChatScreen.route}/${finalThreads![index].threadId}");
+                      "${ChatScreen.route}/${finalThreads[index].threadId}");
                 },
                 child: Container(
                   height: 91,
@@ -77,8 +77,8 @@ class ThreadTile extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10, left: 200),
                       child: Text(
                         convertToNotMilitaryTime(
-                            finalThreads![index].timeCreated.toDate().hour,
-                            finalThreads![index].timeCreated.toDate().minute),
+                            finalThreads[index].timeCreated.toDate().hour,
+                            finalThreads[index].timeCreated.toDate().minute),
                         style: const TextStyle(
                             fontSize: 13,
                             color: Colors.white,
@@ -87,9 +87,9 @@ class ThreadTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      finalThreads![index].threadName.length > 20
-                          ? "${finalThreads![index].threadName.substring(0, 20)}...?"
-                          : finalThreads![index].threadName,
+                      finalThreads[index].threadName.length > 20
+                          ? "${finalThreads[index].threadName.substring(0, 20)}...?"
+                          : finalThreads[index].threadName,
                       style: const TextStyle(
                           fontSize: 24,
                           color: Colors.white,
