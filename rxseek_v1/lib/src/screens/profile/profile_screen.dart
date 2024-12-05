@@ -172,16 +172,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               title: const Text("Settings"),
             ),
-            ListTile(
-              leading: const Icon(
+            const ListTile(
+              leading: Icon(
                 Icons.info_outline,
                 color: Colors.blue,
               ),
-              title: const Text(
+              title: Text(
                 "FAQs",
               ),
               textColor: Colors.black,
-              onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),

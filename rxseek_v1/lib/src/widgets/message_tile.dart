@@ -50,8 +50,11 @@ class MessageWidget extends StatelessWidget {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                              return const CircleAvatar(
+                                radius: 20,
+                                backgroundImage: AssetImage(
+                                    "assets/images/profile_default.jpg"),
+                              );
                             } else if (snapshot.hasError) {
                               return Center(
                                   child: Text('Error: ${snapshot.error}'));
@@ -71,10 +74,9 @@ class MessageWidget extends StatelessWidget {
                               );
                             } else {
                               return const CircleAvatar(
-                                radius: 20,
-                                backgroundImage: NetworkImage(
-                                    "assets/images/sampleProfile.png"),
-                              );
+                                  radius: 20,
+                                  backgroundImage: AssetImage(
+                                      "assets/images/profile_default.jpg"));
                             }
                           }),
                     ],
