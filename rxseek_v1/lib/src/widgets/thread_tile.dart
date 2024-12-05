@@ -17,87 +17,177 @@ class ThreadTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: recent
-          ? threads!.length > 10
-              ? 10
-              : threads!.length
-          : threads!.length,
-      // itemCount: threads!.length > 10 ? 10 : threads!.length,
+    if (recent) {
+      var finalThreads = threads!.reversed.toList();
 
-      separatorBuilder: (context, index) => const Divider(),
-      itemBuilder: (context, index) {
-        return Slidable(
-          key: ValueKey(threads![index].threadId),
-          startActionPane: ActionPane(
-              extentRatio: 0.3,
-              motion: const ScrollMotion(),
-              children: [
-                InkWell(
+      return ListView.separated(
+        itemCount: recent
+            ? finalThreads!.length > 10
+                ? 10
+                : finalThreads!.length
+            : finalThreads!.length,
+        // itemCount: threads!.length > 10 ? 10 : threads!.length,
+
+        separatorBuilder: (context, index) => const Divider(),
+        itemBuilder: (context, index) {
+          return Slidable(
+            key: ValueKey(finalThreads![index].threadId),
+            startActionPane: ActionPane(
+                extentRatio: 0.3,
+                motion: const ScrollMotion(),
+                children: [
+                  InkWell(
+                      onTap: () {
+                        MessageController.I
+                            .saveThread(threads![index].threadId);
+                        // ignore: avoid_print
+                        print("save Thread");
+                      },
+                      child: Image.asset("assets/images/save_button.png")),
+                ]),
+            endActionPane: ActionPane(
+                extentRatio: 0.3,
+                motion: const ScrollMotion(),
+                children: [
+                  InkWell(
                     onTap: () {
-                      MessageController.I.saveThread(threads![index].threadId);
+                      MessageController.I
+                          .deleteThread(finalThreads![index].threadId);
                       // ignore: avoid_print
-                      print("save Thread");
+                      print("deleted Thread");
                     },
-                    child: Image.asset("assets/images/save_button.png")),
-              ]),
-          endActionPane: ActionPane(
-              extentRatio: 0.3,
-              motion: const ScrollMotion(),
-              children: [
-                InkWell(
-                  onTap: () {
-                    MessageController.I.deleteThread(threads![index].threadId);
-                    // ignore: avoid_print
-                    print("deleted Thread");
-                  },
-                  child: Image.asset("assets/images/delete_button.png"),
-                ),
-              ]),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: InkWell(
-              onTap: () {
-                GlobalRouter.I.router
-                    .go("${ChatScreen.route}/${threads![index].threadId}");
-              },
-              child: Container(
-                height: 91,
-                width: 340,
-                decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 1, 65, 117),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 200),
-                    child: Text(
-                      convertToNotMilitaryTime(
-                          threads![index].timeCreated.toDate().hour,
-                          threads![index].timeCreated.toDate().minute),
-                      style: const TextStyle(
-                          fontSize: 13,
-                          color: Colors.white,
-                          fontFamily: 'Quicksand',
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ),
-                  Text(
-                    threads![index].threadName.length > 20
-                        ? "${threads![index].threadName.substring(0, 20)}...?"
-                        : threads![index].threadName,
-                    style: const TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontFamily: 'Quicksand',
-                        fontWeight: FontWeight.w400),
+                    child: Image.asset("assets/images/delete_button.png"),
                   ),
                 ]),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: InkWell(
+                onTap: () {
+                  GlobalRouter.I.router.go(
+                      "${ChatScreen.route}/${finalThreads![index].threadId}");
+                },
+                child: Container(
+                  height: 91,
+                  width: 340,
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 1, 65, 117),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 200),
+                      child: Text(
+                        convertToNotMilitaryTime(
+                            finalThreads![index].timeCreated.toDate().hour,
+                            finalThreads![index].timeCreated.toDate().minute),
+                        style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.white,
+                            fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                    Text(
+                      finalThreads![index].threadName.length > 20
+                          ? "${finalThreads![index].threadName.substring(0, 20)}...?"
+                          : finalThreads![index].threadName,
+                      style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                          fontFamily: 'Quicksand',
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ]),
+                ),
               ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    } else {
+      return ListView.separated(
+        itemCount: recent
+            ? threads!.length > 10
+                ? 10
+                : threads!.length
+            : threads!.length,
+        // itemCount: threads!.length > 10 ? 10 : threads!.length,
+
+        separatorBuilder: (context, index) => const Divider(),
+        itemBuilder: (context, index) {
+          return Slidable(
+            key: ValueKey(threads![index].threadId),
+            startActionPane: ActionPane(
+                extentRatio: 0.3,
+                motion: const ScrollMotion(),
+                children: [
+                  InkWell(
+                      onTap: () {
+                        MessageController.I
+                            .saveThread(threads![index].threadId);
+                        // ignore: avoid_print
+                        print("save Thread");
+                      },
+                      child: Image.asset("assets/images/save_button.png")),
+                ]),
+            endActionPane: ActionPane(
+                extentRatio: 0.3,
+                motion: const ScrollMotion(),
+                children: [
+                  InkWell(
+                    onTap: () {
+                      MessageController.I
+                          .deleteThread(threads![index].threadId);
+                      // ignore: avoid_print
+                      print("deleted Thread");
+                    },
+                    child: Image.asset("assets/images/delete_button.png"),
+                  ),
+                ]),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: InkWell(
+                onTap: () {
+                  GlobalRouter.I.router
+                      .go("${ChatScreen.route}/${threads![index].threadId}");
+                },
+                child: Container(
+                  height: 91,
+                  width: 340,
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 1, 65, 117),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 200),
+                      child: Text(
+                        convertToNotMilitaryTime(
+                            threads![index].timeCreated.toDate().hour,
+                            threads![index].timeCreated.toDate().minute),
+                        style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.white,
+                            fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                    Text(
+                      threads![index].threadName.length > 20
+                          ? "${threads![index].threadName.substring(0, 20)}...?"
+                          : threads![index].threadName,
+                      style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                          fontFamily: 'Quicksand',
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
   }
 
   String convertToNotMilitaryTime(int hour, int minute) {

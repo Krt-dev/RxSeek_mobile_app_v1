@@ -25,8 +25,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
         leadingWidth: 50,
         leading: InkWell(
           onTap: () {
-            //for testing rani para maka route padung profile page
-            GlobalRouter.I.router.go(ProfileScreen.route);
+            GlobalRouter.I.router.go(HomeScreenFinal.route);
           },
           child: Image.asset("assets/images/burger_button.png"),
         ),

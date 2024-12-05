@@ -38,7 +38,14 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                         .getUser(AuthController.I.currentUser!.uid),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child: SizedBox(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                          ),
+                        ));
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (snapshot.hasData && snapshot.data != null) {
@@ -356,12 +363,11 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                   doc.data() as Map<String, dynamic>);
                             }).toList();
                             //reversing the list
-                            List<Thread>? reversedThreads =
-                                threads.reversed.toList();
+
                             return Consumer<UserInterfaceController>(
                               builder: (context, button, child) {
                                 return ThreadTile(
-                                  threads: reversedThreads,
+                                  threads: threads,
                                   recent: button.recent,
                                 );
                               },
