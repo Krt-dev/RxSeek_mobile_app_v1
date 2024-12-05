@@ -90,7 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     return Message.fromJson(doc.data() as Map<String, dynamic>);
                   }).toList();
 
-                  if (messages.isNotEmpty && messages.length == 1) {
+                  if (messages.isNotEmpty && messages.length == 2) {
                     MessageController.I
                         .updateThreadName(widget.threadId, messages);
                   }
@@ -143,28 +143,33 @@ class _ChatScreenState extends State<ChatScreen> {
                         IconButton(
                           icon: Image.asset("assets/images/send_button.png"),
                           onPressed: () {
-                            var message = Message(
-                              messageId: DateTime.now().millisecondsSinceEpoch,
-                              sender: "user",
-                              content: messageController.text,
-                              imageUrl: "",
-                              timeCreated: Timestamp.now(),
-                            );
-                            MessageController.I
-                                .sendMessage(message, widget.threadId);
-                            // scrollController.animateTo(
-                            //     scrollController.position.maxScrollExtent,
-                            //     duration: const Duration(milliseconds: 300),
-                            //     curve: Curves.easeOut);
-                            messageController.clear();
-                            MessageController.I
-                                .getMessageReponse(message, widget.threadId);
-                            // Future.delayed(const Duration(seconds: 8), () {
-                            //   scrollController.animateTo(
-                            //       scrollController.position.maxScrollExtent,
-                            //       duration: const Duration(seconds: 3),
-                            //       curve: Curves.easeOut);
-                            // });
+                            if (messageController.text.isNotEmpty) {
+                              var message = Message(
+                                messageId:
+                                    DateTime.now().millisecondsSinceEpoch,
+                                sender: "user",
+                                content: messageController.text,
+                                imageUrl: "",
+                                timeCreated: Timestamp.now(),
+                              );
+
+                              MessageController.I
+                                  .sendMessage(message, widget.threadId);
+                              // scrollController.animateTo(
+                              //     scrollController.position.maxScrollExtent,
+                              //     duration: const Duration(milliseconds: 300),
+                              //     curve: Curves.easeOut);
+
+                              messageController.clear();
+                              MessageController.I
+                                  .getMessageReponse(message, widget.threadId);
+                              // Future.delayed(const Duration(seconds: 8), () {
+                              //   scrollController.animateTo(
+                              //       scrollController.position.maxScrollExtent,
+                              //       duration: const Duration(seconds: 3),
+                              //       curve: Curves.easeOut);
+                              // });
+                            }
                           },
                         ),
                       ],

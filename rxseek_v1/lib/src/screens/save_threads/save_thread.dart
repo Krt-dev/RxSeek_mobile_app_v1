@@ -93,38 +93,41 @@ class _SaveThreadScreenState extends State<SaveThreadScreen> {
                   ]),
             );
           }),
-          SizedBox(
-              height: 500,
-              child: StreamBuilder(
-                  stream: MessageController.I
-                      .getSavedThreads(AuthController.I.currentUser!.uid),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    }
-                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return const Center(child: Text('No messages found'));
-                    }
+          Center(
+            child: SizedBox(
+                height: 500,
+                width: 350,
+                child: StreamBuilder(
+                    stream: MessageController.I
+                        .getSavedThreads(AuthController.I.currentUser!.uid),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return const Center(child: Text('No messages found'));
+                      }
 
-                    List<Thread>? threads = snapshot.data!.docs.map((doc) {
-                      return Thread.fromJson(
-                          doc.data() as Map<String, dynamic>);
-                    }).toList();
-                    //reversing the list
-                    List<Thread>? reversedThreads = threads.reversed.toList();
+                      List<Thread>? threads = snapshot.data!.docs.map((doc) {
+                        return Thread.fromJson(
+                            doc.data() as Map<String, dynamic>);
+                      }).toList();
+                      //reversing the list
+                      List<Thread>? reversedThreads = threads.reversed.toList();
 
-                    return Consumer<UserInterfaceController>(
-                      builder: (context, button, child) {
-                        return ThreadTile(
-                          threads: reversedThreads,
-                          recent: button.recent,
-                        );
-                      },
-                    );
-                  }))
+                      return Consumer<UserInterfaceController>(
+                        builder: (context, button, child) {
+                          return ThreadTile(
+                            threads: reversedThreads,
+                            recent: button.recent,
+                          );
+                        },
+                      );
+                    })),
+          )
         ],
       ),
     );

@@ -140,7 +140,7 @@ class MessageController with ChangeNotifier {
       MessageController.I.db
           .collection("Thread")
           .doc(threadId)
-          .update({"threadName": messages[0].content});
+          .update({"threadName": messages[1].content});
     } on FirebaseException catch (e) {
       print(e.toString());
       rethrow;
