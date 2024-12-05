@@ -97,15 +97,15 @@ class _ChatScreenState extends State<ChatScreen> {
 
                   return ListView.builder(
                     itemCount: messages.length,
-                    // controller: scrollController,
+                    controller: scrollController,
                     itemBuilder: (context, index) {
                       final message = messages[index];
-                      // Future.delayed(const Duration(seconds: 2), () {
-                      //   scrollController.animateTo(
-                      //       scrollController.position.maxScrollExtent,
-                      //       duration: const Duration(seconds: 1),
-                      //       curve: Curves.easeOut);
-                      // });
+                      Future.delayed(const Duration(seconds: 2), () {
+                        scrollController.animateTo(
+                            scrollController.position.maxScrollExtent,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeOut);
+                      });
                       return MessageWidget(message: message);
                     },
                   );

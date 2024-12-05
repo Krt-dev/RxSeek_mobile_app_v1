@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/image_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
+import 'package:rxseek_v1/src/routing/router.dart';
+import 'package:rxseek_v1/src/screens/save_threads/save_thread.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -147,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return ListView(
           controller: scrollController,
           children: [
-            ExpansionTile(
+            ListTile(
               leading: const Icon(
                 Icons.bookmark_outline,
                 color: Colors.blue,
@@ -157,19 +159,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 side: const BorderSide(width: 0, color: Colors.transparent),
               ),
               title: const Text("Saved Chats"),
-              children: const [
-                ListTile(
-                  title: Text("Samples rani"),
-                ),
-                ListTile(
-                  title: Text("Samples rani"),
-                ),
-                ListTile(
-                  title: Text("Samples rani"),
-                )
-              ],
+              onTap: () => GlobalRouter.I.router.go(SaveThreadScreen.route),
             ),
-            ExpansionTile(
+            ListTile(
               leading: const Icon(
                 Icons.settings,
                 color: Colors.blue,
@@ -179,39 +171,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 side: const BorderSide(width: 0, color: Colors.transparent),
               ),
               title: const Text("Settings"),
-              children: const [
-                ListTile(
-                  title: Text("Samples rani"),
-                ),
-                ListTile(
-                  title: Text("Samples rani"),
-                ),
-                ListTile(
-                  title: Text("Samples rani"),
-                )
-              ],
             ),
-            ExpansionTile(
+            ListTile(
               leading: const Icon(
                 Icons.info_outline,
                 color: Colors.blue,
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: const BorderSide(width: 0, color: Colors.transparent),
+              title: const Text(
+                "FAQs",
               ),
-              title: const Text("FAQs"),
-              children: const [
-                ListTile(
-                  title: Text("Samples rani"),
-                ),
-                ListTile(
-                  title: Text("Samples rani"),
-                ),
-                ListTile(
-                  title: Text("Samples rani"),
-                )
-              ],
+              textColor: Colors.black,
+              onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
