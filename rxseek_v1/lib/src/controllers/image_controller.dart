@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
+import 'package:path/path.dart' as path;
 
 class ImageController {
   static void initialize() {
@@ -62,6 +63,7 @@ class ImageController {
   }
 
 //para get sa message response sa ocr or image then i add lahus sa db ron mabutang sa UI
+  //para get sa message response sa ocr or image then i add lahus sa db ron mabutang sa UI
   getOcrResponse(String imagePath, String threadId) async {
     try {
       File file = File(imagePath);
@@ -72,7 +74,7 @@ class ImageController {
       );
 
       request.files.add(http.MultipartFile.fromBytes(
-          'file', file.readAsBytesSync(),
+          'image', file.readAsBytesSync(),
           filename: file.path.split('/').last,
           contentType: MediaType('image', file.path.split('.').last)));
 
