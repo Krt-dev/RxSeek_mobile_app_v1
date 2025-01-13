@@ -41,7 +41,7 @@ class DisclaimerScreen extends StatelessWidget {
             // ),
             const SizedBox(height: 50),
             SizedBox(
-              width: 400, // Set the desired width
+              width: 300, // Set the desired width
               height: 70,
               child: ElevatedButton(
                   style: ButtonStyle(
