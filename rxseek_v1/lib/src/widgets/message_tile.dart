@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class MessageWidget extends StatelessWidget {
   final Message message;
@@ -66,8 +67,9 @@ class MessageWidget extends StatelessWidget {
                                       builder: (context, button, child) {
                                     return CircleAvatar(
                                       radius: 20,
-                                      backgroundImage: NetworkImage(
-                                          snapshot.data!.profileUrl),
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                              snapshot.data!.profileUrl),
                                     );
                                   }),
                                 ],
@@ -87,7 +89,7 @@ class MessageWidget extends StatelessWidget {
                     children: [
                       const CircleAvatar(
                         radius: 20,
-                        backgroundImage: NetworkImage(
+                        backgroundImage: CachedNetworkImageProvider(
                             "https://firebasestorage.googleapis.com/v0/b/rxseek-b60ba.appspot.com/o/profileImage%2FsystemProfile.png?alt=media&token=29ac9f84-e001-45c8-b37f-764033e9724c"),
                       ),
                       Container(
@@ -143,7 +145,8 @@ class MessageWidget extends StatelessWidget {
                             ),
                           ],
                           image: DecorationImage(
-                              image: NetworkImage(message.imageUrl),
+                              image:
+                                  CachedNetworkImageProvider(message.imageUrl),
                               fit: BoxFit.cover),
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -172,8 +175,9 @@ class MessageWidget extends StatelessWidget {
                                       builder: (context, button, child) {
                                     return CircleAvatar(
                                       radius: 20,
-                                      backgroundImage: NetworkImage(
-                                          snapshot.data!.profileUrl),
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                              snapshot.data!.profileUrl),
                                     );
                                   }),
                                 ],
@@ -194,7 +198,7 @@ class MessageWidget extends StatelessWidget {
                     children: [
                       const CircleAvatar(
                         radius: 20,
-                        backgroundImage: NetworkImage(
+                        backgroundImage: CachedNetworkImageProvider(
                             "https://firebasestorage.googleapis.com/v0/b/rxseek-b60ba.appspot.com/o/profileImage%2FsystemProfile.png?alt=media&token=29ac9f84-e001-45c8-b37f-764033e9724c"),
                       ),
                       Container(
