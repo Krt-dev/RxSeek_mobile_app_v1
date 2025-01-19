@@ -5,6 +5,7 @@ import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
 import "package:rxseek_v1/src/controllers/auth_controller.dart";
 import "package:rxseek_v1/src/enum/enum.dart";
+import "package:rxseek_v1/src/screens/auth/change_password_screen.dart";
 import "package:rxseek_v1/src/screens/disclaimer/disclaimer_screen.dart";
 import "package:rxseek_v1/src/screens/home/chat_screen.dart";
 import "package:rxseek_v1/src/screens/auth/login.screen.dart";
@@ -113,6 +114,13 @@ class GlobalRouter {
               name: DisclaimerScreen.name,
               builder: (context, _) {
                 return const DisclaimerScreen();
+              }),
+          GoRoute(
+              parentNavigatorKey: _rootNavigatorKey,
+              path: ChangePasswordScreen.route,
+              name: ChangePasswordScreen.name,
+              builder: (context, _) {
+                return const ChangePasswordScreen();
               }),
           ShellRoute(
               navigatorKey: _shellNavigatorKey,

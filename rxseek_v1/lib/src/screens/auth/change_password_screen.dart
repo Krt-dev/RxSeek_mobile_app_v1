@@ -6,16 +6,16 @@ import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/auth/login.screen.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  static const String route = "/register";
-  static const String name = "Registration Screen";
-  const RegistrationScreen({super.key});
+class ChangePasswordScreen extends StatefulWidget {
+  static const String route = "/changepass";
+  static const String name = "Change Password Screen";
+  const ChangePasswordScreen({super.key});
 
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   late GlobalKey<FormState> formKey;
   late TextEditingController username,
       password,
