@@ -107,26 +107,27 @@ class AuthController with ChangeNotifier {
       rethrow;
     }
   }
-}
 
-Future<void> changePassword(String currentPassword, String newPassword) async {
-  final user = FirebaseAuth.instance.currentUser;
+  Future<void> changePassword(
+      String currentPassword, String newPassword) async {
+    final user = FirebaseAuth.instance.currentUser;
 
-  if (user == null) {
-    print('No user is signed in');
-    return;
-  }
+    if (user == null) {
+      print('No user is signed in');
+      return;
+    }
 
-  try {
-    final cred = EmailAuthProvider.credential(
-        email: user.email.toString(), password: currentPassword);
+    try {
+      // final cred = EmailAuthProvider.credential(
+      //     email: user.email.toString(), password: currentPassword);
 
-    await user.reauthenticateWithCredential(cred);
+      // await user.reauthenticateWithCredential(cred);
 
-    await user.updatePassword(newPassword);
-    // Password updated successfully
-    print('Password updated successfully');
-  } catch (e) {
-    print('Error updating password: ${e.toString()}');
+      await user.updatePassword(newPassword);
+      // Password updated successfully
+      print('Password updated successfully');
+    } catch (e) {
+      print('Error updating password: ${e.toString()}');
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/auth/login.screen.dart';
+import 'package:rxseek_v1/src/screens/profile/profile_screen.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   static const String route = "/changepass";
@@ -63,7 +64,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             child: Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/signup screen.png"),
+                      image: AssetImage(
+                          "assets/images/change_password_background.png"),
                       fit: BoxFit.cover)),
               padding: const EdgeInsets.only(top: 220, left: 16, right: 16),
               alignment: Alignment.center,
@@ -78,7 +80,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: obfuscate,
                         decoration: decoration.copyWith(
-                            labelText: "Password",
+                            labelText: "Current Password",
                             prefixIcon: const Icon(Icons.password),
                             suffixIcon: IconButton(
                                 onPressed: () {
@@ -94,28 +96,18 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         onEditingComplete: () {
                           currentPasswordfn.requestFocus();
                         },
-                        validator: MultiValidator([
-                          RequiredValidator(errorText: "Password is required"),
-                          MinLengthValidator(12,
-                              errorText:
-                                  "Password must be at least 12 characters long"),
-                          MaxLengthValidator(128,
-                              errorText:
-                                  "Password cannot exceed 72 characters"),
-                          PatternValidator(
-                              r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+?\-=[\]{};':,.<>]).*$",
-                              errorText:
-                                  'Password must contain at least one symbol, one uppercase letter, one lowercase letter, and one number.')
-                        ]).call,
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     //new password start diri
                     Flexible(
                       child: TextFormField(
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: obfuscate,
                         decoration: decoration.copyWith(
-                            labelText: "Password",
+                            labelText: "New Password",
                             prefixIcon: const Icon(Icons.password),
                             suffixIcon: IconButton(
                                 onPressed: () {
@@ -126,10 +118,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 icon: Icon(obfuscate
                                     ? Icons.remove_red_eye_rounded
                                     : CupertinoIcons.eye_slash))),
-                        focusNode: passwordFn,
-                        controller: password,
+                        focusNode: newPasswordfn,
+                        controller: newPassword,
                         onEditingComplete: () {
-                          password2Fn.requestFocus();
+                          newPasswordfn.requestFocus();
 
                           ///call submit maybe?
                         },
@@ -149,14 +141,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       ),
                     ),
                     const SizedBox(
-                      height: 8,
+                      height: 15,
                     ),
                     Flexible(
                       child: TextFormField(
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: obfuscate,
                           decoration: decoration.copyWith(
-                              labelText: "Confirm Password",
+                              labelText: "Confirm New Password",
                               prefixIcon: const Icon(Icons.password),
                               suffixIcon: IconButton(
                                   onPressed: () {
@@ -167,14 +159,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                   icon: Icon(obfuscate
                                       ? Icons.remove_red_eye_rounded
                                       : CupertinoIcons.eye_slash))),
-                          focusNode: password2Fn,
-                          controller: password2,
+                          focusNode: newPassword2fn,
+                          controller: newPassword2,
                           onEditingComplete: () {
-                            password2Fn.unfocus();
+                            newPassword2fn.unfocus();
                           },
                           validator: (v) {
                             String? doesMatchPasswords =
-                                password.text == password2.text
+                                newPassword.text == newPassword2.text
                                     ? null
                                     : "Passwords doesn't match";
                             if (doesMatchPasswords != null) {
@@ -197,13 +189,18 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             }
                           }),
                     ),
+                    const Text(
+                      "Note: After Changing your password you'll be log out",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 45),
                       height: 62,
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         onPressed: () {
-                          print("registerDebug");
+                          print("changepassword");
                           onSubmit();
                         },
                         style: ButtonStyle(
@@ -211,26 +208,27 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               const Color.fromARGB(255, 33, 243, 121)),
                         ),
                         child: const Text(
-                          "Register",
+                          "Change Password",
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
+
                     Container(
                       margin: const EdgeInsets.only(bottom: 190),
                       height: 62,
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         onPressed: () {
-                          GlobalRouter.I.router.go(LoginScreen.route);
+                          GlobalRouter.I.router.go(ProfileScreen.route);
                         },
                         style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all(
                               const Color.fromARGB(255, 231, 238, 239)),
                         ),
                         child: const Text(
-                          "Back To Login Page",
+                          "Back To Profile Page",
                           style: TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.w400),
@@ -247,17 +245,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
-  onSubmit() {
+  onSubmit() async {
     if (formKey.currentState?.validate() ?? false) {
       print("registering");
       WaitingDialog.show(context,
-          future: AuthController.I.register(
-              email.text.trim(),
-              password.text.trim(),
-              name.text.trim(),
-              lastName.text.trim(),
-              username.text.trim()));
+          future: AuthController.I.changePassword(
+              currentPassword.text.trim(), newPassword.text.trim()));
     }
+    AuthController.I.logout();
   }
 
   final OutlineInputBorder _baseBorder = const OutlineInputBorder(
