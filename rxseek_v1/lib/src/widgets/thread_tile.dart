@@ -6,15 +6,15 @@ import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/home/chat_screen.dart';
 
 class ThreadTile extends StatelessWidget {
-  const ThreadTile({
-    super.key,
-    required this.threads,
-    required this.recent,
-  });
+  const ThreadTile(
+      {super.key,
+      required this.threads,
+      required this.recent,
+      required this.saveScreen});
 
   final List<Thread>? threads;
   final bool recent;
-
+  final bool saveScreen;
   @override
   Widget build(BuildContext context) {
     if (recent) {
@@ -51,10 +51,13 @@ class ThreadTile extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      MessageController.I
-                          .deleteThread(finalThreads[index].threadId);
+                      saveScreen
+                          ? MessageController.I
+                              .unsaveThread(finalThreads[index].threadId)
+                          : MessageController.I
+                              .deleteThread(finalThreads[index].threadId);
                       // ignore: avoid_print
-                      print("deleted Thread");
+                      print("deleted/remove from save messages Thread");
                     },
                     child: Image.asset("assets/images/delete_button.png"),
                   ),

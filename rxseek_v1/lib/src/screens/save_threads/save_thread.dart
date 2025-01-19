@@ -57,6 +57,7 @@ class _SaveThreadScreenState extends State<SaveThreadScreen> {
                           return ThreadTile(
                             threads: reversedThreads,
                             recent: button.recent,
+                            saveScreen: true,
                           );
                         },
                       );

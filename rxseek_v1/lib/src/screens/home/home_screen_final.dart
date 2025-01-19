@@ -313,6 +313,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                 return ThreadTile(
                                   threads: threads,
                                   recent: button.recent,
+                                  saveScreen: false,
                                 );
                               },
                             );
