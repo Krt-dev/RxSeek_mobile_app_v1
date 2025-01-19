@@ -147,6 +147,18 @@ class MessageController with ChangeNotifier {
     }
   }
 
+  Future<void> unsaveThread(String threadId) async {
+    try {
+      MessageController.I.db
+          .collection("Thread")
+          .doc(threadId)
+          .update({"save": false});
+    } on FirebaseException catch (e) {
+      print(e.toString());
+      rethrow;
+    }
+  }
+
   Future<void> deleteThread(String threadId) async {
     try {
       CollectionReference messageCollection =
