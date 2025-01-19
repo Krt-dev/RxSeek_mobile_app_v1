@@ -17,18 +17,9 @@ class ChangePasswordScreen extends StatefulWidget {
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   late GlobalKey<FormState> formKey;
-  late TextEditingController username,
-      password,
-      password2,
-      email,
-      name,
-      lastName;
-  late FocusNode usernameFn,
-      passwordFn,
-      password2Fn,
-      emailfn,
-      nameFn,
-      lastNameFn;
+  late TextEditingController currentPassword, newPassword, newPassword2;
+
+  late FocusNode currentPasswordfn, newPasswordfn, newPassword2fn;
 
   bool obfuscate = true;
 
@@ -36,35 +27,24 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   void initState() {
     super.initState();
     formKey = GlobalKey<FormState>();
-    username = TextEditingController();
-    usernameFn = FocusNode();
-    password = TextEditingController();
-    passwordFn = FocusNode();
-    password2 = TextEditingController();
-    password2Fn = FocusNode();
-    email = TextEditingController();
-    emailfn = FocusNode();
-    name = TextEditingController();
-    nameFn = FocusNode();
-    lastName = TextEditingController();
-    lastNameFn = FocusNode();
+
+    currentPassword = TextEditingController();
+    currentPasswordfn = FocusNode();
+    newPassword = TextEditingController();
+    newPasswordfn = FocusNode();
+    newPassword2 = TextEditingController();
+    newPassword2fn = FocusNode();
   }
 
   @override
   void dispose() {
     super.dispose();
-    username.dispose();
-    usernameFn.dispose();
-    password.dispose();
-    passwordFn.dispose();
-    password2.dispose();
-    password2Fn.dispose();
-    email.dispose();
-    emailfn.dispose();
-    name.dispose();
-    nameFn.dispose();
-    lastName.dispose();
-    lastNameFn.dispose();
+    currentPassword.dispose();
+    currentPasswordfn.dispose();
+    newPassword.dispose();
+    newPasswordfn.dispose();
+    newPassword2.dispose();
+    newPassword2fn.dispose();
   }
 
   @override
@@ -92,94 +72,44 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    //diir ang current password
                     Flexible(
                       child: TextFormField(
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: obfuscate,
                         decoration: decoration.copyWith(
-                            labelText: "First Name",
-                            prefixIcon: const Icon(Icons.person)),
-                        focusNode: nameFn,
-                        controller: name,
+                            labelText: "Password",
+                            prefixIcon: const Icon(Icons.password),
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    obfuscate = !obfuscate;
+                                  });
+                                },
+                                icon: Icon(obfuscate
+                                    ? Icons.remove_red_eye_rounded
+                                    : CupertinoIcons.eye_slash))),
+                        focusNode: currentPasswordfn,
+                        controller: currentPassword,
                         onEditingComplete: () {
-                          passwordFn.requestFocus();
+                          currentPasswordfn.requestFocus();
                         },
                         validator: MultiValidator([
-                          RequiredValidator(
-                              errorText: 'Please fill out the Name'),
-                          MaxLengthValidator(32,
-                              errorText: "Name cannot exceed 32 characters"),
-                        ]).call,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Flexible(
-                      child: TextFormField(
-                        decoration: decoration.copyWith(
-                            labelText: "Last Name",
-                            prefixIcon: const Icon(Icons.person)),
-                        focusNode: lastNameFn,
-                        controller: lastName,
-                        onEditingComplete: () {
-                          passwordFn.requestFocus();
-                        },
-                        validator: MultiValidator([
-                          RequiredValidator(
-                              errorText: 'Please fill out the Last name'),
-                          MaxLengthValidator(32,
+                          RequiredValidator(errorText: "Password is required"),
+                          MinLengthValidator(12,
                               errorText:
-                                  "Last name cannot exceed 32 characters"),
-                        ]).call,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Flexible(
-                      child: TextFormField(
-                        decoration: decoration.copyWith(
-                            labelText: "User name",
-                            prefixIcon: const Icon(Icons.person)),
-                        focusNode: usernameFn,
-                        controller: username,
-                        onEditingComplete: () {
-                          passwordFn.requestFocus();
-                        },
-                        validator: MultiValidator([
-                          RequiredValidator(
-                              errorText: 'Please fill out the username'),
-                          MaxLengthValidator(32,
+                                  "Password must be at least 12 characters long"),
+                          MaxLengthValidator(128,
                               errorText:
-                                  "Username cannot exceed 32 characters"),
+                                  "Password cannot exceed 72 characters"),
+                          PatternValidator(
+                              r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+?\-=[\]{};':,.<>]).*$",
+                              errorText:
+                                  'Password must contain at least one symbol, one uppercase letter, one lowercase letter, and one number.')
                         ]).call,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Flexible(
-                      child: TextFormField(
-                        decoration: decoration.copyWith(
-                            labelText: "Email",
-                            prefixIcon: const Icon(Icons.person)),
-                        focusNode: emailfn,
-                        controller: email,
-                        onEditingComplete: () {
-                          passwordFn.requestFocus();
-                        },
-                        validator: MultiValidator([
-                          RequiredValidator(
-                              errorText: 'Please fill out the email'),
-                          MaxLengthValidator(32,
-                              errorText: "Email cannot exceed 32 characters"),
-                          EmailValidator(
-                              errorText: "Please select a valid email"),
-                        ]).call,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
+                    )
+                    //new password start diri
                     Flexible(
                       child: TextFormField(
                         keyboardType: TextInputType.visiblePassword,
