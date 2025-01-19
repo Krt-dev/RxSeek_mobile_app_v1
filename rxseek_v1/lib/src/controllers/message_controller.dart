@@ -123,12 +123,25 @@ class MessageController with ChangeNotifier {
     }
   }
 
-  Stream<QuerySnapshot> getSavedThreads(String userId) {
+  Stream<QuerySnapshot> getSavedThreadsAll(String userId) {
     try {
       return db
           .collection("Thread")
           .where("save", isEqualTo: true)
           .orderBy("timeCreated", descending: false)
+          .snapshots();
+    } on FirebaseException catch (e) {
+      print({e.toString()});
+      rethrow;
+    }
+  }
+
+  Stream<QuerySnapshot> getSavedThreadsRecent(String userId) {
+    try {
+      return db
+          .collection("Thread")
+          .where("save", isEqualTo: true)
+          .orderBy("timeCreated", descending: true)
           .snapshots();
     } on FirebaseException catch (e) {
       print({e.toString()});
