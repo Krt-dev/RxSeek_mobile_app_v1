@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-// First create a new widget for the typing indicator
 class TypingIndicator extends StatefulWidget {
   const TypingIndicator({super.key});
 
@@ -43,7 +42,7 @@ class _TypingIndicatorState extends State<TypingIndicator>
                 height: 8,
                 width: 8,
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(
+                  color: const Color(0xFFD8B689).withOpacity(
                     (sin((_controller.value * 2 * pi) + (index * pi / 2)) + 1) /
                         2,
                   ),
