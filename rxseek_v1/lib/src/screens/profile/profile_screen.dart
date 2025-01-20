@@ -6,6 +6,7 @@ import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/image_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
+import 'package:rxseek_v1/src/screens/auth/change_password_screen.dart';
 import 'package:rxseek_v1/src/screens/save_threads/save_thread.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
@@ -171,6 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 side: const BorderSide(width: 0, color: Colors.transparent),
               ),
               title: const Text("Settings"),
+              onTap: () => GlobalRouter.I.router.go(ChangePasswordScreen.route),
             ),
             const ListTile(
               leading: Icon(

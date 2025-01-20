@@ -29,17 +29,6 @@ class _HomeWrapperState extends State<HomeWrapper> {
           },
           child: Image.asset("assets/images/burger_button.png"),
         ),
-        actions: [
-          InkWell(
-            onTap: () {
-              WaitingDialog.show(context, future: AuthController.I.logout());
-            },
-            child: const Icon(
-              Icons.more_vert,
-              size: 50,
-            ),
-          ),
-        ],
         title: Image.asset("assets/images/RxSeek_name.png"),
       ),
       body: widget.child ?? const Placeholder(),

@@ -277,46 +277,49 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                   Container(
                       color: Colors.white,
                       height: 580,
-                      child: StreamBuilder(
-                          stream: MessageController.I.getUserThreads(
-                              AuthController.I.currentUser!.uid),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                            if (snapshot.hasError) {
-                              return Center(
-                                  child: Text('Error: ${snapshot.error}'));
-                            }
-                            if (!snapshot.hasData ||
-                                snapshot.data!.docs.isEmpty) {
-                              return const Center(
-                                  child: Text(
-                                'No messages yet',
-                                style: TextStyle(
-                                    fontFamily: 'Quicksand',
-                                    fontWeight: FontWeight.w600),
-                              ));
-                            }
+                      child: Consumer<UserInterfaceController>(
+                          builder: (context, button, child) {
+                        return StreamBuilder(
+                            stream: button.recent
+                                ? MessageController.I.getUserThreadsRecent(
+                                    AuthController.I.currentUser!.uid)
+                                : MessageController.I.getUserThreadsAll(
+                                    AuthController.I.currentUser!.uid),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              if (snapshot.hasError) {
+                                return Center(
+                                    child: Text('Error: ${snapshot.error}'));
+                              }
+                              if (!snapshot.hasData ||
+                                  snapshot.data!.docs.isEmpty) {
+                                return const Center(
+                                    child: Text(
+                                  'No messages yet',
+                                  style: TextStyle(
+                                      fontFamily: 'Quicksand',
+                                      fontWeight: FontWeight.w600),
+                                ));
+                              }
 
-                            List<Thread>? threads =
-                                snapshot.data!.docs.map((doc) {
-                              return Thread.fromJson(
-                                  doc.data() as Map<String, dynamic>);
-                            }).toList();
-                            //reversing the list
+                              List<Thread>? threads =
+                                  snapshot.data!.docs.map((doc) {
+                                return Thread.fromJson(
+                                    doc.data() as Map<String, dynamic>);
+                              }).toList();
+                              //reversing the list
 
-                            return Consumer<UserInterfaceController>(
-                              builder: (context, button, child) {
-                                return ThreadTile(
-                                  threads: threads,
-                                  recent: button.recent,
-                                );
-                              },
-                            );
-                          }))
+                              return ThreadTile(
+                                threads: threads,
+                                recent: button.recent,
+                                saveScreen: false,
+                              );
+                            });
+                      }))
                 ],
               ),
             ),

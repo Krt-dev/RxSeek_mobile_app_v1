@@ -97,7 +97,7 @@ class MessageController with ChangeNotifier {
 
 //buhatanan og index sa firebase pangitae paagi mabuhatan index kay composite ang query or nag use og
 //duha ka clause which is nad orederbyog and where so needog index para madungan nig gamit ang duha
-  Stream<QuerySnapshot> getUserThreads(String userId) {
+  Stream<QuerySnapshot> getUserThreadsAll(String userId) {
     try {
       return db
           .collection("Thread")
@@ -110,12 +110,38 @@ class MessageController with ChangeNotifier {
     }
   }
 
-  Stream<QuerySnapshot> getSavedThreads(String userId) {
+  Stream<QuerySnapshot> getUserThreadsRecent(String userId) {
+    try {
+      return db
+          .collection("Thread")
+          .where("userId", isEqualTo: userId)
+          .orderBy("timeCreated", descending: true)
+          .snapshots();
+    } on FirebaseException catch (e) {
+      print({e.toString()});
+      rethrow;
+    }
+  }
+
+  Stream<QuerySnapshot> getSavedThreadsAll(String userId) {
     try {
       return db
           .collection("Thread")
           .where("save", isEqualTo: true)
           .orderBy("timeCreated", descending: false)
+          .snapshots();
+    } on FirebaseException catch (e) {
+      print({e.toString()});
+      rethrow;
+    }
+  }
+
+  Stream<QuerySnapshot> getSavedThreadsRecent(String userId) {
+    try {
+      return db
+          .collection("Thread")
+          .where("save", isEqualTo: true)
+          .orderBy("timeCreated", descending: true)
           .snapshots();
     } on FirebaseException catch (e) {
       print({e.toString()});
@@ -141,6 +167,18 @@ class MessageController with ChangeNotifier {
           .collection("Thread")
           .doc(threadId)
           .update({"threadName": messages[1].content});
+    } on FirebaseException catch (e) {
+      print(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> unsaveThread(String threadId) async {
+    try {
+      MessageController.I.db
+          .collection("Thread")
+          .doc(threadId)
+          .update({"save": false});
     } on FirebaseException catch (e) {
       print(e.toString());
       rethrow;
