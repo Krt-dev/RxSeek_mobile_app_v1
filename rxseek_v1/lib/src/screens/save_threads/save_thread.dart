@@ -19,6 +19,13 @@ class SaveThreadScreen extends StatefulWidget {
 class _SaveThreadScreenState extends State<SaveThreadScreen> {
   @override
   Widget build(BuildContext context) {
+    // Get screen size
+    final Size screenSize = MediaQuery.of(context).size;
+
+    // Calculate responsive dimensions
+    final double height = screenSize.height * 0.69;
+    final double width = screenSize.width > 600 ? 500 : screenSize.width * 0.9;
+
     return Material(
       child: Column(
         children: [

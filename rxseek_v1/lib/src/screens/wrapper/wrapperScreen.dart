@@ -4,6 +4,7 @@ import 'package:rxseek_v1/src/dialogs/waiting_dialog.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
 import 'package:rxseek_v1/src/screens/home/home_screen_final.dart';
 import 'package:rxseek_v1/src/screens/profile/profile_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeWrapper extends StatefulWidget {
   final Widget? child;
@@ -43,27 +44,23 @@ class _HomeWrapperState extends State<HomeWrapper> {
               GlobalRouter.I.router.go(routes[i]);
             });
           },
+          backgroundColor: Colors.white,
+          elevation: 0.0,
           items: [
             BottomNavigationBarItem(
-                icon: Container(
+                icon: SvgPicture.asset(
+                  "assets/images/message_vect.svg", // Path to your SVG asset
                   height: 26,
                   width: 26,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image:
-                              AssetImage("assets/images/messave_nav_icon.png"),
-                          fit: BoxFit.cover)),
+                  fit: BoxFit.cover,
                 ),
                 label: ""),
             BottomNavigationBarItem(
-                icon: Container(
+                icon: SvgPicture.asset(
+                  "assets/images/profile_button_vect.svg", // Path to your SVG asset
                   height: 26,
                   width: 26,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image:
-                              AssetImage("assets/images/profile_nav_icon.png"),
-                          fit: BoxFit.cover)),
+                  fit: BoxFit.cover,
                 ),
                 label: ""),
           ],

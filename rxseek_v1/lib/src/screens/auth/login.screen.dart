@@ -45,65 +45,68 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/images/Login_screen.png"),
                   fit: BoxFit.cover)),
-          padding: const EdgeInsets.only(top: 300, left: 16, right: 16),
+          //padding: const EdgeInsets.only(top: 300, left: 16, right: 16),
           child: Form(
             key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.max,
               children: [
+                Flexible(
+                  flex: 2,
+                  child: Container(),
+                ),
                 Expanded(
+                  flex: 3,
                   child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        SafeArea(
-                          child: Container(
-                            padding: const EdgeInsets.only(top: 190),
-                            child: TextFormField(
-                              decoration: decoration.copyWith(
-                                  labelText: "Username",
-                                  labelStyle: const TextStyle(
-                                    fontFamily:
-                                        'Quicksand', // Apply Quicksand font to the label
-                                    fontSize: 20, // Adjust font size if needed
-                                    fontWeight:
-                                        FontWeight.bold, // Use regular weight
-                                  ),
-                                  prefixIcon: const Icon(Icons.person),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        30.0), // Adds rounded corners
-                                    // borderSide: const BorderSide(
-                                    //   width: 1.0, // Sets border width
-                                    // ),
-                                  )),
-                              focusNode: usernameFn,
-                              controller: username,
-                              style: const TextStyle(
-                                fontFamily:
-                                    'Quicksand', // Set custom font family
-                                fontSize: 19, // Adjust font size as desired
-                                fontWeight:
-                                    FontWeight.normal, // Use regular weight
-                              ),
-                              onEditingComplete: () {
-                                passwordFn.requestFocus();
-                              },
-                              validator: MultiValidator([
-                                RequiredValidator(
-                                    errorText: 'Please fill out the username'),
-                                EmailValidator(
-                                    errorText: "Please select a valid email"),
-                              ]).call,
+                        Container(
+                          padding: const EdgeInsets.only(top: 190),
+                          child: TextFormField(
+                            decoration: decoration.copyWith(
+                                labelText: "Username",
+                                labelStyle: const TextStyle(
+                                  fontFamily:
+                                      'Quicksand', // Apply Quicksand font to the label
+                                  fontSize: 20, // Adjust font size if needed
+                                  fontWeight:
+                                      FontWeight.bold, // Use regular weight
+                                ),
+                                prefixIcon: const Icon(Icons.person),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      30.0), // Adds rounded corners
+                                  // borderSide: const BorderSide(
+                                  //   width: 1.0, // Sets border width
+                                  // ),
+                                )),
+                            focusNode: usernameFn,
+                            controller: username,
+                            style: const TextStyle(
+                              fontFamily: 'Quicksand', // Set custom font family
+                              fontSize: 19, // Adjust font size as desired
+                              fontWeight:
+                                  FontWeight.normal, // Use regular weight
                             ),
+                            onEditingComplete: () {
+                              passwordFn.requestFocus();
+                            },
+                            validator: MultiValidator([
+                              RequiredValidator(
+                                  errorText: 'Please fill out the username'),
+                              EmailValidator(
+                                  errorText: "Please select a valid email"),
+                            ]).call,
                           ),
                         ),
                         const SizedBox(

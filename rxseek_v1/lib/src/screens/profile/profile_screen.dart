@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rxseek_v1/src/Faq/Faq_screen.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/image_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
@@ -125,7 +126,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Text(
                                   "${snapshot.data!.firstName} ${snapshot.data!.lastName}",
                                   style: const TextStyle(
-                                      color: Colors.white, fontSize: 25)),
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontFamily: 'SourceSans3')),
                             ],
                           );
                         } else {
@@ -136,6 +139,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 172,
                     child: Text(
                       "${AuthController.I.currentUser!.email}",
+                      style: const TextStyle(
+                          fontFamily: 'Quicksand', fontWeight: FontWeight.w500),
                     ),
                   ),
                   const SizedBox(
@@ -150,6 +155,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return ListView(
           controller: scrollController,
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             ListTile(
               leading: const Icon(
                 Icons.bookmark_outline,
@@ -159,7 +167,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderRadius: BorderRadius.circular(10),
                 side: const BorderSide(width: 0, color: Colors.transparent),
               ),
-              title: const Text("Saved Chats"),
+              title: const Text(
+                "Saved Chats",
+                style: TextStyle(
+                    fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
+              ),
               onTap: () => GlobalRouter.I.router.go(SaveThreadScreen.route),
             ),
             ListTile(
@@ -173,15 +185,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               title: const Text("Settings"),
               onTap: () => GlobalRouter.I.router.go(ChangePasswordScreen.route),
+                style: TextStyle(
+                    fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
+              ),
             ),
-            const ListTile(
-              leading: Icon(
+            ListTile(
+              leading: const Icon(
                 Icons.info_outline,
                 color: Colors.blue,
               ),
-              title: Text(
+              title: const Text(
                 "FAQs",
+                style: TextStyle(
+                    fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
               ),
+              onTap: () => GlobalRouter.I.router.go(FaqScreen.route),
               textColor: Colors.black,
             ),
             ListTile(

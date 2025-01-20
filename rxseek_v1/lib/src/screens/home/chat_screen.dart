@@ -13,6 +13,7 @@ import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
 import 'package:rxseek_v1/src/widgets/message_tile.dart';
 import 'package:http/http.dart' as http;
+import 'package:rxseek_v1/src/widgets/typing_ani.dart';
 
 class ChatScreen extends StatefulWidget {
   static const String route = "/ChatScreen";
@@ -27,6 +28,8 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   late TextEditingController messageController;
   final ScrollController scrollController = ScrollController();
+  final ImagePicker imagePicker = ImagePicker();
+  bool isWaitingForResponse = false;
 
   @override
   void initState() {
@@ -44,31 +47,8 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return SafeArea(
-      child:
-          // appBar: AppBar(
-          //   leading: InkWell(
-          //     onTap: () {
-          //       //for testing rani para maka route padung profile page
-          //       GlobalRouter.I.router.go(ProfileScreen.route);
-          //     },
-          //     child: Image.asset("assets/images/burger_button.png"),
-          //   ),
-          //   actions: [
-          //     InkWell(
-          //       onTap: () {
-          //         WaitingDialog.show(context, future: AuthController.I.logout());
-          //       },
-          //       child: const Icon(
-          //         Icons.more_vert,
-          //         size: 50,
-          //       ),
-          //     ),
-          //   ],
-          //   title: Image.asset("assets/images/RxSeek_name.png"),
-          // ),
-          Column(
+      child: Column(
         children: [
-          //this part is sa messages
           Expanded(
             child: Container(
               width: size.width * 0.99,
@@ -86,6 +66,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                     return const Center(child: Text('No messages found'));
                   }
+
                   var messages = snapshot.data!.docs.map((doc) {
                     return Message.fromJson(doc.data() as Map<String, dynamic>);
                   }).toList();
@@ -95,25 +76,43 @@ class _ChatScreenState extends State<ChatScreen> {
                         .updateThreadName(widget.threadId, messages);
                   }
 
-                  return ListView.builder(
-                    itemCount: messages.length,
-                    controller: scrollController,
-                    itemBuilder: (context, index) {
-                      final message = messages[index];
-                      Future.delayed(const Duration(seconds: 2), () {
-                        scrollController.animateTo(
-                            scrollController.position.maxScrollExtent,
-                            duration: const Duration(seconds: 1),
-                            curve: Curves.easeOut);
-                      });
-                      return MessageWidget(message: message);
-                    },
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: messages.length,
+                          controller: scrollController,
+                          itemBuilder: (context, index) {
+                            final message = messages[index];
+                            Future.delayed(const Duration(seconds: 2), () {
+                              scrollController.animateTo(
+                                scrollController.position.maxScrollExtent,
+                                duration: const Duration(seconds: 1),
+                                curve: Curves.easeOut,
+                              );
+                            });
+                            return MessageWidget(message: message);
+                          },
+                        ),
+                      ),
+                      if (isWaitingForResponse)
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 16.0),
+                            child: Row(
+                              children: [
+                                TypingIndicator(),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ],
                   );
                 },
               ),
             ),
           ),
-          //this part is sa textfield
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -142,8 +141,12 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         IconButton(
                           icon: Image.asset("assets/images/send_button.png"),
-                          onPressed: () {
+                          onPressed: () async {
                             if (messageController.text.isNotEmpty) {
+                              setState(() {
+                                isWaitingForResponse = true;
+                              });
+
                               var message = Message(
                                 messageId:
                                     DateTime.now().millisecondsSinceEpoch,
@@ -155,20 +158,16 @@ class _ChatScreenState extends State<ChatScreen> {
 
                               MessageController.I
                                   .sendMessage(message, widget.threadId);
-                              // scrollController.animateTo(
-                              //     scrollController.position.maxScrollExtent,
-                              //     duration: const Duration(milliseconds: 300),
-                              //     curve: Curves.easeOut);
-
                               messageController.clear();
-                              MessageController.I
-                                  .getMessageReponse(message, widget.threadId);
-                              // Future.delayed(const Duration(seconds: 8), () {
-                              //   scrollController.animateTo(
-                              //       scrollController.position.maxScrollExtent,
-                              //       duration: const Duration(seconds: 3),
-                              //       curve: Curves.easeOut);
-                              // });
+
+                              try {
+                                await MessageController.I.getMessageReponse(
+                                    message, widget.threadId);
+                              } finally {
+                                setState(() {
+                                  isWaitingForResponse = false;
+                                });
+                              }
                             }
                           },
                         ),
@@ -179,45 +178,66 @@ class _ChatScreenState extends State<ChatScreen> {
                 IconButton(
                   icon: Image.asset("assets/images/upload_image_button.png"),
                   onPressed: () async {
-                    var listOfImageResults =
-                        await ImageController.I.selectandSendImage();
-                    String uploadedImageUrl = listOfImageResults[0];
+                    setState(() {
+                      isWaitingForResponse = true;
+                    });
 
-                    var message = Message(
-                      messageId: DateTime.now().millisecondsSinceEpoch,
-                      sender: "user",
-                      content: messageController.text,
-                      imageUrl: uploadedImageUrl,
-                      timeCreated: Timestamp.now(),
-                    );
-                    MessageController.I.sendMessage(message, widget.threadId);
-                    //diri kay function to send the image to the backend then get and response nya i send sa db then butang sa frontend
-                    if (listOfImageResults[1] != null) {
-                      ImageController.I.getOcrResponse(
-                          listOfImageResults[1], widget.threadId);
+                    try {
+                      var listOfImageResults =
+                          await ImageController.I.selectandSendImage();
+                      String uploadedImageUrl = listOfImageResults[0];
+
+                      var message = Message(
+                        messageId: DateTime.now().millisecondsSinceEpoch,
+                        sender: "user",
+                        content: messageController.text,
+                        imageUrl: uploadedImageUrl,
+                        timeCreated: Timestamp.now(),
+                      );
+
+                      MessageController.I.sendMessage(message, widget.threadId);
+
+                      if (listOfImageResults[1] != null) {
+                        await ImageController.I.getOcrResponse(
+                            listOfImageResults[1], widget.threadId);
+                      }
+                    } finally {
+                      setState(() {
+                        isWaitingForResponse = false;
+                      });
                     }
                   },
                 ),
                 IconButton(
                   icon: Image.asset("assets/images/camera_button.png"),
                   onPressed: () async {
-                    var listOfImageResults =
-                        await ImageController.I.openCameraAndUploadImage();
-                    String uploadedImageUrl = listOfImageResults[0];
+                    setState(() {
+                      isWaitingForResponse = true;
+                    });
 
-                    var message = Message(
-                      messageId: DateTime.now().millisecondsSinceEpoch,
-                      sender: "user",
-                      content: messageController.text,
-                      imageUrl: uploadedImageUrl,
-                      timeCreated: Timestamp.now(),
-                    );
-                    //sent the image to the db to put in Frontend
-                    MessageController.I.sendMessage(message, widget.threadId);
-                    //diri kay function to send the image to the backend then get and response nya i send sa db then butang sa frontend
-                    if (listOfImageResults[1] != null) {
-                      ImageController.I.getOcrResponse(
-                          listOfImageResults[1], widget.threadId);
+                    try {
+                      var listOfImageResults =
+                          await ImageController.I.openCameraAndUploadImage();
+                      String uploadedImageUrl = listOfImageResults[0];
+
+                      var message = Message(
+                        messageId: DateTime.now().millisecondsSinceEpoch,
+                        sender: "user",
+                        content: messageController.text,
+                        imageUrl: uploadedImageUrl,
+                        timeCreated: Timestamp.now(),
+                      );
+
+                      MessageController.I.sendMessage(message, widget.threadId);
+
+                      if (listOfImageResults[1] != null) {
+                        await ImageController.I.getOcrResponse(
+                            listOfImageResults[1], widget.threadId);
+                      }
+                    } finally {
+                      setState(() {
+                        isWaitingForResponse = false;
+                      });
                     }
                   },
                 ),
@@ -228,6 +248,4 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
-
-  final ImagePicker imagePicker = ImagePicker();
 }

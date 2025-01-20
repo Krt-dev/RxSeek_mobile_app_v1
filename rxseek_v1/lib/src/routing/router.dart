@@ -3,6 +3,7 @@ import "dart:async";
 import "package:flutter/material.dart";
 import "package:get_it/get_it.dart";
 import "package:go_router/go_router.dart";
+import "package:rxseek_v1/src/Faq/Faq_screen.dart";
 import "package:rxseek_v1/src/controllers/auth_controller.dart";
 import "package:rxseek_v1/src/enum/enum.dart";
 import "package:rxseek_v1/src/screens/auth/change_password_screen.dart";
@@ -131,6 +132,13 @@ class GlobalRouter {
                     name: SaveThreadScreen.name,
                     builder: (context, _) {
                       return const SaveThreadScreen();
+                    }),
+                GoRoute(
+                    parentNavigatorKey: _shellNavigatorKey,
+                    path: FaqScreen.route,
+                    name: FaqScreen.name,
+                    builder: (context, _) {
+                      return const FaqScreen();
                     }),
                 GoRoute(
                   parentNavigatorKey: _shellNavigatorKey,
