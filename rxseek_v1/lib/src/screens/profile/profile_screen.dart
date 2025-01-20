@@ -54,32 +54,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-        child: SlidingUpPanel(
-      controller: panelController,
-      minHeight: 360,
-      maxHeight: 360,
-      borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(35), topRight: Radius.circular(35)),
-      body: Scaffold(
+      child: SlidingUpPanel(
+        controller: panelController,
+        minHeight: 360,
+        maxHeight: 360,
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(35), topRight: Radius.circular(35)),
+        body: Scaffold(
           backgroundColor: const Color(0xffd8b689),
-
-          //kaning body mao ni ang backgroiund sa panel
           body: Column(
             children: [
               Center(
-                  child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    "Profile",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  FutureBuilder(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      "Profile",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    FutureBuilder(
                       future: AuthController.I
                           .getUser(AuthController.I.currentUser!.uid),
                       builder: (context, snapshot) {
@@ -134,87 +132,93 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         } else {
                           return const Center(child: Text('No User is found'));
                         }
-                      }),
-                  SizedBox(
-                    width: 172,
-                    child: Text(
-                      "${AuthController.I.currentUser!.email}",
-                      style: const TextStyle(
-                          fontFamily: 'Quicksand', fontWeight: FontWeight.w500),
+                      },
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ))
+                    SizedBox(
+                      width: 172,
+                      child: Text(
+                        "${AuthController.I.currentUser!.email}",
+                        style: const TextStyle(
+                            fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              )
             ],
-          )),
-      //mao ni ang panel para marking or dmalibog
-      panelBuilder: () {
-        return ListView(
-          controller: scrollController,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.bookmark_outline,
-                color: Colors.blue,
+          ),
+        ),
+        panelBuilder: () {
+          return ListView(
+            controller: scrollController,
+            children: [
+              const SizedBox(
+                height: 20,
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: const BorderSide(width: 0, color: Colors.transparent),
+              ListTile(
+                leading: const Icon(
+                  Icons.bookmark_outline,
+                  color: Colors.blue,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: const BorderSide(width: 0, color: Colors.transparent),
+                ),
+                title: const Text(
+                  "Saved Chats",
+                  style: TextStyle(
+                      fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
+                ),
+                onTap: () => GlobalRouter.I.router.go(SaveThreadScreen.route),
               ),
-              title: const Text(
-                "Saved Chats",
-                style: TextStyle(
-                    fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
+              ListTile(
+                leading: const Icon(
+                  Icons.settings,
+                  color: Colors.blue,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: const BorderSide(width: 0, color: Colors.transparent),
+                ),
+                title: const Text(
+                  "Settings",
+                  style: TextStyle(
+                      fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
+                ),
+                onTap: () =>
+                    GlobalRouter.I.router.go(ChangePasswordScreen.route),
               ),
-              onTap: () => GlobalRouter.I.router.go(SaveThreadScreen.route),
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.settings,
-                color: Colors.blue,
+              ListTile(
+                leading: const Icon(
+                  Icons.info_outline,
+                  color: Colors.blue,
+                ),
+                title: const Text(
+                  "FAQs",
+                  style: TextStyle(
+                      fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
+                ),
+                onTap: () => GlobalRouter.I.router.go(FaqScreen.route),
+                textColor: Colors.black,
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: const BorderSide(width: 0, color: Colors.transparent),
-              ),
-              title: const Text("Settings"),
-              onTap: () => GlobalRouter.I.router.go(ChangePasswordScreen.route),
-                style: TextStyle(
-                    fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.info_outline,
-                color: Colors.blue,
-              ),
-              title: const Text(
-                "FAQs",
-                style: TextStyle(
-                    fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
-              ),
-              onTap: () => GlobalRouter.I.router.go(FaqScreen.route),
-              textColor: Colors.black,
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout, color: Colors.red),
-              title: const Text(
-                "Log Out",
-              ),
-              textColor: Colors.red,
-              onTap: () {
-                AuthController.I.logout();
-              },
-            )
-          ],
-        );
-      },
-    ));
+              ListTile(
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text(
+                  "Log Out",
+                ),
+                textColor: Colors.red,
+                onTap: () {
+                  AuthController.I.logout();
+                },
+              )
+            ],
+          );
+        },
+      ),
+    );
   }
 }
