@@ -127,6 +127,7 @@ class MessageController with ChangeNotifier {
     try {
       return db
           .collection("Thread")
+          .where("userId", isEqualTo: userId)
           .where("save", isEqualTo: true)
           .orderBy("timeCreated", descending: false)
           .snapshots();
@@ -140,6 +141,7 @@ class MessageController with ChangeNotifier {
     try {
       return db
           .collection("Thread")
+          .where("userId", isEqualTo: userId)
           .where("save", isEqualTo: true)
           .orderBy("timeCreated", descending: true)
           .snapshots();
