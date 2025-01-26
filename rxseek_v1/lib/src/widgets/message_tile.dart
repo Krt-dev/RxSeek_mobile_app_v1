@@ -10,9 +10,9 @@ class MessageWidget extends StatelessWidget {
   final Message message;
 
   const MessageWidget({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,8 @@ class MessageWidget extends StatelessWidget {
                             styleSheet: MarkdownStyleSheet(
                               p: const TextStyle(color: Colors.white),
                               strong: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
                                   color: Colors.white),
                             ),
                           )
@@ -75,12 +76,18 @@ class MessageWidget extends StatelessWidget {
                                 children: [
                                   Consumer<UserInterfaceController>(
                                       builder: (context, button, child) {
-                                    return CircleAvatar(
-                                      radius: 20,
-                                      backgroundImage:
-                                          CachedNetworkImageProvider(
-                                              snapshot.data!.profileUrl),
-                                    );
+                                    return snapshot.data!.profileUrl != ""
+                                        ? CircleAvatar(
+                                            radius: 20,
+                                            backgroundImage:
+                                                CachedNetworkImageProvider(
+                                                    snapshot.data!.profileUrl),
+                                          )
+                                        : const CircleAvatar(
+                                            radius: 20,
+                                            backgroundImage: AssetImage(
+                                                "assets/images/profile_default.jpg"),
+                                          );
                                   }),
                                 ],
                               );
@@ -120,7 +127,8 @@ class MessageWidget extends StatelessWidget {
                             styleSheet: MarkdownStyleSheet(
                               p: const TextStyle(color: Colors.white),
                               strong: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
                                   color: Colors.white),
                             ),
                           )
@@ -192,12 +200,18 @@ class MessageWidget extends StatelessWidget {
                                 children: [
                                   Consumer<UserInterfaceController>(
                                       builder: (context, button, child) {
-                                    return CircleAvatar(
-                                      radius: 20,
-                                      backgroundImage:
-                                          CachedNetworkImageProvider(
-                                              snapshot.data!.profileUrl),
-                                    );
+                                    return snapshot.data!.profileUrl != ""
+                                        ? CircleAvatar(
+                                            radius: 20,
+                                            backgroundImage:
+                                                CachedNetworkImageProvider(
+                                                    snapshot.data!.profileUrl),
+                                          )
+                                        : const CircleAvatar(
+                                            radius: 20,
+                                            backgroundImage: AssetImage(
+                                                "assets/images/profile_default.jpg"),
+                                          );
                                   }),
                                 ],
                               );
@@ -238,7 +252,8 @@ class MessageWidget extends StatelessWidget {
                             styleSheet: MarkdownStyleSheet(
                               p: const TextStyle(color: Colors.white),
                               strong: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
                                   color: Colors.white),
                             ),
                           )
