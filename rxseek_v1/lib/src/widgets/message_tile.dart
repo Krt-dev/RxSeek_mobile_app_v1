@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
@@ -26,25 +27,34 @@ class MessageWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(12.0),
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 8.0),
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.75,
-                        ),
-                        decoration: BoxDecoration(
-                          color: message.sender == "user"
-                              ? Colors.blueAccent
-                              : const Color(0xFFE1BD8F),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          message.content,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          padding: const EdgeInsets.all(12.0),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 8.0),
+                          constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.75,
                           ),
-                        ),
-                      ),
+                          decoration: BoxDecoration(
+                            color: message.sender == "user"
+                                ? Colors.blueAccent
+                                : const Color(0xFFE1BD8F),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: MarkdownBody(
+                            data: message.content,
+                            styleSheet: MarkdownStyleSheet(
+                              p: const TextStyle(color: Colors.white),
+                              strong: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          )
+                          // child: Text(
+                          //   message.content,
+                          //   style: const TextStyle(
+                          //     color: Colors.white,
+                          //   ),
+                          // ),
+                          ),
                       FutureBuilder(
                           future: AuthController.I
                               .getUser(AuthController.I.currentUser!.uid),
@@ -93,25 +103,34 @@ class MessageWidget extends StatelessWidget {
                             "https://firebasestorage.googleapis.com/v0/b/rxseek-b60ba.appspot.com/o/profileImage%2FsystemProfile.png?alt=media&token=29ac9f84-e001-45c8-b37f-764033e9724c"),
                       ),
                       Container(
-                        padding: const EdgeInsets.all(12.0),
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 8.0),
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.75,
-                        ),
-                        decoration: BoxDecoration(
-                          color: message.sender == "user"
-                              ? Colors.blueAccent
-                              : const Color(0xFFE1BD8F),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          message.content,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          padding: const EdgeInsets.all(12.0),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 8.0),
+                          constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.75,
                           ),
-                        ),
-                      ),
+                          decoration: BoxDecoration(
+                            color: message.sender == "user"
+                                ? Colors.blueAccent
+                                : const Color(0xFFE1BD8F),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: MarkdownBody(
+                            data: message.content,
+                            styleSheet: MarkdownStyleSheet(
+                              p: const TextStyle(color: Colors.white),
+                              strong: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          )
+                          // child: Text(
+                          //   message.content,
+                          //   style: const TextStyle(
+                          //     color: Colors.white,
+                          //   ),
+                          // ),
+                          ),
                     ],
                   ),
           )
@@ -202,25 +221,34 @@ class MessageWidget extends StatelessWidget {
                             "https://firebasestorage.googleapis.com/v0/b/rxseek-b60ba.appspot.com/o/profileImage%2FsystemProfile.png?alt=media&token=29ac9f84-e001-45c8-b37f-764033e9724c"),
                       ),
                       Container(
-                        padding: const EdgeInsets.all(12.0),
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 8.0),
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.75,
-                        ),
-                        decoration: BoxDecoration(
-                          color: message.sender == "user"
-                              ? Colors.blueAccent
-                              : const Color(0xFFE1BD8F),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          message.content,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          padding: const EdgeInsets.all(12.0),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 8.0),
+                          constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.75,
                           ),
-                        ),
-                      ),
+                          decoration: BoxDecoration(
+                            color: message.sender == "user"
+                                ? Colors.blueAccent
+                                : const Color(0xFFE1BD8F),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: MarkdownBody(
+                            data: message.content,
+                            styleSheet: MarkdownStyleSheet(
+                              p: const TextStyle(color: Colors.white),
+                              strong: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          )
+                          // child: Text(
+                          //   message.content,
+                          //   style: const TextStyle(
+                          //     color: Colors.white,
+                          //   ),
+                          // ),
+                          ),
                     ],
                   ),
           );
