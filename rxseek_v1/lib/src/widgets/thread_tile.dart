@@ -114,7 +114,7 @@ class ThreadTile extends StatelessWidget {
     final philippineDateTime = dateTime.add(const Duration(hours: 8));
 
     // Format the date/time
-    final formatter = DateFormat('HH:mm a');
+    final formatter = DateFormat('hh:mm a');
     return formatter.format(philippineDateTime);
   }
 }
