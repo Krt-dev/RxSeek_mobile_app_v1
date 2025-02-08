@@ -60,14 +60,7 @@ class MessageWidget extends StatelessWidget {
                           future: AuthController.I
                               .getUser(AuthController.I.currentUser!.uid),
                           builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircleAvatar(
-                                radius: 20,
-                                backgroundImage: AssetImage(
-                                    "assets/images/profile_default.jpg"),
-                              );
-                            } else if (snapshot.hasError) {
+                            if (snapshot.hasError) {
                               return Center(
                                   child: Text('Error: ${snapshot.error}'));
                             } else if (snapshot.hasData &&
@@ -187,11 +180,7 @@ class MessageWidget extends StatelessWidget {
                           future: AuthController.I
                               .getUser(AuthController.I.currentUser!.uid),
                           builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            } else if (snapshot.hasError) {
+                            if (snapshot.hasError) {
                               return Center(
                                   child: Text('Error: ${snapshot.error}'));
                             } else if (snapshot.hasData &&
@@ -219,7 +208,7 @@ class MessageWidget extends StatelessWidget {
                               return const CircleAvatar(
                                 radius: 20,
                                 backgroundImage: NetworkImage(
-                                    "assets/images/sampleProfile.png"),
+                                    "assets/images/profile_default.png"),
                               );
                             }
                           }),

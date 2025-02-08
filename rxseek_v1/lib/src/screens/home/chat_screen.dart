@@ -61,10 +61,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 stream:
                     MessageController.I.getMessagesInThread(widget.threadId),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                        child: CircularProgressIndicator(color: Colors.red));
-                  }
+                  // if (snapshot.connectionState == ConnectionState.waiting) {
+                  //   return const Center(
+                  //       child: CircularProgressIndicator());
+                  // }
                   if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   }
@@ -172,7 +172,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 timeCreated: Timestamp.now(),
                               );
 
-                              MessageController.I
+                              await MessageController.I
                                   .sendMessage(message, widget.threadId);
                               messageController.clear();
 
