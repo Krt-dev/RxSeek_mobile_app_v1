@@ -27,19 +27,23 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   late TextEditingController messageController;
-  final ScrollController scrollController = ScrollController();
+  late ScrollController scrollController = ScrollController();
   final ImagePicker imagePicker = ImagePicker();
   bool isWaitingForResponse = false;
+  bool isVisible = false;
 
+  @override
   @override
   void initState() {
     super.initState();
     messageController = TextEditingController();
+    scrollController = ScrollController();
   }
 
   @override
   void dispose() {
     messageController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -58,7 +62,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     MessageController.I.getMessagesInThread(widget.threadId),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: CircularProgressIndicator(color: Colors.red));
                   }
                   if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
@@ -84,29 +89,40 @@ class _ChatScreenState extends State<ChatScreen> {
                           controller: scrollController,
                           itemBuilder: (context, index) {
                             final message = messages[index];
-                            // Future.delayed(const Duration(seconds: 2), () {
-                            //   scrollController.animateTo(
-                            //     scrollController.position.maxScrollExtent,
-                            //     duration: const Duration(seconds: 1),
-                            //     curve: Curves.easeOut,
-                            //   );
-                            // });
+
                             return MessageWidget(message: message);
                           },
                         ),
                       ),
-                      if (isWaitingForResponse)
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 16.0),
-                            child: Row(
-                              children: [
-                                TypingIndicator(),
-                              ],
+                      Row(
+                        children: [
+                          if (isWaitingForResponse)
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 16.0),
+                                child: const TypingIndicator(),
+                              ),
                             ),
-                          ),
+                        ],
+                      ),
+                      InkWell(
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          decoration: const BoxDecoration(color: Colors.blue),
+                          child: const Icon(Icons.arrow_downward),
                         ),
+                        onTap: () {
+                          Future.delayed(const Duration(milliseconds: 250), () {
+                            scrollController.animateTo(
+                              scrollController.position.maxScrollExtent,
+                              duration: const Duration(milliseconds: 250),
+                              curve: Curves.easeOut,
+                            );
+                          });
+                        },
+                      ),
                     ],
                   );
                 },
