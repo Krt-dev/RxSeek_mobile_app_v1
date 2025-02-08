@@ -110,7 +110,12 @@ class _ChatScreenState extends State<ChatScreen> {
                         child: Container(
                           height: 30,
                           width: 30,
-                          decoration: const BoxDecoration(color: Colors.blue),
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 248, 246, 246),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: const Color.fromARGB(255, 230, 229, 229),
+                              )),
                           child: const Icon(Icons.arrow_downward),
                         ),
                         onTap: () {

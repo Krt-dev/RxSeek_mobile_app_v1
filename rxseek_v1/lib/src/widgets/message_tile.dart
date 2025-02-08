@@ -207,8 +207,8 @@ class MessageWidget extends StatelessWidget {
                             } else {
                               return const CircleAvatar(
                                 radius: 20,
-                                backgroundImage: NetworkImage(
-                                    "assets/images/profile_default.png"),
+                                backgroundImage: AssetImage(
+                                    "assets/images/profile_default.jpg"),
                               );
                             }
                           }),

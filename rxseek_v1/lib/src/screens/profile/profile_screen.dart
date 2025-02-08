@@ -43,8 +43,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Uint8List img = listOfImageResult[2];
     String userId = AuthController.I.currentUser!.uid;
     //getting image URL paghuman upload gamit ani na function na ato gebuhat
-    String imageNetworkUrl = await ImageController.I
-        .uploadImageToDb(img, "profileImage/ + ${userId}");
+    String imageNetworkUrl =
+        await ImageController.I.uploadImageToDb(img, "profileImage/ + $userId");
     //para rebuild sa UI sa consumer widget part
     setState(() {});
     //para update sa profile url na link sa user digtos firebase
@@ -84,8 +84,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return const Center(
-                              child: const CircleAvatar(
-                                  radius: 60,
+                              child: CircleAvatar(
+                                  radius: 64,
                                   backgroundImage: AssetImage(
                                       "assets/images/profile_default.jpg")));
                         } else if (snapshot.hasError) {
@@ -106,17 +106,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ? CircleAvatar(
                                               radius: 64,
                                               backgroundImage: NetworkImage(
-                                                  "${snapshot.data!.profileUrl}"),
+                                                  snapshot.data!.profileUrl),
                                             )
-                                          : Container(
-                                              height: 107,
-                                              width: 101,
-                                              decoration: const BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage(
-                                                          "assets/images/sampleProfile.png"),
-                                                      fit: BoxFit.contain)),
-                                            ),
+                                          : const CircleAvatar(
+                                              radius: 60,
+                                              backgroundImage: AssetImage(
+                                                  "assets/images/profile_default.jpg"))
                                     ],
                                   ),
                                 );
