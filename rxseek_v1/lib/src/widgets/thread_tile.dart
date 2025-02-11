@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:rxseek_v1/src/controllers/message_controller.dart';
 import 'package:rxseek_v1/src/models/thread_model.dart';
 import 'package:rxseek_v1/src/routing/router.dart';
@@ -75,9 +77,7 @@ class ThreadTile extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 200),
                     child: Text(
-                      convertToNotMilitaryTime(
-                          threads![index].timeCreated.toDate().hour,
-                          threads![index].timeCreated.toDate().minute),
+                      convertToPhilippineTime(threads![index].timeCreated),
                       style: const TextStyle(
                           fontSize: 13,
                           color: Colors.white,
@@ -104,13 +104,17 @@ class ThreadTile extends StatelessWidget {
     );
   }
 
-  String convertToNotMilitaryTime(int hour, int minute) {
-    int finalHour = 0;
-    if (hour > 12) {
-      finalHour = hour - 12;
-      return "$finalHour:${minute} PM";
-    } else {
-      return "$hour:${minute} AM";
-    }
+  String convertToPhilippineTime(Timestamp? timestamp) {
+    if (timestamp == null) return 'No date available';
+
+    // Convert to DateTime object
+    final dateTime = timestamp.toDate();
+
+    // Setting timezone to Philippines (UTC+8)
+    final philippineDateTime = dateTime.add(const Duration(hours: 8));
+
+    // Format the date/time
+    final formatter = DateFormat('hh:mm a');
+    return formatter.format(philippineDateTime);
   }
 }

@@ -43,8 +43,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Uint8List img = listOfImageResult[2];
     String userId = AuthController.I.currentUser!.uid;
     //getting image URL paghuman upload gamit ani na function na ato gebuhat
-    String imageNetworkUrl = await ImageController.I
-        .uploadImageToDb(img, "profileImage/ + ${userId}");
+    String imageNetworkUrl =
+        await ImageController.I.uploadImageToDb(img, "profileImage/ + $userId");
     //para rebuild sa UI sa consumer widget part
     setState(() {});
     //para update sa profile url na link sa user digtos firebase
@@ -84,10 +84,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return const Center(
-                              child: SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator()));
+                              child: CircleAvatar(
+                                  radius: 64,
+                                  backgroundImage: AssetImage(
+                                      "assets/images/profile_default.jpg")));
                         } else if (snapshot.hasError) {
                           return Center(
                               child: Text('Error: ${snapshot.error}'));
@@ -106,17 +106,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ? CircleAvatar(
                                               radius: 64,
                                               backgroundImage: NetworkImage(
-                                                  "${snapshot.data!.profileUrl}"),
+                                                  snapshot.data!.profileUrl),
                                             )
-                                          : Container(
-                                              height: 107,
-                                              width: 101,
-                                              decoration: const BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage(
-                                                          "assets/images/sampleProfile.png"),
-                                                      fit: BoxFit.contain)),
-                                            ),
+                                          : const CircleAvatar(
+                                              radius: 60,
+                                              backgroundImage: AssetImage(
+                                                  "assets/images/profile_default.jpg"))
                                     ],
                                   ),
                                 );
@@ -175,11 +170,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 onTap: () => GlobalRouter.I.router.go(SaveThreadScreen.route),
               ),
-              ListTile(
+              ExpansionTile(
                 leading: const Icon(
                   Icons.settings,
                   color: Colors.blue,
                 ),
+                trailing: const SizedBox.shrink(),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                   side: const BorderSide(width: 0, color: Colors.transparent),
@@ -189,8 +185,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(
                       fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
                 ),
-                onTap: () =>
-                    GlobalRouter.I.router.go(ChangePasswordScreen.route),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () =>
+                          GlobalRouter.I.router.go(ChangePasswordScreen.route),
+                      child: const Text(
+                        "Change Password",
+                        style: TextStyle(
+                          fontSize: 17.5,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
               ListTile(
                 leading: const Icon(

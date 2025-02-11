@@ -41,14 +41,12 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                         .getUser(AuthController.I.currentUser!.uid),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                            child: SizedBox(
-                          height: 10,
-                          width: 10,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 3,
-                          ),
-                        ));
+                        return const Text(
+                          "Hi, Guess",
+                          style: TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.w500),
+                        );
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (snapshot.hasData && snapshot.data != null) {

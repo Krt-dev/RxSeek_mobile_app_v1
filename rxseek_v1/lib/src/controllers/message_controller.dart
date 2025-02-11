@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print, duplicate_ignore
-
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,7 +22,7 @@ class MessageController with ChangeNotifier {
 //send messsage nya butang sa db then butang sa ui
   Future<void> sendMessage(Message message, String threadId) async {
     try {
-      db
+      await db
           .collection("Thread")
           .doc(threadId)
           .collection("Messages")
@@ -60,7 +58,7 @@ class MessageController with ChangeNotifier {
             imageUrl: "",
             timeCreated: Timestamp.now());
         try {
-          db
+          await db
               .collection("Thread")
               .doc(threadId)
               .collection("Messages")
@@ -127,6 +125,7 @@ class MessageController with ChangeNotifier {
     try {
       return db
           .collection("Thread")
+          .where("userId", isEqualTo: userId)
           .where("save", isEqualTo: true)
           .orderBy("timeCreated", descending: false)
           .snapshots();
@@ -140,6 +139,7 @@ class MessageController with ChangeNotifier {
     try {
       return db
           .collection("Thread")
+          .where("userId", isEqualTo: userId)
           .where("save", isEqualTo: true)
           .orderBy("timeCreated", descending: true)
           .snapshots();
