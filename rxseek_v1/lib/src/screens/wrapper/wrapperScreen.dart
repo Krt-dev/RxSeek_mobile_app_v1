@@ -46,6 +46,19 @@ class _HomeWrapperState extends State<HomeWrapper> {
           },
           backgroundColor: Colors.white,
           elevation: 0.0,
+          selectedLabelStyle: const TextStyle(
+            fontSize: 14, // Change font size
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Quicksand', // Make it bold
+            color:
+                Colors.blue, // Not used here, use `selectedItemColor` instead
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontSize: 12, // Smaller for unselected items
+            fontWeight: FontWeight.normal, // Normal weight
+          ),
+          selectedItemColor: const Color(0xff37B1B8), // Color for selected item
+          unselectedItemColor: Colors.grey, // Color for unselected items
           items: [
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -54,7 +67,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                   width: 26,
                   fit: BoxFit.cover,
                 ),
-                label: ""),
+                label: "Chat"),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   "assets/images/profile_button_vect.svg", // Path to your SVG asset
@@ -62,7 +75,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                   width: 26,
                   fit: BoxFit.cover,
                 ),
-                label: ""),
+                label: "Profile"),
           ],
         ),
       ),
