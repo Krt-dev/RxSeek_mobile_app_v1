@@ -36,7 +36,7 @@ class MessageController with ChangeNotifier {
   Future<void> getMessageReponse(Message message, String threadId) async {
     //mao ni atong post request to process the query sa backend then get the response sa LLM gekan sa backend from the query
     final response = await http.post(
-      Uri.parse("http://10.0.2.2:8000/process_query/"),
+      Uri.parse("http://192.168.1.2:8000/process_query/"),
 
       // Uri.parse("http://127.0.0.1:8000/process_query/"),
       headers: <String, String>{
