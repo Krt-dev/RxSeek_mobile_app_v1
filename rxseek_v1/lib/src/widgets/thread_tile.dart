@@ -65,7 +65,7 @@ class ThreadTile extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 GlobalRouter.I.router
-                    .go("${ChatScreen.route}/${threads![index].threadId}");
+                    .push("${ChatScreen.route}/${threads![index].threadId}");
               },
               child: Container(
                 height: 91,

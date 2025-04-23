@@ -26,7 +26,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
         leadingWidth: 50,
         leading: InkWell(
           onTap: () {
-            GlobalRouter.I.router.go(HomeScreenFinal.route);
+            GlobalRouter.I.router.push(HomeScreenFinal.route);
           },
           child: Image.asset("assets/images/burger_button.png"),
         ),
@@ -41,7 +41,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
             setState(() {
               index = i;
 
-              GlobalRouter.I.router.go(routes[i]);
+              GlobalRouter.I.router.push(routes[i]);
             });
           },
           backgroundColor: Colors.white,

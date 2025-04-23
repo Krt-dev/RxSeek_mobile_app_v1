@@ -168,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(
                       fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
                 ),
-                onTap: () => GlobalRouter.I.router.go(SaveThreadScreen.route),
+                onTap: () => GlobalRouter.I.router.push(SaveThreadScreen.route),
               ),
               ExpansionTile(
                 leading: const Icon(
@@ -189,8 +189,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
-                      onTap: () =>
-                          GlobalRouter.I.router.go(ChangePasswordScreen.route),
+                      onTap: () => GlobalRouter.I.router
+                          .push(ChangePasswordScreen.route),
                       child: const Text(
                         "Change Password",
                         style: TextStyle(
@@ -211,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(
                       fontFamily: 'Quicksand', fontWeight: FontWeight.w600),
                 ),
-                onTap: () => GlobalRouter.I.router.go(FaqScreen.route),
+                onTap: () => GlobalRouter.I.router.push(FaqScreen.route),
                 textColor: Colors.black,
               ),
               ListTile(
