@@ -96,7 +96,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
 
                             await MessageController.I
                                 .createNewThread(newThread);
-                            GlobalRouter.I.router.go(
+                            GlobalRouter.I.router.push(
                                 "${ChatScreen.route}/${newThread.threadId}");
                           },
                           child: Container(
@@ -136,7 +136,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                             InkWell(
                               onTap: () {
                                 GlobalRouter.I.router
-                                    .go(SaveThreadScreen.route);
+                                    .push(SaveThreadScreen.route);
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
@@ -188,7 +188,7 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
 
                                 await MessageController.I
                                     .createNewThread(newThread);
-                                GlobalRouter.I.router.go(
+                                GlobalRouter.I.router.push(
                                     "${ChatScreen.route}/${newThread.threadId}");
 
                                 var listOfImageResults = await ImageController.I

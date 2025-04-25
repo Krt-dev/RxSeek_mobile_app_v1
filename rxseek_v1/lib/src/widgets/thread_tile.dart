@@ -101,9 +101,8 @@ class _ThreadTileState extends State<ThreadTile> {
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: InkWell(
               onTap: () {
-                GlobalRouter.I.router.go(
-                  "${ChatScreen.route}/${widget.threads![index].threadId}",
-                );
+                GlobalRouter.I.router
+                    .push("${ChatScreen.route}/${threads![index].threadId}");
               },
               child: Container(
                 height: 91,
