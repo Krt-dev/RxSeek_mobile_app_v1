@@ -23,14 +23,26 @@ class _HomeWrapperState extends State<HomeWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 50,
+        leadingWidth: 40,
         leading: InkWell(
           onTap: () {
             GlobalRouter.I.router.push(HomeScreenFinal.route);
           },
-          child: Image.asset("assets/images/burger_button.png"),
+          child: SizedBox(
+            width: 50,
+            height: 50,
+            child: SvgPicture.asset(
+              "assets/images/burger.svg",
+              width: 24,
+              height: 14,
+            ),
+          ),
         ),
-        title: Image.asset("assets/images/RxSeek_name.png"),
+        title: SvgPicture.asset(
+          "assets/images/RxSeek_logoname.svg",
+          width: 24,
+          height: 24,
+        ),
       ),
       body: widget.child ?? const Placeholder(),
       bottomNavigationBar: SizedBox(

@@ -14,6 +14,7 @@ import 'package:rxseek_v1/src/models/message_model.dart';
 import 'package:rxseek_v1/src/widgets/message_tile.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxseek_v1/src/widgets/typing_ani.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatScreen extends StatefulWidget {
   static const String route = "/ChatScreen";
@@ -161,7 +162,11 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         ),
                         IconButton(
-                          icon: Image.asset("assets/images/send_button.png"),
+                          icon: SvgPicture.asset(
+                            "assets/images/Send.svg",
+                            width: 30,
+                            height: 30,
+                          ),
                           onPressed: () async {
                             if (messageController.text.isNotEmpty) {
                               setState(() {
@@ -197,7 +202,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 IconButton(
-                  icon: Image.asset("assets/images/upload_image_button.png"),
+                  icon: SvgPicture.asset(
+                    "assets/images/upload_image.svg",
+                    width: 34,
+                    height: 34,
+                  ),
                   onPressed: () async {
                     setState(() {
                       isWaitingForResponse = true;
@@ -230,7 +239,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   },
                 ),
                 IconButton(
-                  icon: Image.asset("assets/images/camera_button.png"),
+                  icon: SvgPicture.asset(
+                    "assets/images/camera_button.svg",
+                    width: 34,
+                    height: 34,
+                  ),
                   onPressed: () async {
                     setState(() {
                       isWaitingForResponse = true;

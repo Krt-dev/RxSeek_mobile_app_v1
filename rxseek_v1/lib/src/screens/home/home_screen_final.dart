@@ -15,6 +15,7 @@ import 'package:rxseek_v1/src/screens/home/chat_screen.dart';
 import 'package:rxseek_v1/src/screens/save_threads/save_thread.dart';
 import 'package:rxseek_v1/src/widgets/chat_button_history.dart';
 import 'package:rxseek_v1/src/widgets/thread_tile.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreenFinal extends StatefulWidget {
   static const String route = "/homeScreenFinal";
@@ -111,8 +112,11 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       bottom: 70, left: 90),
-                                  child: Image.asset(
-                                      "assets/images/chat_with_rxseek_button.png"),
+                                  child: SvgPicture.asset(
+                                    "assets/images/chatWithRxSeek.svg",
+                                    width: 44,
+                                    height: 44,
+                                  ),
                                 ),
                                 const Padding(
                                   padding: EdgeInsets.only(right: 10),
@@ -154,13 +158,13 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                     Padding(
                                       padding: const EdgeInsets.only(left: 60),
                                       child: Container(
-                                        height: 34,
-                                        width: 34,
-                                        decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/save_chats_button_icon.png"),
-                                                fit: BoxFit.cover)),
+                                        alignment: Alignment.center,
+                                        child: SvgPicture.asset(
+                                          "assets/images/bookmark.svg",
+                                          width: 34,
+                                          height: 34,
+                                          fit: BoxFit.contain,
+                                        ),
                                       ),
                                     ),
                                     const Text(
@@ -227,8 +231,12 @@ class _HomeScreenFinalState extends State<HomeScreenFinal> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(left: 60),
-                                      child: Image.asset(
-                                          "assets/images/chat_with_image_icon.png"),
+                                      child: SvgPicture.asset(
+                                        "assets/images/image_icon.svg",
+                                        width: 34,
+                                        height: 34,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
                                     const Text("Query With\n Image",
                                         style: TextStyle(

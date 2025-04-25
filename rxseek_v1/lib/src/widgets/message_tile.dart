@@ -5,6 +5,7 @@ import 'package:rxseek_v1/src/controllers/auth_controller.dart';
 import 'package:rxseek_v1/src/controllers/user_interface_controller.dart';
 import 'package:rxseek_v1/src/models/message_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MessageWidget extends StatelessWidget {
   final Message message;
@@ -97,10 +98,18 @@ class MessageWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 20,
-                        backgroundImage: CachedNetworkImageProvider(
-                            "https://firebasestorage.googleapis.com/v0/b/rxseek-b60ba.appspot.com/o/profileImage%2FsystemProfile.png?alt=media&token=29ac9f84-e001-45c8-b37f-764033e9724c"),
+                        backgroundColor: Colors
+                            .transparent, // optional if you want no background
+                        child: ClipOval(
+                          child: SvgPicture.network(
+                            "https://firebasestorage.googleapis.com/v0/b/rxseek-b60ba.appspot.com/o/profileImage%2FGroup%204.svg?alt=media&token=ded14c13-4c6e-498b-83e2-08d2fafd3faa",
+                            width: 40, // Adjust size as needed
+                            height: 40, // Adjust size as needed
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                       Container(
                           padding: const EdgeInsets.all(12.0),
