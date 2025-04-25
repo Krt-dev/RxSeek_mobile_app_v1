@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
-        alignment: Alignment.center, // Center the contents
+        alignment: Alignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 200.0, left: 20),
@@ -43,10 +43,19 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           const Positioned(
             top: 65,
-            bottom: 50, // Adjust the position of the spinner
+            bottom: 50, // Move spinner slightly up to make space for GIF
             child: SpinKitFadingCube(
-              color: Color(0xffe37B1B8), // Change to your preferred color
-              size: 50.0, // Adjust the size of the spinner
+              color: Color(0xffe37B1B8),
+              size: 50.0,
+            ),
+          ),
+          Positioned(
+            bottom: 50,
+            child: Image.asset(
+              'assets/gifs/Sequence 01.gif',
+              width: 150,
+              height: 150,
+              fit: BoxFit.contain,
             ),
           ),
         ],

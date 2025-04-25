@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     formKey = GlobalKey<FormState>();
     username = TextEditingController(text: "rhunnan3216@gmail.com");
-    password = TextEditingController(text: "#Newpassword3216");
+    password = TextEditingController(text: "#Newpass3216");
     usernameFn = FocusNode();
     passwordFn = FocusNode();
   }
@@ -70,8 +70,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
+                        Positioned(
+                          bottom: 50,
+                          child: Image.asset(
+                            'assets/gifs/Sequence 01.gif',
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                         Container(
-                          padding: const EdgeInsets.only(top: 190),
+                          padding: const EdgeInsets.only(top: 5),
                           child: TextFormField(
                             decoration: decoration.copyWith(
                                 labelText: "Username",
@@ -159,36 +168,50 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        Container(
+                        Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 10.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              GlobalRouter.I.router
-                                  .go(RegistrationScreen.route);
-                            },
-                            child: Text("No account? Register",
-                                style: GoogleFonts.quicksand(
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 10.0),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                onSubmit();
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    WidgetStateProperty.all(Colors.blue),
+                              horizontal: 10.0, vertical: 2.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    GlobalRouter.I.router
+                                        .go(RegistrationScreen.route);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.grey[300],
+                                  ),
+                                  child: Text(
+                                    "Register",
+                                    style: GoogleFonts.quicksand(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
                               ),
-                              child: Text(
-                                "Login",
-                                style: GoogleFonts.quicksand(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              )),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    onSubmit();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blue,
+                                  ),
+                                  child: Text(
+                                    "Login",
+                                    style: GoogleFonts.quicksand(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
