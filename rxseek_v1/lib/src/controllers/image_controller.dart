@@ -71,6 +71,7 @@ class ImageController {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse("http://10.0.2.2:8000/process_query/"),
+        // Uri.parse("http://172.29.3.94:5000/process_query/"), //use IPV4
       );
 
       request.files.add(http.MultipartFile.fromBytes(

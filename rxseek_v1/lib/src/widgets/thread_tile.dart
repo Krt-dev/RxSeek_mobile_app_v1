@@ -111,12 +111,14 @@ class _ThreadTileState extends State<ThreadTile> {
                 decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 1, 65, 117),
                     borderRadius: BorderRadius.circular(15)),
-                child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 200),
-                    child: Text(
-                      convertToPhilippineTime(threads![index].timeCreated),
-                      style: const TextStyle(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 200),
+                      child: Text(
+                        convertToPhilippineTime(
+                            widget.threads![index].timeCreated),
+                        style: const TextStyle(
                           fontSize: 13,
                           color: Colors.white,
                           fontFamily: 'Quicksand',
